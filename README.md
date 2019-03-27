@@ -1,1 +1,1 @@
-# cse308_CoMiXXer
+# CoMiXXer
