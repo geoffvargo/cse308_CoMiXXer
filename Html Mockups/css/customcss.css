@@ -4,3 +4,14 @@
   overflow: hidden;
   border-top:1px solid #2e3439;
 }
+
+.nav-pills .nav-item .nav-link{
+  color:white;
+}
+
+.nav-pills .nav-item .nav-link.active{
+  background-color:inherit;
+  color:white;
+  font-weight: bold;
+  border-bottom: 2px solid yellow;
+}
