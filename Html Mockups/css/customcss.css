@@ -58,3 +58,11 @@ background-color: #575656; }
 .h-100{
   height:100%;
 }
+
+.carousel-control-next:hover, .carousel-control-prev:hover, .carousel-indicators:hover{
+  background-color: rgba(0,0,0,.5);
+}
+
+.mh-page{
+  max-height:90vh;
+}
