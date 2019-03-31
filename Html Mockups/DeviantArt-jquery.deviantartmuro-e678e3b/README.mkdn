@@ -1,0 +1,64 @@
+jquery.deviantartmuro
+=====================
+
+[jquery.deviantartmuro][jquery.deviantartmuro] is a [jQuery][jquery] plugin to provide a convenient wrapper around the embedding API for the [deviantART muro][damuro] HTML5 drawing application, allowing you to provide image drawing and editing within third-party sites.
+
+Embedding [deviantART muro][damuro] in your site allows you to pass images from your site to [deviantART muro][damuro], allow your users to edit those images, and then hand the saved image data back to your site. You can also make scripted use of a number of [deviantART muro][damuro] tools such as filters.
+
+For further documentation and examples, visit these pages:
+
+ * [jQuery.deviantartmuro Home Page](http://deviantart.github.com/jquery.deviantartmuro/).
+ * [Wiki Introduction Page](http://github.com/deviantART/jquery.deviantartmuro/wiki/Home).
+ * [Installation Instructions](https://github.com/deviantART/jquery.deviantartmuro/wiki/Installation).
+ * [Reference Manual](http://github.com/deviantART/jquery.deviantartmuro/wiki/Reference).
+ * [Introduction to the underlying deviantART muro API](http://github.com/deviantART/embedded-deviantART-muro/wiki/Home).
+
+Example
+=======
+
+Using [jquery.deviantartmuro][jquery.deviantartmuro] is as simple as this code snippet:
+
+```javascript
+// Embed deviantART muro within the element with id "damuro-goes-here".
+$('#damuro-goes-here').damuro({
+    // Say what image we want the user to embed.
+    background: '../images/crane_squared_by_mudimba_and_draweverywhere.png',
+    // We don't want to have deviantART muro load automatically.
+    autoload: false
+    })
+    // Bind a single-use onclick handler to open muro when they click on the splash screen
+    .one('click', function () { $(this).damuro().open(); })
+    // Chain down to the damuro object rather than $('#damuro-goes-here')
+    .damuro()
+    // The .damuro() object is a promise, so lets bind a done() and fail() handler.
+    .done(function (data) {
+            // Here's where you'd save the image, we'll just set the page background as an example
+            if (data.image && !/'/.test(data.image)) {
+                $('body').css('backgroundImage', "url('" + data.image + "')");
+            }
+            $(this).hide().damuro().remove();
+        })
+    .fail(function (data) {
+            $(this).hide().damuro().remove();
+            if (data.error) {
+                // Something failed in saving the image.
+                $('body').append('<p>All aboard the fail whale: ' + data.error + '.</p>');
+            } else {
+                // The user pressed "done" without making any changes.
+                $('body').append("<p>Be that way then, don't edit anything.</p>");
+            }
+        });
+```
+
+To see a demo like this in action you can visit our [home page](http://deviantart.github.com/jquery.deviantartmuro/).
+
+Licenses
+========
+
+Please check the LICENSES.txt file for full details on the licensing, the quick synopsis is that image assets are provided under a Creative Commons Attribution License and the code snippets are under a BSD 3-Clause License.
+
+[damuro]: http://sta.sh/muro
+[da]: http://www.deviantart.com/
+[stash]: http://sta.sh/
+[jquery.deviantartmuro]: http://deviantart.github.com/jquery.deviantartmuro/
+[jquery]: http://jquery.com/

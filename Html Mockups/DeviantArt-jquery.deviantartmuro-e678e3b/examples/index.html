@@ -1,0 +1,38 @@
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Embedded deviantART muro, jQuery plugin example</title>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+<script src="../jquery.deviantartmuro.js"></script>
+<style>
+#damuro-goes-here { width: 900px; height: 600px; }
+.damuro-splash-text {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: bold;
+    font-size: 36px;
+    background-color: #9e9;
+    opacity: 0.8;
+    padding: 6px 12px;
+    border: 6px #5a5 solid;
+    border-radius: 12px;
+}
+.damuro-splash-view:hover .damuro-splash-text {
+    background-color: #e9e;
+    border-color: #a5a;
+}
+
+body {
+    background-position: top center;
+/*    background-size: contain; Since our example page is light on content, this rule makes it go a little nuts */
+    background-repeat: no-repeat;
+}
+</style>
+</head>
+<body>
+<h1>Embedded deviantART muro, jQuery plugin example</h1>
+<p>Blah blah description.</p>
+<div id="damuro-goes-here"></div>
+<div id="status"></div>
+</body>
+</html>
+<script src="example.js"></script>
