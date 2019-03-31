@@ -1,4 +1,7 @@
 $(document).ready(function(){
+  $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+  })
   $("#toggleViewBtn").click(function(){
     if($("#toggleViewBtn").attr("data-mode") === "right"){
       $("#toggleViewBtn").attr("data-mode","down");
