@@ -92,7 +92,7 @@
     <!-- Sidebar -->
     <ul class="sidebar navbar-nav bg-primary">
       <li class="nav-item active">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="browse.html">
           <i class="fa fa-fw fa-search"></i>
           <span>Browse</span>
         </a>
@@ -149,7 +149,7 @@
       <div class="container">
         <div class="row">
           <div class="col-4"></div>
-          <div class="col-4mb-3">
+          <div class="col-4 mb-3">
             <h1 class="text-center d-inline">Comic Name</h1>
             <button class="btn btn-info d-inline mx-4 mb-3" id="toggleViewBtn" data-mode="right"><i class="fas fa-fw fa-angle-double-right" id="toggleViewIcon"></i></button>
           </div>
@@ -186,19 +186,33 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-4"></div>
           <div class="col-4">
-            <ul class="nav text-center justify-content-center">
+            <ul class="nav mb-4">
               <li class="nav-item mr-1">
-                <a class="btn btn-info" data-toggle="collapse" href="#commentsSection" role="button" aria-expanded="false" aria-controls="commentsSection">
-                    Comments
-                  </a>
+                <div class="text-muted mt-2">100</div>
+                </li>
+              <li class="nav-item mx-1">
+                <button class="btn btn-info">
+                  <i class="fas fa-chevron-up"></i>
+                </button>
               </li>
               <li class="nav-item ml-1">
+                <button class="btn btn-info"><i class="fas fa-chevron-down"></i></button>
+              </li>
+            </ul>
+          </div>
+          <div class="col-4">
+            <ul class="nav text-center justify-content-center">
+              <li class="nav-item mx-1">
                 <a class="btn btn-info" data-toggle="collapse" href="#commentsSection" role="button" aria-expanded="false" aria-controls="commentsSection">
+                    Comments
+                </a>
+              </li>
+              <li class="nav-item ml-1">
+                <button class="btn btn-info">
                     Remix
                     <i class="fas fa-random"></i>
-                  </a>
+                </button>
               </li>
             </ul>
           </div>
@@ -315,8 +329,8 @@
         </div>
         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
         <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="login.html">Logout</a>
+          <button class="btn btn-primary" type="button" data-dismiss="modal">Cancel</button>
+          <a class="btn btn-secondary" href="login.html">Logout</a>
         </div>
       </div>
     </div>
