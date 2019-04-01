@@ -56,10 +56,6 @@
   flex-wrap:nowrap;
 }
 
-.scrollbar {
-float: left;
-}
-
 .scrollbar-primary::-webkit-scrollbar {
 width: 12px;
 border-radius:10px;}
