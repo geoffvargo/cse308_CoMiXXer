@@ -16,6 +16,18 @@
   border-bottom: 2px solid yellow;
 }
 
+.no-a,.no-a:hover{
+  text-decoration: none !important;
+  color:white;
+}
+
+.unindent-ul{
+  padding-inline-start:0px;
+}
+
+.no-padding-l{
+  padding-left:0px;
+}
 .card-underline{
   text-decoration: none !important;
   color:white;
@@ -32,6 +44,7 @@
 
 .scrollable-y{
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .scrollable-x{
@@ -65,4 +78,8 @@ background-color: #575656; }
 
 .mh-page{
   max-height:90vh;
+}
+
+.mh-smaller{
+  max-height:65vh;
 }
