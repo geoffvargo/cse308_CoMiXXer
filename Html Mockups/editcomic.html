@@ -66,7 +66,7 @@
           <span>User Name Here</span>
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-          <a class="dropdown-item" href="#">Settings</a>
+          <a class="dropdown-item" href="userSettings.html">Settings</a>
           <a class="dropdown-item" href="#">Activity Log</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
@@ -116,11 +116,6 @@
           <i class="fa fa-fw fa-compass"></i>
           <span>Curations</span></a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="libraries.html">
-          <i class="fa fa-fw fa-building"></i>
-          <span>Libraries</span></a>
-      </li>
       <li class="divider"></li>
       <li class="nav-item">
         <a class="nav-link" href="libraries.html">
@@ -128,9 +123,18 @@
           <span>Create a Comic</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="libraries.html">
+        <a role="button" class="nav-link" href="#" id="curationDropDown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fa fa-fw fa-compass"></i>
-          <span>Create a Curation</span></a>
+          <span>Create a Curation</span>
+        </a>
+        <div class="dropdown-menu">
+          <form class="dropdown-item">
+            <div class="form-group">
+              <input class="form-control" type="text" placeholder="Curation Name..."></input>
+            </div>
+            <button class="btn btn-secondary" href="#">Create Curation</button>
+          </form>
+        </div>
       </li>
     </ul>
 
@@ -146,7 +150,7 @@
             <div class="col-5"></div>
           </div>
           <div class="form-group row">
-            <label for="privacyBox" class="col-4 col-form-label text-right">Comic Name</label>
+            <label for="privacyBox" class="col-4 col-form-label text-right">Privacy</label>
             <div class="col-4">
               <select class="form-control" id="privacyBox">
                 <option selected>Public</option>

@@ -79,3 +79,8 @@ background-color: #575656; }
 .mh-smaller{
   max-height:65vh;
 }
+
+.dropdown-item:hover{
+  background-color: #1a1a1a;
+  color:white;
+}
