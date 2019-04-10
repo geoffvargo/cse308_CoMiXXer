@@ -20,7 +20,7 @@ public class ComixAuthenticationSuccessHandler implements AuthenticationSuccessH
 
         for (GrantedAuthority auth : authentication.getAuthorities()) {
             if ("USER".equals(auth.getAuthority())) {
-                response.sendRedirect("/menu");
+                response.sendRedirect("/browse");
             }
         }
     }
