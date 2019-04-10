@@ -1,8 +1,4 @@
-/* Copyright 2013, deviantART, Inc.
- * Licensed under 3-Clause BSD.
- * Refer to the LICENCES.txt file for details.
- * For latest version, see https://github.com/deviantART/jquery.deviantartmuro
- */
+
 (function (window, $, undefined) {
 
 "use strict";
