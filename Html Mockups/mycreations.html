@@ -37,7 +37,7 @@
     <!-- Navbar Search -->
     <form class="d-none d-md-inline-block form-inline mr-auto ml-4 my-2 my-md-0">
       <div class="input-group">
-        <input type="text" class="form-control" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+        <input type="text" class="form-control search-bar" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
         <div class="input-group-append">
           <button class="btn btn-primary" type="button">
             <i class="fa fa-search"></i>
@@ -138,13 +138,12 @@
       </li>
     </ul>
 
-    <div id="content-wrapper">
+    <div id="content-wrapper no-scroll">
       <div class="container-fluid">
-        <h1 class="text-center mb-4">User Name</h1>
         <div class="container">
           <div class="row">
             <div class="col-9">
-              <h2 class="text-left mb-4">My Creations</h2>
+              <h5 class="text-left my-4">My Creations</h5>
               <div class="row scrollable-x no-fw scrollbar scrollbar-primary">
                 <div class="col-3">
                   <div class="card bg-info d-inline-block mb-4 mx-1" style="max-width:14rem">
@@ -431,7 +430,7 @@
                 </div>
               </div>
               <div class="divider mt-4"></div>
-              <h2 class="text-left mb-4">Drafts</h2>
+              <h5 class="text-left mb-4">Drafts</h5>
               <div class="row scrollable-x no-fw scrollbar scrollbar-primary">
                 <div class="col-3">
                   <div class="card bg-info d-inline-block mb-4 mx-1" style="max-width:14rem">
@@ -612,8 +611,9 @@
               </div>
             </div>
             <div class="col-3">
-              <div class="container">
+              <div class="container scrollbar-y scrollbar scrollbar-primary h-bio">
                 <div class="bg-info rounded h-100 p-3 mx-auto">
+                  <h3 class="text-center mb-4">User Name</h3>
                   <div class="text-center mb-1">
                     <img src="https://bootdey.com/img/Content/user_1.jpg" alt="", class="rounded-circle">
                   </div>
@@ -646,13 +646,13 @@
         <!-- /.container-fluid -->
 
         <!-- Sticky Footer -->
-        <footer class="sticky-footer bg-primary ">
+        <!-- <footer class="sticky-footer bg-primary ">
           <div class="container my-auto">
             <div class="copyright text-center my-auto">
               <span>Copyright © Your Website 2019</span>
             </div>
           </div>
-        </footer>
+        </footer> -->
 
       </div>
       <!-- /.content-wrapper -->
