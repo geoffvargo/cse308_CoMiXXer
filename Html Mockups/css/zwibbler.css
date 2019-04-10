@@ -1,0 +1,32 @@
+zwibbler {
+                position: absolute;
+                top: 0; left: 0; right: 0; bottom: 0;
+                display: flex;
+                flex-flow: row;
+            }
+
+            [toolbar] {
+                /* Don't allow stretching */
+                flex: 0 0 200px;
+                background: #ccc;
+            }
+
+            [pages] {
+                flex: 0 0 150px;
+            }
+
+
+            .page {
+                border: 3px solid transparent;
+                box-shadow: 2px 2px 2px rgba(0,0,0,0.2);
+            }
+
+            .page.selected {
+                border: 3px solid orange; 
+            }
+
+            [z-canvas] {
+                /* Stretch to fill available space. */
+                flex: 1 1 auto;
+                border: 5px solid purple;
+            }

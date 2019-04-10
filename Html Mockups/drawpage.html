@@ -3,11 +3,30 @@
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- <script src="js/drawpage.js"></script> -->
 	<script src="https://zwibbler.com/zwibbler-demo.js"></script>
+	<link href="css/zwibbler.css" rel="stylesheet">
+
   </head>
   <body>
-	<zwibbler>
-	<z-canvas>
-	</z-canvas>
-	</zwibbler>
+	<zwibbler 
+            z-controller="MyFunction"
+            showToolbar="false"
+            pageView="true"
+            defaultPaperSize="letter">
+            <div toolbar>
+                <button z-click="usePickTool()">Pick tool</button>
+                <button z-click="useBrushTool()">Brush tool</button>
+                <button z-click="useCircleTool()">Brush tool</button>
+            </div>
+            <div z-canvas></div>
+            <div pages>
+                <div class="page"
+                     z-for="mypage in getPageCount()"
+                     z-page="mypage"
+                     z-width="120"
+                     z-click="setCurrentPage(mypage)"
+                     z-class="{selected: mypage==getCurrentPage()}">
+                 </div>
+            </div>
+        </zwibbler>
   </body>
 </html>
