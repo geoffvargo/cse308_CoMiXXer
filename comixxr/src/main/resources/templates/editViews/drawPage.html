@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{default}" lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>Comixxer - Edit</title>
+</head>
+
+<body id="page-top">
+    <div layout:fragment="content" id="content-wrapper">
+      <div class="container-fluid">
+        <h1 class="text-center mb-4">Edit a Comic</h1>
+        <div class="container">
+          <div class="row">
+            <div class="col-2 pl-0 scrollable-y scrollbar scrollbar-primary mh-smaller">
+              <div class="bg-info rounded">
+                <h3 class="text-center">Pages</h3>
+                <img class="img-fluid px-4 my-2" src="img/portfolio/cake.png"></img>
+                <img class="img-fluid px-4 my-2" src="img/portfolio/submarine.png"></img>
+                <img class="img-fluid px-4 my-2" src="img/portfolio/game.png"></img>
+                <img class="img-fluid px-4 my-2" src="img/portfolio/cabin.png"></img>
+                <img class="img-fluid px-4 my-2" src="img/portfolio/comic.png"></img>
+              </div>
+            </div>
+            <div class="col-8">
+              <zwibbler 
+            z-controller="MyFunction"
+            showToolbar="false"
+            pageView="true"
+            defaultPaperSize="letter">
+            <div toolbar>
+                <button z-click="usePickTool()">Pick tool</button>
+                <button z-click="useBrushTool()">Brush tool</button>
+                <button z-click="useCircleTool()">Brush tool</button>
+            </div>
+            <div z-canvas></div>
+            <div pages>
+                <div class="page"
+                     z-for="mypage in getPageCount()"
+                     z-page="mypage"
+                     z-width="120"
+                     z-click="setCurrentPage(mypage)"
+                     z-class="{selected: mypage==getCurrentPage()}">
+                 </div>
+            </div>
+        </zwibbler>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /.container-fluid -->
+
+    </div>
+    <!-- /.content-wrapper -->
+  </div>
+  <!-- /#wrapper -->
+
+</body>
+
+</html>

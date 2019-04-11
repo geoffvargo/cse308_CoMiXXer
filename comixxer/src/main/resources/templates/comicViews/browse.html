@@ -12,23 +12,12 @@
 
   <title>Comixxer - Browse</title>
 
-  <!-- Page level plugin CSS-->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/v4-shims.css">
-
-  <!-- Custom styles for this template-->
-  <link type="text/css" href="css/sb-admin.min.css" rel="stylesheet">
-  <link type="text/css" href="css/mytheme.min.css" rel="stylesheet">
-  <link type="text/css" href="css/customcss.css" rel="stylesheet">
-
 
 </head>
 
 <body id="page-top">
-    <span id="current-user" th:value="currentUser.name"></span>
-    <div th:replace="fragments/topnav.html:: header"></div>
     <div layout:fragment="content" id="content-wrapper">
+      <span id="current-user" th:text="${currentUser.getFullname()}" hidden></span>
       <div class="container-fluid">
         <div class="container">
           <ul class="nav nav-pills">
@@ -417,21 +406,11 @@
         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
         <div class="modal-footer">
           <button class="btn btn-primary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-secondary" href="login.html">Logout</a>
+          <a class="btn btn-secondary" href="../login.html">Logout</a>
         </div>
       </div>
     </div>
   </div>
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-  <!-- Custom fonts for this template-->
-  <script src="https://use.fontawesome.com/a2deeff422.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.js"></script>
-  <!-- Core plugin JavaScript-->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.compatibility.min.js"></script>
-  <!-- Custom scripts for all pages-->
-  <script src="js/sb-admin.min.js"></script>
 
 </body>
 

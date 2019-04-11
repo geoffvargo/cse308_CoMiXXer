@@ -38,7 +38,7 @@ public class HomeController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
         modelAndView.addObject("currentUser", user);
-        modelAndView.setViewName("browse");
+        modelAndView.setViewName("comicViews/browse");
         return modelAndView;
     }
 
@@ -55,6 +55,13 @@ public class HomeController {
     public ModelAndView login() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("login");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/makeComic", method = RequestMethod.GET)
+    public ModelAndView makeComic() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("editViews/drawPage");
         return modelAndView;
     }
 
