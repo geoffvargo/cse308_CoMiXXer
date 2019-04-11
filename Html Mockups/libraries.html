@@ -21,6 +21,7 @@
   <link href="css/sb-admin.min.css" rel="stylesheet">
   <link href="css/mytheme.min.css" rel="stylesheet">
   <link href="css/customcss.css" rel="stylesheet">
+  <link href="css/zwibbler.css" rel="stylesheet">
 
 
 </head>
@@ -155,7 +156,27 @@
               </div>
             </div>
             <div class="col-8">
-              <img class="img-fluid px-4 my-2" src="img/portfolio/cake.png"></img>
+              <zwibbler 
+            z-controller="MyFunction"
+            showToolbar="false"
+            pageView="true"
+            defaultPaperSize="letter">
+            <div toolbar>
+                <button z-click="usePickTool()">Pick tool</button>
+                <button z-click="useBrushTool()">Brush tool</button>
+                <button z-click="useCircleTool()">Brush tool</button>
+            </div>
+            <div z-canvas></div>
+            <div pages>
+                <div class="page"
+                     z-for="mypage in getPageCount()"
+                     z-page="mypage"
+                     z-width="120"
+                     z-click="setCurrentPage(mypage)"
+                     z-class="{selected: mypage==getCurrentPage()}">
+                 </div>
+            </div>
+        </zwibbler>
             </div>
           </div>
         </div>
@@ -212,6 +233,16 @@
   <script src="js/customjs.js"></script>
 
   <script src="js/sb-admin.min.js"></script>
+  <script src="https://zwibbler.com/zwibbler-demo.js"></script>
+  <script type="text/javascript">
+  $("#save-button").click(function() {
+    var saved = ctx.save();
+	zwibbler.on("document-changed", function() {
+        var canUndo = zwibbler.canUndo();
+        var canRedo = zwibbler.canRedo();
+        var dirty = zwibbler.dirty();
+  </script>
+
 
 </body>
 

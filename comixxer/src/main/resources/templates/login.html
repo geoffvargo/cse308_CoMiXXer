@@ -1,5 +1,5 @@
-<html lang="en">
-
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{default}" lang="en">
 <head>
 
   <meta charset="utf-8">
@@ -27,7 +27,7 @@
 </head>
 
 <body id="page-top">
-
+  <div layout:fragment="content">
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg bg-primary fixed-top text-uppercase" id="mainNav">
     <div class="container">
@@ -56,9 +56,12 @@
   <!-- Header -->
   <header class="masthead text-white text-center">
     <div class="container">
-      <img class="img-fluid mb-5 d-block mx-auto" src="../img/logo.jpg" alt="">
+      <img class="img-fluid mb-5 d-block mx-auto" src="img/logos/logo.jpg" alt="">
       <div class="container w-50">
-        <form class="form-signin" action="./home.html" method="post">
+        <div th:if="${param.error}" class="alert alert-danger">
+          Invalid email and password.
+        </div>
+        <form class="form-signin" th:action="@{/login}" method="post">
           <label for="inputEmail" class="sr-only">Email address</label>
           <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email" required="" />
           <label for="inputPassword" class="sr-only">Password</label>
@@ -393,6 +396,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.compatibility.min.js"></script>
   <!-- Custom scripts for all pages-->
   <script src="js/sb-admin.min.js"></script>
+  </div>
 
 </body>
 

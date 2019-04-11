@@ -1,4 +1,6 @@
 $(document).ready(function(){
+  $("#navbarUsername").text($("#current-user").text());
+
   $(function () {
   $('[data-toggle="tooltip"]').tooltip()
   })
