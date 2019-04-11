@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{default}" lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Comixxer - Browse</title>
+
+  <!-- Page level plugin CSS-->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/v4-shims.css">
+
+  <!-- Custom styles for this template-->
+  <link type="text/css" href="css/sb-admin.min.css" rel="stylesheet">
+  <link type="text/css" href="css/mytheme.min.css" rel="stylesheet">
+  <link type="text/css" href="css/customcss.css" rel="stylesheet">
+
+
+</head>
+
+<body id="page-top">
+    <span id="current-user" th:value="currentUser.name"></span>
+    <div th:replace="fragments/topnav.html:: header"></div>
+    <div layout:fragment="content" id="content-wrapper">
+      <div class="container-fluid">
+        <div class="container">
+          <ul class="nav nav-pills">
+            <li class="nav-item">
+              <a class="nav-link active" id="pills-general-tab" data-toggle="pill" href="#pills-general" role="tab" aria-controls="pills-general" aria-selected="true">General</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="pills-genre-tab" data-toggle="pill" href="#pills-genre" role="tab" aria-controls="pills-genre" aria-selected="true">Genre</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="pills-newrelease-tab" data-toggle="pill" href="#pills-newrelease" role="tab" aria-controls="pills-newrelease" aria-selected="true">New Releases</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="pills-remixes-tab" data-toggle="pill" href="#pills-remixes" role="tab" aria-controls="pills-remixes" aria-selected="true">Remixes</a>
+            </li>
+          </ul>
+          <div class="divider mb-2"></div>
+          <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="pills-general" role="tabpanel" aria-labelledby="pills-general-tab">
+              <div class="row">
+                <div class="container">
+                  <h2>Single</h2>
+                  <div class="row scrollable-x no-fw scrollbar scrollbar-primary">
+
+                    <div class="col-3">
+                      <div class="card bg-info d-inline-block mb-4 mx-1" style="max-width:14rem">
+                        <a class="card-underline" href="single.html">
+                          <img class="card-img-top" src="img/portfolio/game.png" alt="Card!">
+                          <div class="card-body h-25 p-3">
+                            <h4 class="card-text text-center">
+                            Popular
+                          </h4>
+                          </div>
+                        </a>
+                      </div>
+                    </div>
+
+                    <div class="col-3">
+                      <div class="card bg-info d-inline-block mb-4 mx-1" style="max-width:14rem">
+                        <a class="card-underline" href="single.html">
+                          <img class="card-img-top" src="img/portfolio/game.png" alt="Card!">
+                          <div class="card-body h-25 p-3">
+                            <h4 class="card-text text-center">
+                            Popular
+                          </h4>
+                          </div>
+                        </a>
+                      </div>
+                    </div>
+
+                    <div class="col-3">
+                      <div class="card bg-info d-inline-block mb-4 mx-1" style="max-width:14rem">
+                        <a class="card-underline" href="single.html">
+                          <img class="card-img-top" src="img/portfolio/game.png" alt="Card!">
+                          <div class="card-body h-25 p-3">
+                            <h4 class="card-text text-center">
+                            Popular
+                          </h4>
+                          </div>
+                        </a>
+                      </div>
+                    </div>
+
+                    <div class="col-3">
+                      <div class="card bg-info d-inline-block mb-4 mx-1" style="max-width:14rem">
+                        <a class="card-underline" href="single.html">
+                          <img class="card-img-top" src="img/portfolio/game.png" alt="Card!">
+                          <div class="card-body h-25 p-3">
+                            <h4 class="card-text text-center">
+                            Popular
+                          </h4>
+                          </div>
+                        </a>
+                      </div>
+                    </div>
+
+                    <div class="col-3">
+                      <div class="card bg-info d-inline-block mb-4 mx-1" style="max-width:14rem">
+                        <a class="card-underline" href="single.html">
+                          <img class="card-img-top" src="img/portfolio/game.png" alt="Card!">
+                          <div class="card-body h-25 p-3">
+                            <h4 class="card-text text-center">
+                            Popular
+                          </h4>
+                          </div>
+                        </a>
+                      </div>
+                    </div>
+
+                    <div class="col-3">
+                      <div class="card bg-info d-inline-block mb-4 mx-1" style="max-width:14rem">
+                        <a class="card-underline" href="single.html">
+                          <img class="card-img-top" src="img/portfolio/game.png" alt="Card!">
+                          <div class="card-body h-25 p-3">
+                            <h4 class="card-text text-center">
+                            Popular
+                          </h4>
+                          </div>
+                        </a>
+                      </div>
+                    </div>
+
+                    <div class="col-3">
+                      <div class="card bg-info d-inline-block mb-4 mx-1" style="max-width:14rem">
+                        <a class="card-underline" href="single.html">
+                          <img class="card-img-top" src="img/portfolio/game.png" alt="Card!">
+                          <div class="card-body h-25 p-3">
+                            <h4 class="card-text text-center">
+                            Popular
+                          </h4>
+                          </div>
+                        </a>
+                      </div>
+                    </div>
+
+
+                  </div>
+                </div>
+              </div>
+              <div class="divider"></div>
+              <div class="row">
+                <div class="container">
+                  <h2>Series</h2>
+                  <div class="row scrollable-x no-fw scrollbar scrollbar-primary">
+                    <div class="col-3">
+                      <div class="card bg-info d-inline-block mb-4 mx-1" style="max-width:14rem">
+                        <a class="card-underline" href="seriesview.html">
+                          <img class="card-img-top" src="img/portfolio/game.png" alt="Card!">
+                          <div class="card-body h-25 p-3">
+                            <h4 class="card-text text-center">
+                            Popular
+                          </h4>
+                          </div>
+                        </a>
+                      </div>
+                    </div>
+                    <div class="col-3">
+                      <div class="card bg-info d-inline-block mb-4 mx-1" style="max-width:14rem">
+                        <a class="card-underline" href="seriesview.html">
+                          <img class="card-img-top" src="img/portfolio/game.png" alt="Card!">
+                          <div class="card-body h-25 p-3">
+                            <h4 class="card-text text-center">
+                            Popular
+                          </h4>
+                          </div>
+                        </a>
+                      </div>
+                    </div>
+                    <div class="col-3">
+                      <div class="card bg-info d-inline-block mb-4 mx-1" style="max-width:14rem">
+                        <a class="card-underline" href="seriesview.html">
+                          <img class="card-img-top" src="img/portfolio/game.png" alt="Card!">
+                          <div class="card-body h-25 p-3">
+                            <h4 class="card-text text-center">
+                            Popular
+                          </h4>
+                          </div>
+                        </a>
+                      </div>
+                    </div>
+                    <div class="col-3">
+                      <div class="card bg-info d-inline-block mb-4 mx-1" style="max-width:14rem">
+                        <a class="card-underline" href="seriesview.html">
+                          <img class="card-img-top" src="img/portfolio/game.png" alt="Card!">
+                          <div class="card-body h-25 p-3">
+                            <h4 class="card-text text-center">
+                            Popular
+                          </h4>
+                          </div>
+                        </a>
+                      </div>
+                    </div>
+                    <div class="col-3">
+                      <div class="card bg-info d-inline-block mb-4 mx-1" style="max-width:14rem">
+                        <a class="card-underline" href="seriesview.html">
+                          <img class="card-img-top" src="img/portfolio/game.png" alt="Card!">
+                          <div class="card-body h-25 p-3">
+                            <h4 class="card-text text-center">
+                            Popular
+                          </h4>
+                          </div>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="pills-genre" role="tabpanel" aria-labelledby="pills-genre-tab">
+              <div class="row">
+                <div class="container">
+                  <div class="row">
+                    <div class="col-lg">
+                      <div class="card bg-info d-inline-block mb-4 mx-1" style="max-width:14rem">
+                        <a class="card-underline" href="series.html">
+                          <img class="card-img-top" src="img/portfolio/cake.png" alt="Card!">
+                          <div class="card-body h-25 p-3">
+                            <h4 class="card-text text-center">
+                            Horror
+                          </h4>
+                          </div>
+                        </a>
+                      </div>
+
+                      <div class="card bg-info d-inline-block mb-4 mx-1" style="max-width:14rem">
+                        <a class="card-underline" href="series.html">
+                          <img class="card-img-top" src="img/portfolio/cake.png" alt="Card!">
+                          <div class="card-body h-25 p-3">
+                            <h4 class="card-text text-center">
+                            Comedy
+                          </h4>
+                          </div>
+                        </a>
+                      </div>
+
+                      <div class="card bg-info d-inline-block mb-4 mx-1" style="max-width:14rem">
+                        <a class="card-underline" href="series.html">
+                          <img class="card-img-top" src="img/portfolio/cake.png" alt="Card!">
+                          <div class="card-body h-25 p-3">
+                            <h4 class="card-text text-center">
+                            Adventure
+                          </h4>
+                          </div>
+                        </a>
+                      </div>
+
+                      <div class="card bg-info d-inline-block mb-4 mx-1" style="max-width:14rem">
+                        <a class="card-underline" href="series.html">
+                          <img class="card-img-top" src="img/portfolio/cake.png" alt="Card!">
+                          <div class="card-body h-25 p-3">
+                            <h4 class="card-text text-center">
+                            Sci-Fi
+                          </h4>
+                          </div>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="pills-newrelease" role="tabpanel" aria-labelledby="pills-newrelease-tab">
+
+              <div class="row">
+                <div class="container">
+                  <div class="row">
+                    <div class="col-lg">
+                      <div class="card bg-info d-inline-block mb-4 mx-1" style="max-width:14rem">
+                        <a class="card-underline" href="series.html">
+                          <img class="card-img-top" src="img/portfolio/cabin.png" alt="Card!">
+                          <div class="card-body h-25 p-3">
+                            <h4 class="card-text text-center">
+                            Horror
+                          </h4>
+                          </div>
+                        </a>
+                      </div>
+
+                      <div class="card bg-info d-inline-block mb-4 mx-1" style="max-width:14rem">
+                        <a class="card-underline" href="series.html">
+                          <img class="card-img-top" src="img/portfolio/cabin.png" alt="Card!">
+                          <div class="card-body h-25 p-3">
+                            <h4 class="card-text text-center">
+                            Comedy
+                          </h4>
+                          </div>
+                        </a>
+                      </div>
+
+                      <div class="card bg-info d-inline-block mb-4 mx-1" style="max-width:14rem">
+                        <a class="card-underline" href="series.html">
+                          <img class="card-img-top" src="img/portfolio/cabin.png" alt="Card!">
+                          <div class="card-body h-25 p-3">
+                            <h4 class="card-text text-center">
+                            Adventure
+                          </h4>
+                          </div>
+                        </a>
+                      </div>
+
+                      <div class="card bg-info d-inline-block mb-4 mx-1" style="max-width:14rem">
+                        <a class="card-underline" href="series.html">
+                          <img class="card-img-top" src="img/portfolio/cabin.png" alt="Card!">
+                          <div class="card-body h-25 p-3">
+                            <h4 class="card-text text-center">
+                            Sci-Fi
+                          </h4>
+                          </div>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div class="tab-pane fade" id="pills-remixes" role="tabpanel" aria-labelledby="pills-remixes">
+
+              <div class="row">
+                <div class="container">
+                  <div class="row">
+                    <div class="col-lg">
+                      <div class="card bg-info d-inline-block mb-4 mx-1" style="max-width:14rem">
+                        <a class="card-underline" href="series.html">
+                          <img class="card-img-top" src="img/portfolio/submarine.png" alt="Card!">
+                          <div class="card-body h-25 p-3">
+                            <h4 class="card-text text-center">
+                            Horror
+                          </h4>
+                          </div>
+                        </a>
+                      </div>
+
+                      <div class="card bg-info d-inline-block mb-4 mx-1" style="max-width:14rem">
+                        <a class="card-underline" href="series.html">
+                          <img class="card-img-top" src="img/portfolio/submarine.png" alt="Card!">
+                          <div class="card-body h-25 p-3">
+                            <h4 class="card-text text-center">
+                            Comedy
+                          </h4>
+                          </div>
+                        </a>
+                      </div>
+
+                      <div class="card bg-info d-inline-block mb-4 mx-1" style="max-width:14rem">
+                        <a class="card-underline" href="series.html">
+                          <img class="card-img-top" src="img/portfolio/submarine.png" alt="Card!">
+                          <div class="card-body h-25 p-3">
+                            <h4 class="card-text text-center">
+                            Adventure
+                          </h4>
+                          </div>
+                        </a>
+                      </div>
+
+                      <div class="card bg-info d-inline-block mb-4 mx-1" style="max-width:14rem">
+                        <a class="card-underline" href="series.html">
+                          <img class="card-img-top" src="img/portfolio/submarine.png" alt="Card!">
+                          <div class="card-body h-25 p-3">
+                            <h4 class="card-text text-center">
+                            Sci-Fi
+                          </h4>
+                          </div>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!-- /.container-fluid -->
+
+      <!-- Sticky Footer -->
+      <footer class="sticky-footer bg-primary ">
+        <div class="container my-auto">
+          <div class="copyright text-center my-auto">
+            <span>Copyright © Your Website 2019</span>
+          </div>
+        </div>
+      </footer>
+
+    </div>
+    <!-- /.content-wrapper -->
+    <!-- /#wrapper -->
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fa fa-angle-up"></i>
+  </a>
+
+  <!-- Logout Modal-->
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" type="button" data-dismiss="modal">Cancel</button>
+          <a class="btn btn-secondary" href="login.html">Logout</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <!-- Custom fonts for this template-->
+  <script src="https://use.fontawesome.com/a2deeff422.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.js"></script>
+  <!-- Core plugin JavaScript-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.compatibility.min.js"></script>
+  <!-- Custom scripts for all pages-->
+  <script src="js/sb-admin.min.js"></script>
+
+</body>
+
+</html>
