@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/v4-shims.css">
 
     <!-- Custom styles for this template-->
-    <link type="text/css" href="/\css/sb-admin.min.css" rel="stylesheet">
+    <link type="text/css" href="/css/sb-admin.min.css" rel="stylesheet">
     <link type="text/css" href="/css/mytheme.min.css" rel="stylesheet">
     <link type="text/css" href="/css/customcss.css" rel="stylesheet">
     <link type="text/css" href="/css/zwibblercss.css" rel="stylesheet">
@@ -157,16 +157,6 @@
 <script src="/js/sb-admin.min.js"></script>
 <script src="/js/customjs.js"></script>
     <script src="https://zwibbler.com/zwibbler-demo.js"></script>
-    <script type="text/javascript">
-        $("#save-button").click(function() {
-            var saved = ctx.save();
-            zwibbler.on("document-changed", function () {
-                var canUndo = zwibbler.canUndo();
-                var canRedo = zwibbler.canRedo();
-                var dirty = zwibbler.dirty();
-            })
-        })
-    </script>
 
 </body>
 </html>
