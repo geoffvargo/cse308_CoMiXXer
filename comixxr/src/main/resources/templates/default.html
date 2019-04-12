@@ -157,16 +157,6 @@
 <script src="/js/sb-admin.min.js"></script>
 <script src="/js/customjs.js"></script>
     <script src="https://zwibbler.com/zwibbler-demo.js"></script>
-    <script type="text/javascript">
-        $("#save-button").click(function() {
-            var saved = ctx.save();
-            zwibbler.on("document-changed", function () {
-                var canUndo = zwibbler.canUndo();
-                var canRedo = zwibbler.canRedo();
-                var dirty = zwibbler.dirty();
-            })
-        })
-    </script>
 
 </body>
 </html>
