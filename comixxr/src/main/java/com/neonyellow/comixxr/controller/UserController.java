@@ -23,13 +23,13 @@ public class UserController {
     @Autowired
     UserRepository userRepository;
 
-    @RequestMapping(value = {"/drawPage"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/draw"}, method = RequestMethod.GET)
     public ModelAndView getDrawPage(){
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
         modelAndView.addObject("currentUser", user);
-        modelAndView.setViewName("drawPage");
+        modelAndView.setViewName("draw");
         return modelAndView;
     }
 
