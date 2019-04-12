@@ -15,7 +15,8 @@
 
 <body id="page-top">
     <div layout:fragment="content" id="content-wrapper">
-      <div class="container-fluid">
+        <span id="current-user" th:text="${currentUser.getFullname()}" hidden></span>
+        <div class="container-fluid">
         <h1 class="text-center mb-4">Edit a Comic</h1>
         <div class="container">
           <div class="row">

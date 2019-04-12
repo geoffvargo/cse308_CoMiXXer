@@ -53,11 +53,11 @@ public class UserController {
         return null;
     }
 
-    /*GET USER BROWSE PAGE*/
-    @RequestMapping(value = {"/browse"}, method = RequestMethod.GET)
-    public ModelAndView getBrowse(){
-        return null;
-    }
+//    /*GET USER BROWSE PAGE*/
+//    @RequestMapping(value = {"/browse"}, method = RequestMethod.GET)
+//    public ModelAndView getBrowse(){
+//        return null;
+//    }
 
     /*HELPER FUNCTIONS*/
     private ArrayList<Comic> getPopularSingles(){

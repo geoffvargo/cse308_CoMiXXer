@@ -58,6 +58,26 @@ public class HomeController {
         return modelAndView;
     }
 
+    @RequestMapping(value = "/singlesGenre", method = RequestMethod.GET)
+    public ModelAndView getSingleGenre() {
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByEmail(auth.getName());
+        modelAndView.addObject("currentUser", user);
+        modelAndView.setViewName("singlesGenre");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/seriesGenre", method = RequestMethod.GET)
+    public ModelAndView getSeriesGenre() {
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByEmail(auth.getName());
+        modelAndView.addObject("currentUser", user);
+        modelAndView.setViewName("seriesGenre");
+        return modelAndView;
+    }
+
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
