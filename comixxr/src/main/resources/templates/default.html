@@ -9,9 +9,9 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/v4-shims.css">
 
     <!-- Custom styles for this template-->
-    <link type="text/css" href="css/sb-admin.min.css" rel="stylesheet">
-    <link type="text/css" href="css/mytheme.min.css" rel="stylesheet">
-    <link type="text/css" href="css/customcss.css" rel="stylesheet">
+    <link type="text/css" href="/css/sb-admin.min.css" rel="stylesheet">
+    <link type="text/css" href="/css/mytheme.min.css" rel="stylesheet">
+    <link type="text/css" href="/css/customcss.css" rel="stylesheet">
     </head>
 <body>
 <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
@@ -31,7 +31,7 @@
             </div>
         </div>
     </form>
-    <img class="navbar-brand mr-1 img-fluid" style="max-width:150px;" src="img/logos/part-logo.png"/>
+    <img class="navbar-brand mr-1 img-fluid" style="max-width:150px;" src="/img/logos/part-logo.png"/>
 
 
     <!-- Navbar -->
@@ -153,16 +153,18 @@
 <!-- Core plugin JavaScript-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.compatibility.min.js"></script>
 <!-- Custom scripts for all pages-->
-<script src="js/sb-admin.min.js"></script>
-<script src="js/customjs.js"></script>
+<script src="/js/sb-admin.min.js"></script>
+<script src="/js/customjs.js"></script>
     <script src="https://zwibbler.com/zwibbler-demo.js"></script>
     <script type="text/javascript">
         $("#save-button").click(function() {
             var saved = ctx.save();
-            zwibbler.on("document-changed", function() {
+            zwibbler.on("document-changed", function () {
                 var canUndo = zwibbler.canUndo();
                 var canRedo = zwibbler.canRedo();
                 var dirty = zwibbler.dirty();
+            })
+        })
     </script>
 
 </body>
