@@ -22,35 +22,192 @@
             <div class="col-2 pl-0 scrollable-y scrollbar scrollbar-primary mh-smaller">
               <div class="bg-info rounded">
                 <h3 class="text-center">Pages</h3>
-                <img class="img-fluid px-4 my-2" src="img/portfolio/cake.png"></img>
-                <img class="img-fluid px-4 my-2" src="img/portfolio/submarine.png"></img>
-                <img class="img-fluid px-4 my-2" src="img/portfolio/game.png"></img>
-                <img class="img-fluid px-4 my-2" src="img/portfolio/cabin.png"></img>
-                <img class="img-fluid px-4 my-2" src="img/portfolio/comic.png"></img>
+                <img class="img-fluid px-4 my-2" src="/img/portfolio/cake.png"></img>
+                <img class="img-fluid px-4 my-2" src="/img/portfolio/submarine.png"></img>
+                <img class="img-fluid px-4 my-2" src="/img/portfolio/game.png"></img>
+                <img class="img-fluid px-4 my-2" src="/img/portfolio/cabin.png"></img>
+                <img class="img-fluid px-4 my-2" src="/img/portfolio/comic.png"></img>
               </div>
             </div>
             <div class="col-8">
-              <zwibbler
-            z-controller="MyFunction"
-            showToolbar="false"
-            pageView="true"
-            defaultPaperSize="letter">
-            <div toolbar>
-                <button z-click="usePickTool()">Pick tool</button>
-                <button z-click="useBrushTool()">Brush tool</button>
-                <button z-click="useCircleTool()">Brush tool</button>
-            </div>
-            <div z-canvas></div>
-            <div pages>
-                <div class="page"
-                     z-for="mypage in getPageCount()"
-                     z-page="mypage"
-                     z-width="120"
-                     z-click="setCurrentPage(mypage)"
-                     z-class="{selected: mypage==getCurrentPage()}">
-                 </div>
-            </div>
-        </zwibbler>
+<!--              <zwibbler-->
+<!--            z-controller="MyFunction"-->
+<!--            showToolbar="false"-->
+<!--            pageView="true"-->
+<!--            defaultPaperSize="letter">-->
+<!--            <div toolbar>-->
+<!--                <button z-click="usePickTool()">Pick tool</button>-->
+<!--                <button z-click="useBrushTool()">Brush tool</button>-->
+<!--                <button z-click="useCircleTool()">Brush tool</button>-->
+<!--            </div>-->
+<!--            <div z-canvas></div>-->
+<!--            <div pages>-->
+<!--                <div class="page"-->
+<!--                     z-for="mypage in getPageCount()"-->
+<!--                     z-page="mypage"-->
+<!--                     z-width="120"-->
+<!--                     z-click="setCurrentPage(mypage)"-->
+<!--                     z-class="{selected: mypage==getCurrentPage()}">-->
+<!--                 </div>-->
+<!--            </div>-->
+<!--        </zwibbler>-->
+
+                <zwibbler
+                        showToolbar="false"
+                        pageView="true"
+                        defaultPaperSize="letter landscape">
+                    <div class="tools">
+                        <div>
+                            <button tool z-on:click="usePickTool()" title="Select"
+                                    z-class="{selected:getCurrentTool()=='pick'}">
+                                <i class="fas fa-mouse-pointer"></i>
+                            </button>
+                            <button tool z-on:click="useBrushTool()" title="Draw"
+                                    z-class="{selected:getCurrentTool()=='brush'}">
+                                <i class="fas fa-pencil-alt"></i>
+                            </button>
+                            <button tool z-click="useLineTool()" title="Lines"
+                                    z-class="{selected:getCurrentTool()=='line'}">
+                                <i class="fas fa-pencil-ruler"></i>
+                            </button>
+                            <button tool z-click="useRectangleTool()" title="Rectangle"
+                                    z-class="{selected:getCurrentTool()=='rectangle'}">
+                                <i class="fas fa-square"></i>
+                            </button>
+                            <button tool z-click="useCircleTool()" title="Circle"
+                                    z-class="{selected:getCurrentTool()=='circle'}">
+                                <i class="fas fa-circle"></i>
+                            </button>
+                            <button tool z-click="useTextTool()" title="Text"
+                                    z-class="{selected:getCurrentTool()=='text'}">
+                                <i class="fas fa-font"></i>
+                            </button>
+                            <button tool z-click="insertImage()" title="Insert image">
+                                <i class="fas fa-image"></i>
+                            </button>
+                            <button tool z-click="cut()" title="Cut">
+                                <i class="fas fa-cut"></i>
+                            </button>
+                            <button tool z-click="copy()" title="Copy">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                            <button tool z-click="paste()" title="Paste">
+                                <i class="fas fa-paste"></i>
+                            </button>
+                            <button tool z-click="undo()" z-disabled="!canUndo()">
+                                <i class="fas fa-undo"></i>
+                            </button>
+                            <button tool z-click="redo()" z-disabled="!canRedo()">
+                                <i class="fas fa-redo"></i>
+                            </button>
+                            <button tool z-click="zoomIn()">
+                                <i class="fas fa-search-plus"></i>
+                            </button>
+                            <button tool z-click="setZoom('page')">
+                                <i class="fas fa-compress-arrows-alt"></i>
+                            </button>
+                            <button tool z-click="zoomOut()">
+                                <i class="fas fa-search-minus"></i>
+                            </button>
+                        </div>
+                        <button z-click="Download" z-show-popup="my-menu">Download</button>
+                        <div z-has="AnyNode">
+                            <h3>Shape options</h3>
+                            <button z-click="deleteNodes()">Delete</button>
+                            <button z-click="bringToFront()">
+                                Move to front
+                            </button>
+                            <button z-click="sendToBack()">
+                                Send to back
+                            </button>
+                        </div>
+                        <div z-has="fontName">
+                            <h4>Font</h4>
+                            <select z-property="fontName">
+                                <option>Arial</option>
+                                <option>Times New Roman</option>
+                            </select>
+                        </div>
+                        <div z-has="fontSize">
+                            <h4>Font size</h4>
+                            <select z-property="fontSize">
+                                <option>8</option>
+                                <option>10</option>
+                                <option>12</option>
+                                <option>18</option>
+                                <option>24</option>
+                                <option>50</option>
+                            </select>
+                        </div>
+                        <div z-has="fillStyle">
+                            <h3>Colours</h3>
+                            <div class="colour-picker" z-has="fillStyle">
+                                <div swatch z-property="fillStyle" z-colour></div>
+                                Fill style
+                            </div>
+                            <div class="colour-picker" z-has="strokeStyle">
+                                <div swatch z-property="strokeStyle" z-colour></div>
+                                Outline
+                            </div>
+                            <div class="colour-picker" z-has="background">
+                                <div swatch z-property="background" z-colour></div>
+                                Background
+                            </div>
+                        </div>
+                        <div z-has="arrowSize">
+                            <h3>Arrows</h3>
+                            <button class="option" z-property="arrowSize" z-value="0">None</button>
+                            <button class="option" z-property="arrowSize" z-value="10">Small</button>
+                            <button class="option" z-property="arrowSize" z-value="15">Large</button>
+                            <hr>
+                            <button class="option" z-property="arrowStyle" z-value="solid">Solid</button>
+                            <button class="option" z-property="arrowStyle" z-value="open">Open</button>
+                        </div>
+                        <div z-has="lineWidth">
+                            <h3>Line width</h3>
+                            <select z-property="lineWidth">
+                                <option value="0">None</option>
+                                <option>1</option>
+                                <option>2</option>
+                                <option>4</option>
+                                <option>8</option>
+                            </select>
+                        </div>
+                        <div z-has="dashes">
+                            <h3>Line style</h3>
+                            <button class="option" z-property="dashes" z-value="">Solid</button>
+                            <button class="option" z-property="dashes" z-value="3,3">Dots</button>
+                            <button class="option" z-property="dashes" z-value="8,2">Dashes</button>
+                        </div>
+                        <div z-has="opacity">
+                            <h3>Opacity</h3>
+                            <input z-property="opacity" type="range" min="0.1" max="1.0" step="0.05">
+                        </div>
+                    </div>
+                    <div style="display:flex;flex-flow:column;flex: 1 1 auto;min-width:0">
+                        <div z-canvas></div>
+                        <div class="pages">
+                            <button title="Insert page" z-click="insertPage()"><i class="fas fa-plus"></i></button>
+                            <button title="Delete page" z-click="deletePage()"><i class="fas fa-minus"></i></button>
+                            <div z-for="mypage in getPageCount()">
+                                <div z-page="mypage"
+                                     z-height="70"
+                                     class="page"
+                                     z-class="{selected: mypage==getCurrentPage()}"
+                                     z-click="setCurrentPage(mypage)"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div z-popup="my-menu">
+                        <button z-click="download('png', 'drawing.png')">PNG</button>
+                        <button z-click="download('jpg', 'drawing.jpg')">JPG</button>
+                        <button z-click="download('svg', 'drawing.svg')">SVG</button>
+                        <button z-click="download('pdf', 'drawing.pdf')">PDF</button>
+                    </div>
+                </zwibbler>
+                <script>
+                    Zwibbler.enableConsoleLogging();
+                </script>
 
             </div>
           </div>
