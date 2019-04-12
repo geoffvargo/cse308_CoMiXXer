@@ -25,13 +25,13 @@ public class User {
     private boolean enabled;
     @DBRef
     private Set<Role> roles;
-    private List<User> subscribers;
-    private List<User> subscriptions;
+//    private List<User> subscribers;
+//    private List<User> subscriptions;
     private String bio;
 
     public User(){
         this._id = new ObjectId();
-        this.subscribers = new ArrayList<>();
-        this.subscriptions = new ArrayList<>();
+//        this.subscribers = new ArrayList<>();
+//        this.subscriptions = new ArrayList<>();
     }
 }
