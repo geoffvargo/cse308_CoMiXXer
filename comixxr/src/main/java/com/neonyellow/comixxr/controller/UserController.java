@@ -36,6 +36,15 @@ public class UserController {
     public ModelAndView getMyProfile(){
         ModelAndView modelAndView = getMAVWithUser();
         //TODO: add my creations, drafts, user information
+        /**
+         * Add:
+         * <LIST> my creations</LIST>
+         * <LIST> my drafts</LIST>
+         * <int> subscribers</int>
+         * <int> subscribed to</int>
+         * <text> user name</text>
+         * <text> user description</text>
+         */
         modelAndView.setViewName("myProfile");
         return modelAndView;
     }
