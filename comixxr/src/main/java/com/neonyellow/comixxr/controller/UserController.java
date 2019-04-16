@@ -23,21 +23,29 @@ public class UserController {
     @Autowired
     UserRepository userRepository;
 
-    @RequestMapping(value = {"/draw"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/draw"}, method = RequestMethod.POST)
     public ModelAndView getDrawPage(){
-        ModelAndView modelAndView = new ModelAndView();
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByEmail(auth.getName());
-        modelAndView.addObject("currentUser", user);
+        //TODO: here add the comic to the user
+        ModelAndView modelAndView = getMAVWithUser();
         modelAndView.setViewName("draw");
         return modelAndView;
     }
 
     /*GET CURRENT USER CREATIONS FROM DATABASE*/
-    @RequestMapping(value = {"/myCreations"}, method = RequestMethod.GET)
-    public ModelAndView getCreations(){
+    @RequestMapping(value = {"/myProfile"}, method = RequestMethod.GET)
+    public ModelAndView getMyProfile(){
+        ModelAndView modelAndView = getMAVWithUser();
+        //TODO: add my creations, drafts, user information
+        modelAndView.setViewName("myProfile");
+        return modelAndView;
+    }
 
-        return null;
+    @RequestMapping(value = {"/userProfile"}, method = RequestMethod.GET)
+    public ModelAndView getUserProfile(){
+        ModelAndView modelAndView = getMAVWithUser();
+        //TODO: add creations, drafts, user information for different user
+        modelAndView.setViewName("userProfile");
+        return modelAndView;
     }
 
     /*GET CURRENT USER CURATIONS FROM DATABASE*/
@@ -66,5 +74,13 @@ public class UserController {
 
     private ArrayList<Comic> getPopularSeries(){
         return null;
+    }
+
+    public ModelAndView getMAVWithUser(){
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByEmail(auth.getName());
+        modelAndView.addObject("currentUser", user);
+        return modelAndView;
     }
 }

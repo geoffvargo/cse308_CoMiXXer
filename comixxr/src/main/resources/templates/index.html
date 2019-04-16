@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
 
   <meta charset="utf-8">
@@ -67,6 +66,7 @@
           <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required="" />
           <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
         </form>
+          <a class="btn btn-lg btn-secondary btn-block" th:href="@{/signup}">Sign Up</a>
       </div>
       <hr class="star-light">
       <h2 class="font-weight-light mb-0">Comic design made easier!</h2>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{default}" lang="en"><head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div layout:fragment="content" id="content-wrapper">
+    <div class="container-fluid">
+        <h1 class="text-center mb-4">Create a Comic</h1>
+        <form action="/user/draw" method="post">
+            <div class="form-group row">
+                <label for="comicName" class="col-4 col-form-label text-right">Comic Name</label>
+                <div class="col-4">
+                    <input type="text" minlength="2" class="form-control" id="comicName" name="comicName"/>
+                </div>
+                <div class="col-5"></div>
+            </div>
+            <div class="form-group row">
+                <label for="privacyBox" class="col-4 col-form-label text-right">Privacy</label>
+                <div class="col-4">
+                    <select class="form-control" id="privacyBox" name="privacy">
+                        <option selected>Public</option>
+                        <option>Unlisted</option>
+                        <option>Private</option>
+                    </select>
+                </div>
+                <div class="col-5"></div>
+            </div>
+            <div class="form-group row">
+                <label for="genreBox" class="col-4 col-form-label text-right">Genre</label>
+                <div class="col-4">
+                    <select class="form-control" id="genreBox" name="genre">
+                        <option selected>Abstract</option>
+                        <option>Alternative</option>
+                        <option>Crime</option>
+                        <option>Fantasy</option>
+                        <option>Gag</option>
+                        <option>Horror</option>
+                        <option>Romance</option>
+                        <option>Sci-Fi</option>
+                        <option>Super Hero</option>
+                        <option>Teen</option>
+                        <option>Child</option>
+                        <option>War</option>
+                        <option>Manga</option>
+                        <option>Daily</option>
+                        <option>Western</option>
+                    </select>
+                </div>
+                <div class="col-5"></div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4"></div>
+                <div class="col-4 text-center">
+                    <input type="submit" class="btn btn-secondary"/>
+                </div>
+                <div class="col-4"></div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

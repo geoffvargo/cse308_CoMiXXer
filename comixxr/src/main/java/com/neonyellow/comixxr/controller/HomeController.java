@@ -34,10 +34,7 @@ public class HomeController {
 
     @RequestMapping(value = "/browse", method = RequestMethod.GET)
     public ModelAndView browse() {
-        ModelAndView modelAndView = new ModelAndView();
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByEmail(auth.getName());
-        modelAndView.addObject("currentUser", user);
+        ModelAndView modelAndView = getMAVWithUser();
         modelAndView.setViewName("browse");
         return modelAndView;
     }
@@ -60,20 +57,28 @@ public class HomeController {
 
     @RequestMapping(value = "/singlesGenre", method = RequestMethod.GET)
     public ModelAndView getSingleGenre() {
-        ModelAndView modelAndView = new ModelAndView();
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByEmail(auth.getName());
-        modelAndView.addObject("currentUser", user);
+        ModelAndView modelAndView = getMAVWithUser();
         modelAndView.setViewName("singlesGenre");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/viewComic", method = RequestMethod.GET)
+    public ModelAndView getViewComic() {
+        ModelAndView modelAndView = getMAVWithUser();
+        modelAndView.setViewName("viewComic");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/createComic", method = RequestMethod.GET)
+    public ModelAndView getCreateComic() {
+        ModelAndView modelAndView = getMAVWithUser();
+        modelAndView.setViewName("createComic");
         return modelAndView;
     }
 
     @RequestMapping(value = "/seriesGenre", method = RequestMethod.GET)
     public ModelAndView getSeriesGenre() {
-        ModelAndView modelAndView = new ModelAndView();
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByEmail(auth.getName());
-        modelAndView.addObject("currentUser", user);
+        ModelAndView modelAndView = getMAVWithUser();
         modelAndView.setViewName("seriesGenre");
         return modelAndView;
     }
@@ -96,6 +101,14 @@ public class HomeController {
             modelAndView.setViewName("login");
 
         }
+        return modelAndView;
+    }
+
+    public ModelAndView getMAVWithUser(){
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByEmail(auth.getName());
+        modelAndView.addObject("currentUser", user);
         return modelAndView;
     }
 }
