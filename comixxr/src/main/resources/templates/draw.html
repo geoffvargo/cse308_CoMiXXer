@@ -92,6 +92,8 @@
                             </button>
                         </div>
                         <button z-click="Download" z-show-popup="my-menu">Download</button>
+                        <button z-click="onSave()">Save</button>
+                        <button z-click="onSaveAs()">Save as</button>
                         <div z-has="AnyNode">
                             <h3>Shape options</h3>
                             <button z-click="deleteNodes()">Delete</button>
@@ -189,7 +191,24 @@
                 <script>
                     Zwibbler.enableConsoleLogging();
                     function ZwibblerController(ctx){
+                        var saved = null;
 
+                        ctx.onSave = function() {
+                            saved = ctx.save("zwibbler3");
+
+                            $.post("/user/comic/save", {comicData: saved})
+                                .done(function() {
+                                    alert("Comic saved");
+                                })
+                                .fail(function () {
+                                    alert("error");
+                                });
+                            //$("#loadButton").removeAttr("disabled");
+                        };
+
+                        // ctx.onLoad = function() {
+                        //     ctx.load("zwibbler3", saved);
+                        // };
                     }
                 </script>
 
