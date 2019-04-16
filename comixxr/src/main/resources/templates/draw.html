@@ -33,6 +33,7 @@
             <div class="col-8">
 
                 <zwibbler
+                        z-controller="ZwibblerController"
                         showToolbar="false"
                         pageView="true"
                         defaultPaperSize="letter landscape">
@@ -187,6 +188,9 @@
                 </zwibbler>
                 <script>
                     Zwibbler.enableConsoleLogging();
+                    function ZwibblerController(ctx){
+
+                    }
                 </script>
 
             </div>
