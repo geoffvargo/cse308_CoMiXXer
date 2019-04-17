@@ -13,7 +13,7 @@ public class Post {
     private ObjectId userId;
     private String text = "";
     private ObjectId comicId = null;
-    private
+//    private
 
     public Post(ObjectId userId){
         this._id = new ObjectId();
