@@ -19,12 +19,12 @@
             <div class="col-9">
               <h5 class="text-left my-4">My Creations</h5>
               <div class="row scrollable-x no-fw scrollbar scrollbar-primary">
-                <div th:each="creation, iStat : ${myCreations}" class="col-3">
+                <div th:each="creation : ${myCreations}" class="col-3">
                   <div class="card bg-info d-inline-block mb-4 mx-1" style="max-width:14rem">
-                    <a class="card-underline no-a" href="viewcomic.html">
+                    <a class="card-underline no-a" th:href="@{comic/viewComic/__${creation.getId()}__}">
                       <img class="card-img-top" th:src="${creation.getThumbnail()}" alt="Card!">
                       <div class="card-body h-25 p-2">
-                        <h6 class="card-text text-center" th:value="${creation.getTitle()}">
+                        <h6 class="card-text text-center" th:value="${comic/creation.getTitle()}">
                           <a class="no-a" href="currentComicRemixes.html">
                             <span th:if="${creation.isInSeries()}" class="badge badge-secondary" data-toggle="tooltip" data-placement="right" title="Series"><i class="fas fa-random"></i></span>
                           </a>
@@ -44,12 +44,12 @@
                     <div class="row">
                       <div class="col-3 mt-1 pr-0 text-center"><i class="fas fa-globe"></i></div>
                       <div class="col btn-group dropright">
-                        <button class="btn btn-info text-right" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <button class="btn btn-info text-right" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           <i class="fas fa-bars"></i>
                         </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                          <a class="dropdown-item" href="editcomic.html">Edit</a>
-                          <a class="dropdown-item" href="#">Remove</a>
+                        <div class="dropdown-menu">
+                          <a class="dropdown-item" th:href="@{comic/editComic/__${creation.getId()}__}">Edit</a>
+                          <a class="dropdown-item" th:href="@{comic/removeComic/__${creation.getId()}__}">Remove</a>
                           <a class="dropdown-item" href="#">Add To Curation</a>
                         </div>
                       </div>
@@ -59,177 +59,22 @@
                 <div class="divider mt-4"></div>
               <h5 class="text-left mb-4">Drafts</h5>
               <div class="row scrollable-x no-fw scrollbar scrollbar-primary">
-                <div class="col-3">
+                <div th:each="draft : ${myDrafts}" class="col-3">
                   <div class="card bg-info d-inline-block mb-4 mx-1" style="max-width:14rem">
-                    <a class="card-underline no-a" href="viewcomic.html">
-                  <img class="card-img-top" src="img/portfolio/game.png" alt="Card!">
-                  <div class="card-body h-25 p-2">
-                    <h6 class="card-text text-center">
-                    Comic One Name
-                  </h6>
-                  </div>
-                </a>
-                    <div class="row">
-                      <div class="col btn-group dropright">
-                        <button class="btn btn-info text-right" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <i class="fas fa-bars"></i>
-                    </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                          <a class="dropdown-item" href="#">Remove</a>
-                        </div>
+                    <a class="card-underline no-a" th:href="@{comic/editComic/__${draft.getId()}__}">
+                      <img class="card-img-top" th:src="@{draft.getThumbnail()}" alt="Card!">
+                      <div class="card-body h-25 p-2">
+                        <h6 class="card-text text-center" th:text="draft.getTitle()">
+                        </h6>
                       </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-3">
-                  <div class="card bg-info d-inline-block mb-4 mx-1" style="max-width:14rem">
-                    <a class="card-underline no-a" href="viewcomic.html">
-                  <img class="card-img-top" src="img/portfolio/game.png" alt="Card!">
-                  <div class="card-body h-25 p-2">
-                    <h6 class="card-text text-center">
-                    Comic One Name
-                  </h6>
-                  </div>
-                </a>
+                    </a>
                     <div class="row">
                       <div class="col btn-group dropright">
-                        <button class="btn btn-info text-right" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <i class="fas fa-bars"></i>
-                    </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                          <a class="dropdown-item" href="#">Remove</a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-3">
-                  <div class="card bg-info d-inline-block mb-4 mx-1" style="max-width:14rem">
-                    <a class="card-underline no-a" href="viewcomic.html">
-                  <img class="card-img-top" src="img/portfolio/game.png" alt="Card!">
-                  <div class="card-body h-25 p-2">
-                    <h6 class="card-text text-center">
-                    Comic One Name
-                  </h6>
-                  </div>
-                </a>
-                    <div class="row">
-                      <div class="col btn-group dropright">
-                        <button class="btn btn-info text-right" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <i class="fas fa-bars"></i>
-                    </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                          <a class="dropdown-item" href="#">Remove</a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-3">
-                  <div class="card bg-info d-inline-block mb-4 mx-1" style="max-width:14rem">
-                    <a class="card-underline no-a" href="viewcomic.html">
-                  <img class="card-img-top" src="img/portfolio/game.png" alt="Card!">
-                  <div class="card-body h-25 p-2">
-                    <h6 class="card-text text-center">
-                    Comic One Name
-                  </h6>
-                  </div>
-                </a>
-                    <div class="row">
-                      <div class="col btn-group dropright">
-                        <button class="btn btn-info text-right" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <i class="fas fa-bars"></i>
-                    </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                          <a class="dropdown-item" href="#">Remove</a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-3">
-                  <div class="card bg-info d-inline-block mb-4 mx-1" style="max-width:14rem">
-                    <a class="card-underline no-a" href="viewcomic.html">
-                  <img class="card-img-top" src="img/portfolio/game.png" alt="Card!">
-                  <div class="card-body h-25 p-2">
-                    <h6 class="card-text text-center">
-                    Comic One Name
-                  </h6>
-                  </div>
-                </a>
-                    <div class="row">
-                      <div class="col btn-group dropright">
-                        <button class="btn btn-info text-right" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <i class="fas fa-bars"></i>
-                    </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                          <a class="dropdown-item" href="#">Remove</a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-3">
-                  <div class="card bg-info d-inline-block mb-4 mx-1" style="max-width:14rem">
-                    <a class="card-underline no-a" href="viewcomic.html">
-                  <img class="card-img-top" src="img/portfolio/game.png" alt="Card!">
-                  <div class="card-body h-25 p-2">
-                    <h6 class="card-text text-center">
-                    Comic One Name
-                  </h6>
-                  </div>
-                </a>
-                    <div class="row">
-                      <div class="col btn-group dropright">
-                        <button class="btn btn-info text-right" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <i class="fas fa-bars"></i>
-                    </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                          <a class="dropdown-item" href="#">Remove</a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-3">
-                  <div class="card bg-info d-inline-block mb-4 mx-1" style="max-width:14rem">
-                    <a class="card-underline no-a" href="viewcomic.html">
-                  <img class="card-img-top" src="img/portfolio/game.png" alt="Card!">
-                  <div class="card-body h-25 p-2">
-                    <h6 class="card-text text-center">
-                    Comic One Name
-                  </h6>
-                  </div>
-                </a>
-                    <div class="row">
-                      <div class="col btn-group dropright">
-                        <button class="btn btn-info text-right" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <i class="fas fa-bars"></i>
-                    </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                          <a class="dropdown-item" href="#">Remove</a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-3">
-                  <div class="card bg-info d-inline-block mb-4 mx-1" style="max-width:14rem">
-                    <a class="card-underline no-a" href="viewcomic.html">
-                  <img class="card-img-top" src="img/portfolio/game.png" alt="Card!">
-                  <div class="card-body h-25 p-2">
-                    <h6 class="card-text text-center">
-                    Comic One Name
-                  </h6>
-                  </div>
-                </a>
-                    <div class="row">
-                      <div class="col btn-group dropright">
-                        <button class="btn btn-info text-right" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <i class="fas fa-bars"></i>
-                    </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                          <a class="dropdown-item" href="#">Remove</a>
+                        <button class="btn btn-info text-right" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <i class="fas fa-bars"></i>
+                        </button>
+                        <div class="dropdown-menu">
+                          <a class="dropdown-item" th:href="@{comic/removeDraft/__${draft.getId()}__}">Remove</a>
                         </div>
                       </div>
                     </div>
@@ -246,23 +91,21 @@
                   </div>
                     <div class="my-2">
                       <span>Subscribers: </span>
-                      <a class="no-a text-secondary" href="subscribers.html">201</a>
+                      <a class="no-a text-secondary" th:href="@{user/getSubscribers}" th:text="${subscribers}"></a>
                     </div>
                     <div class="my-2">
                       <span>Subscribed to: </span>
-                      <a class="no-a text-secondary" href="subscribedTo.html">17</a>
+                      <a class="no-a text-secondary" th:href="@{user/getSubscribedTo}" th:text="${subscribedTo}"></a>
                     </div>
                     <div class="my-2">
                       <span>Comics: </span>
-                      <a class="no-a text-secondary" href="userComics.html">12</a>
+                      <a class="no-a text-secondary" th:href="@{user/myComics}" th:text="${numComics}"></a>
                     </div>
                     <div class="my-2">
                       <span>Remixes: </span>
-                      <a class="no-a text-secondary" href="userRemixes.html">4</a>
+                      <a class="no-a text-secondary" th:href="@{user/myRemixes}" th:text="${numRemixes}"></a>
                     </div>
-                    <p class="mt-2">
-                      Lorem ipsum dolor sit amet, vis alia voluptatibus an, cum eu audire tacimates delicata, cu duo laudem adipisci temporibus. At postulant iudicabit usu, pro tation sanctus te. Cu nullam graece omnesque quo, mel ne assum populo
-                      dissentiunt, assentior consetetur ex cum. Ne ius scripta delenit praesent. Et nam utamur labores signiferumque. Cum cu quas vocent vidisse, enim recteque per ad. Brute tamquam ad duo.
+                    <p class="mt-2" th:text="${bio}">
                     </p>
                   </div>
                 </div>
