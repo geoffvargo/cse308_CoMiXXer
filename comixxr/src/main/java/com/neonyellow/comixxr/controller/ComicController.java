@@ -26,6 +26,18 @@ public class ComicController {
     @Autowired
     ComicRepository comicRepository;
 
+    @RequestMapping(value = {"createDraft"}, method = RequestMethod.POST)
+    public ModelAndView createDraft(@RequestBody MultiValueMap<String,String> formData){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findByEmail(auth.getName());
+
+        Comic draft = new Comic(user.get_id());
+
+
+        return null;
+
+    }
+
     @RequestMapping(value = {"/save"}, method = RequestMethod.POST)
     public ModelAndView comicSave(@RequestBody MultiValueMap<String,String> data){
         //find user
