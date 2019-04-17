@@ -8,7 +8,7 @@
 <div layout:fragment="content" id="content-wrapper">
     <div class="container-fluid">
         <h1 class="text-center mb-4">Create a Comic</h1>
-        <form action="/user/draw" method="post">
+        <form th:action="@{/user/createDraft}" method="post">
             <div class="form-group row">
                 <label for="comicName" class="col-4 col-form-label text-right">Comic Name</label>
                 <div class="col-4">
