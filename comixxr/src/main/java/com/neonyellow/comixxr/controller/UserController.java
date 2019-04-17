@@ -38,13 +38,14 @@ public class UserController {
         //TODO: add my creations, drafts, user information
         /**
          * Add:
-         * <LIST> my creations</LIST>
+         * <LIST> my creations [comics]</LIST>
          * <LIST> my drafts</LIST>
          * <int> subscribers</int>
          * <int> subscribed to</int>
          * <text> user name</text>
          * <text> user description</text>
          */
+//        modelAndView.
         modelAndView.setViewName("myProfile");
         return modelAndView;
     }
