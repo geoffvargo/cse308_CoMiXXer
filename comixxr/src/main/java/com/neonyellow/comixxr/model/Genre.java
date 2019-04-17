@@ -6,5 +6,15 @@ public enum Genre {
     FANTASY,
     CRIME,
     ROMANCE,
-    MANGA
+    MANGA,
+    ALTERNATIVE,
+    GAG,
+    SCIFI,
+    SUPERHERO,
+    CHILD,
+    WAR,
+    DAILY,
+    WESTERN,
+    ABSTRACT,
+    NA
 }
