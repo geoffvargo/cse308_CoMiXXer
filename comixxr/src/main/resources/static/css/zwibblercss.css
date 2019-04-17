@@ -6,8 +6,8 @@ zwibbler {
     bottom: 0;
     display: flex;
     flex-flow: row nowrap;
-    /*width: 800px;*/
-    /*height: 800px;*/
+    width: 840px;
+    height: 650px;
 }
 
 .tools {

@@ -6,6 +6,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Document(collection = "comic")
@@ -17,6 +18,9 @@ public class Comic {
     private String author;
     private String title;
     private String synopsis;
+    private Genre genre;
+    private ObjectId parent;
+    private List<ObjectId> remixes;
     private boolean isRemix;
     private int upVote;
     private int downVote;
