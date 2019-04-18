@@ -103,6 +103,10 @@ background-color: #575656; }
   max-height:79vh;
 }
 
+.w-bio{
+  width:100vw;
+}
+
 /*#content-wrapper{*/
 /*  width: 1000px;*/
 /*}*/

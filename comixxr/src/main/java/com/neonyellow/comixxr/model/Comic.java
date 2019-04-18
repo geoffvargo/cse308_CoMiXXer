@@ -27,10 +27,32 @@ public class Comic {
     private LocalDateTime age;
     private boolean isPublished;
     private Privacy privacy = Privacy.PRIVATE;
+    private boolean isInSeries;
 
     public Comic(ObjectId userId){
         this._id = new ObjectId();
         this.userId = userId;
         this.age = LocalDateTime.now();
+        isInSeries = false;
+    }
+
+    /**
+     *
+     * @return local URL path to post
+     */
+    public String getThumbnail(){
+        return "";
+    }
+
+    public int getTotalVotes(){
+        return upVote-downVote;
+    }
+
+    public int getTotalComments(){
+        return 100;
+    }
+
+    public int getTotalRemixes(){
+        return remixes.size();
     }
 }
