@@ -75,10 +75,10 @@ public class ComicController {
         comic.setPrivacy(Privacy.PUBLIC);
         comicRepository.save(comic);
 
-        ModelAndView mv = new ModelAndView();
-        mv.setViewName("myProfile");
+//        ModelAndView mv = new ModelAndView();
+//        mv.setViewName("myProfile");
 
-        return mv;
+        return null;
     }
 
     @RequestMapping(value = {"/load"}, method = RequestMethod.GET)
