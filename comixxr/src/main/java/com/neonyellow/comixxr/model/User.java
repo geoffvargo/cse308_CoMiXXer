@@ -1,7 +1,9 @@
 package com.neonyellow.comixxr.model;
 
+import com.neonyellow.comixxr.repository.ComicRepository;
 import lombok.Data;
 import org.bson.types.ObjectId;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.IndexDirection;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -27,8 +29,11 @@ public class User {
     private Set<Role> roles;
     private List<ObjectId> subscribers;
     private List<ObjectId> subscriptions;
-    private List<Comic> comics;
+    private List<ObjectId> comics;
     private String bio;
+
+    @Autowired
+    ComicRepository comicRepository;
 
     public User(){
         this._id = new ObjectId();
@@ -41,7 +46,8 @@ public class User {
         ArrayList<Comic> ans  = new ArrayList<>();
 
         if (!this.comics.isEmpty()) {
-            for (Comic c : this.comics) {
+            for (ObjectId id : this.comics) {
+                Comic c = comicRepository.findBy_id(id);
                 if (!c.isPublished()) {
                     ans.add(c);
                 }
@@ -55,7 +61,8 @@ public class User {
         ArrayList<Comic> ans = new ArrayList<>();
 
         if (!this.comics.isEmpty()) {
-            for (Comic c : this.comics) {
+            for (ObjectId id : this.comics) {
+                Comic c = comicRepository.findBy_id(id);
                 if (c.isPublished()) {
                     ans.add(c);
                 }
@@ -65,26 +72,25 @@ public class User {
         return ans;
     }
 
-    public ArrayList<Comic> getAllComics() {
-        ArrayList<Comic> ans = new ArrayList<>();
-
-        if (!this.comics.isEmpty()) {
-            ans.addAll(this.comics);
-        }
-
-        return ans;
-    }
+//    public ArrayList<Comic> getAllComics() {
+//        ArrayList<Comic> ans = new ArrayList<>();
+//
+//        if (!this.comics.isEmpty()) {
+//            ans.addAll(this.comics);
+//        }
+//        return ans;
+//    }
 
     public void addToComics(Comic comic) {
         if (comic != null) {
-            this.comics.add(comic);
+            this.comics.add(comic.get_id());
         }
     }
 
     public int getNumRemixes(){
         int size = 0;
-        for(Comic c : comics){
-            if(c.isRemix())
+        for(ObjectId id : comics){
+            if(comicRepository.findBy_id(id).isRemix())
                 size++;
         }
         return size;
