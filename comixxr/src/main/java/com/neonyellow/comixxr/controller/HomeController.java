@@ -104,7 +104,7 @@ public class HomeController {
         return modelAndView;
     }
 
-    public ModelAndView getMAVWithUser(){
+    private ModelAndView getMAVWithUser(){
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());

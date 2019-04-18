@@ -99,6 +99,10 @@ background-color: #575656; }
   overflow: hidden
 }
 
+.mh-zwib{
+  max-height:79vh;
+}
+
 /*#content-wrapper{*/
 /*  width: 1000px;*/
 /*}*/
@@ -107,9 +111,6 @@ background-color: #575656; }
 /*  width: 1000px;*/
 /*}*/
 
-.container{
-
-}
 
 /*.row{*/
 /*  width: 1000px;*/

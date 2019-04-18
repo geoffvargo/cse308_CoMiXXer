@@ -18,32 +18,22 @@
         <span id="current-user" th:text="${currentUser.getFullname()}" hidden></span>
         <div class="container-fluid">
         <h1 class="text-center mb-4">Edit a Comic</h1>
-        <div class="container">
           <div class="row">
-            <div class="col-2 pl-0 scrollable-y scrollbar scrollbar-primary mh-smaller">
-              <div class="bg-info rounded">
-                <h3 class="text-center">Pages</h3>
-                <img class="img-fluid px-4 my-2" src="/img/portfolio/cake.png"></img>
-                <img class="img-fluid px-4 my-2" src="/img/portfolio/submarine.png"></img>
-                <img class="img-fluid px-4 my-2" src="/img/portfolio/game.png"></img>
-                <img class="img-fluid px-4 my-2" src="/img/portfolio/cabin.png"></img>
-                <img class="img-fluid px-4 my-2" src="/img/portfolio/comic.png"></img>
-              </div>
-            </div>
-            <div class="col-8">
-
+              <div class="col-1"></div>
+            <div class="col-10">
                 <zwibbler
                         z-controller="ZwibblerController"
                         showToolbar="false"
                         pageView="true"
-                        defaultPaperSize="letter landscape">
+                        defaultPaperSize="letter landscape"
+                        class="mh-zwib">
                     <div class="tools">
                         <div>
-                            <button tool z-on:click="usePickTool()" title="Select"
+                            <button tool z-click="usePickTool()" title="Select"
                                     z-class="{selected:getCurrentTool()=='pick'}">
                                 <i class="fas fa-mouse-pointer"></i>
                             </button>
-                            <button tool z-on:click="useBrushTool()" title="Draw"
+                            <button tool z-click="useBrushTool()" title="Draw"
                                     z-class="{selected:getCurrentTool()=='brush'}">
                                 <i class="fas fa-pencil-alt"></i>
                             </button>
@@ -213,8 +203,8 @@
                 </script>
 
             </div>
+              <div class="col-1"></div>
           </div>
-        </div>
       </div>
       <!-- /.container-fluid -->
 
