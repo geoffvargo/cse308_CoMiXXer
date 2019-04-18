@@ -4,7 +4,7 @@ import com.neonyellow.comixxr.model.Comic;
 import com.neonyellow.comixxr.model.User;
 import com.neonyellow.comixxr.repository.UserRepository;
 import com.neonyellow.comixxr.service.ComixUserDetailsService;
-import com.neonyellow.comixxr.service.UserServiceImpl;
+import com.neonyellow.comixxr.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,7 +25,7 @@ public class UserController {
     UserRepository userRepository;
 
     @Autowired
-    private UserServiceImpl userService;
+    private UserService userService;
 
     @RequestMapping(value = {"/draw"}, method = RequestMethod.POST)
     public ModelAndView getDrawPage(){

@@ -5,25 +5,20 @@ import com.neonyellow.comixxr.model.Comic;
 import com.neonyellow.comixxr.model.User;
 import com.neonyellow.comixxr.repository.ComicRepository;
 import com.neonyellow.comixxr.repository.UserRepository;
-import com.neonyellow.comixxr.service.interfaces.UserService;
+import com.neonyellow.comixxr.service.interfaces.IUserService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserService implements IUserService {
 
     @Autowired
     UserRepository userRepository;
     @Autowired
     ComicRepository comicRepository;
-
-    public List<Comic> getAllComics(){
-        return null;
-    }
 
     public Comic findComicBy_id(ObjectId id){
       return comicRepository.findBy_id(id);

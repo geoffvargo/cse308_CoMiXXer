@@ -5,10 +5,8 @@ import com.neonyellow.comixxr.model.User;
 import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public interface UserService {
-    List<Comic> getAllComics();
+public interface IUserService {
     Comic findComicBy_id(ObjectId id);
     ArrayList<Comic> getPublishedComics(User user);
     ArrayList<Comic> getDrafts(User user);
