@@ -16,12 +16,12 @@
       <div class="container-fluid">
         <div class="container">
           <div class="row">
-            <div class="col-9">
+            <div class="col-9 w-bio">
               <h5 class="text-left my-4">My Creations</h5>
               <div class="row scrollable-x no-fw scrollbar scrollbar-primary">
                 <div th:each="creation : ${myCreations}" class="col-3">
                   <div class="card bg-info d-inline-block mb-4 mx-1" style="max-width:14rem">
-                    <a class="card-underline no-a" th:href="@{comic/viewComic/__${creation.getId()}__}">
+                    <a class="card-underline no-a" th:href="@{comic/viewComic/__${creation.get_id()}__}">
                       <img class="card-img-top" th:src="${creation.getThumbnail()}" alt="Card!">
                       <div class="card-body h-25 p-2">
                         <h6 class="card-text text-center" th:value="${comic/creation.getTitle()}">
@@ -48,8 +48,8 @@
                           <i class="fas fa-bars"></i>
                         </button>
                         <div class="dropdown-menu">
-                          <a class="dropdown-item" th:href="@{comic/editComic/__${creation.getId()}__}">Edit</a>
-                          <a class="dropdown-item" th:href="@{comic/removeComic/__${creation.getId()}__}">Remove</a>
+                          <a class="dropdown-item" th:href="@{comic/editComic/__${creation.get_id()}__}">Edit</a>
+                          <a class="dropdown-item" th:href="@{comic/removeComic/__${creation.get_id()}__}">Remove</a>
                           <a class="dropdown-item" href="#">Add To Curation</a>
                         </div>
                       </div>
@@ -61,7 +61,7 @@
               <div class="row scrollable-x no-fw scrollbar scrollbar-primary">
                 <div th:each="draft : ${myDrafts}" class="col-3">
                   <div class="card bg-info d-inline-block mb-4 mx-1" style="max-width:14rem">
-                    <a class="card-underline no-a" th:href="@{comic/editComic/__${draft.getId()}__}">
+                    <a class="card-underline no-a" th:href="@{comic/editComic/__${draft.get_id()}__}">
                       <img class="card-img-top" th:src="@{draft.getThumbnail()}" alt="Card!">
                       <div class="card-body h-25 p-2">
                         <h6 class="card-text text-center" th:text="draft.getTitle()">
@@ -74,7 +74,7 @@
                           <i class="fas fa-bars"></i>
                         </button>
                         <div class="dropdown-menu">
-                          <a class="dropdown-item" th:href="@{comic/removeDraft/__${draft.getId()}__}">Remove</a>
+                          <a class="dropdown-item" th:href="@{comic/removeDraft/__${draft.get_id()}__}">Remove</a>
                         </div>
                       </div>
                     </div>
@@ -82,10 +82,11 @@
                 </div>
               </div>
             </div>
+            </div>
             <div class="col-3">
               <div class="container scrollbar-y scrollbar scrollbar-primary h-bio">
                 <div class="bg-info rounded h-100 p-3 mx-auto">
-                  <h3 class="text-center mb-4">User Name</h3>
+                  <h3 class="text-center mb-4" th:text="${userName}"></h3>
                   <div class="text-center mb-1">
                     <img src="https://bootdey.com/img/Content/user_1.jpg" alt="", class="rounded-circle">
                   </div>
@@ -99,13 +100,13 @@
                     </div>
                     <div class="my-2">
                       <span>Comics: </span>
-                      <a class="no-a text-secondary" th:href="@{user/myComics}" th:text="${numComics}"></a>
+                      <a class="no-a text-secondary" th:href="@{user/myComics}" th:text="${myCreations.size()}"></a>
                     </div>
                     <div class="my-2">
                       <span>Remixes: </span>
                       <a class="no-a text-secondary" th:href="@{user/myRemixes}" th:text="${numRemixes}"></a>
                     </div>
-                    <p class="mt-2" th:text="${bio}">
+                    <p class="mt-2" th:text="${userBio}">
                     </p>
                   </div>
                 </div>

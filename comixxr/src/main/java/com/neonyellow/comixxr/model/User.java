@@ -81,6 +81,15 @@ public class User {
         }
     }
 
+    public int getNumRemixes(){
+        int size = 0;
+        for(Comic c : comics){
+            if(c.isRemix())
+                size++;
+        }
+        return size;
+    }
+
     public int getNumOfSubscibers() {
         return this.subscribers.size();
     }
