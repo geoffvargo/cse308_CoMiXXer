@@ -18,7 +18,7 @@ public class Comic {
     private String author;
     private String title;
     private String synopsis;
-    private Genre genre;
+    private Genre genre = Genre.NA;
     private ObjectId parent;
     private List<ObjectId> remixes;
     private boolean isRemix;
@@ -26,7 +26,7 @@ public class Comic {
     private int downVote;
     private LocalDateTime age;
     private boolean isPublished;
-    private Privacy privacy = Privacy.PRIVATE;;
+    private Privacy privacy = Privacy.PRIVATE;
 
     public Comic(ObjectId userId){
         this._id = new ObjectId();

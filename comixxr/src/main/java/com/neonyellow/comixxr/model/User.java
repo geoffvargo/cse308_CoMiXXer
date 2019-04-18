@@ -27,11 +27,65 @@ public class User {
     private Set<Role> roles;
     private List<ObjectId> subscribers;
     private List<ObjectId> subscriptions;
+    private List<Comic> comics;
     private String bio;
 
     public User(){
         this._id = new ObjectId();
         this.subscribers = new ArrayList<>();
         this.subscriptions = new ArrayList<>();
+        this.comics = new ArrayList<>();
+    }
+
+    public ArrayList<Comic> getDrafts() {
+        ArrayList<Comic> ans  = new ArrayList<>();
+
+        if (!this.comics.isEmpty()) {
+            for (Comic c : this.comics) {
+                if (!c.isPublished()) {
+                    ans.add(c);
+                }
+            }
+        }
+
+        return ans;
+    }
+
+    public ArrayList<Comic> getPublishedComics() {
+        ArrayList<Comic> ans = new ArrayList<>();
+
+        if (!this.comics.isEmpty()) {
+            for (Comic c : this.comics) {
+                if (c.isPublished()) {
+                    ans.add(c);
+                }
+            }
+        }
+
+        return ans;
+    }
+
+    public ArrayList<Comic> getAllComics() {
+        ArrayList<Comic> ans = new ArrayList<>();
+
+        if (!this.comics.isEmpty()) {
+            ans.addAll(this.comics);
+        }
+
+        return ans;
+    }
+
+    public void addToComics(Comic comic) {
+        if (comic != null) {
+            this.comics.add(comic);
+        }
+    }
+
+    public int getNumOfSubscibers() {
+        return this.subscribers.size();
+    }
+
+    public int getNumOfSubsriptions() {
+        return this.subscriptions.size();
     }
 }
