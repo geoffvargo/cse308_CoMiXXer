@@ -35,18 +35,18 @@ public class UserController {
     @RequestMapping(value = {"/myProfile"}, method = RequestMethod.GET)
     public ModelAndView getMyProfile(){
         ModelAndView modelAndView = getMAVWithUser();
-        //TODO: add my creations, drafts, user information
-        /**
-         * Add:
-         * <LIST> my creations [comics]</LIST>
-         * <LIST> my drafts</LIST>
-         * <int> subscribers</int>
-         * <int> subscribed to</int>
-         * <text> user name</text>
-         * <text> user description</text>
-         */
-//        modelAndView.
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User currUser = userRepository.findByEmail(auth.getName());
+
+        modelAndView.addObject("myCreations", currUser.getPublishedComics());
+        modelAndView.addObject("myDrafts", currUser.getDrafts());
+        modelAndView.addObject("subscribers", currUser.getNumOfSubscibers());
+        modelAndView.addObject("subscribedTo", currUser.getNumOfSubsriptions());
+        modelAndView.addObject("userName", currUser.getFullname());
+        modelAndView.addObject("userDescription", currUser.getBio());
+
         modelAndView.setViewName("myProfile");
+
         return modelAndView;
     }
 

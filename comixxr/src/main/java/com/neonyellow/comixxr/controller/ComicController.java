@@ -42,6 +42,8 @@ public class ComicController {
 
         comicRepository.save(draft);
 
+        user.addToComics(draft);
+
         ModelAndView mv = new ModelAndView();
         mv.addObject("comicId", draft.get_id().toString());
         mv.setViewName("draw");
