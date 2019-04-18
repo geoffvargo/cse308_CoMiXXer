@@ -1,9 +1,9 @@
 $(document).ready(function(){
   $("#navbarUsername").text($("#current-user").text());
 
-  $(function () {
-  $('[data-toggle="tooltip"]').tooltip()
-  })
+  // $(function () {
+  // $('[data-toggle="tooltip"]').tooltip()
+  // })
   /*$("#toggleViewBtn").click(function(){
     if($("#toggleViewBtn").attr("data-mode") === "right"){
       $("#toggleViewBtn").attr("data-mode","down");
@@ -50,4 +50,4 @@ $(document).ready(function(){
     }
   })*/
 
-})
+});
