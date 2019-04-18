@@ -35,8 +35,10 @@ public class UserController {
     @RequestMapping(value = {"/myProfile"}, method = RequestMethod.GET)
     public ModelAndView getMyProfile(){
         ModelAndView modelAndView = getMAVWithUser();
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User currUser = userRepository.findByEmail(auth.getName());
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        User currUser = userRepository.findByEmail(auth.getName());
+
+        User currUser = (User) modelAndView.getModel().get("currentUser");
 
         modelAndView.addObject("myCreations", currUser.getPublishedComics());
         modelAndView.addObject("myDrafts", currUser.getDrafts());
