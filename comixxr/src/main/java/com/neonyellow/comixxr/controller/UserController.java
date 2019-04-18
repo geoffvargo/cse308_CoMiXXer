@@ -50,7 +50,7 @@ public class UserController {
         modelAndView.addObject("subscribedTo", currUser.getNumOfSubsriptions());
         modelAndView.addObject("userName", currUser.getFullname());
         modelAndView.addObject("userBio", currUser.getBio());
-        modelAndView.addObject("numRemixes",currUser.getNumRemixes());
+        modelAndView.addObject("numRemixes", userService.getNumRemixes(currUser));
 
         modelAndView.setViewName("myProfile");
 
