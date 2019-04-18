@@ -44,6 +44,7 @@ public class ComicController {
 
         ModelAndView mv = new ModelAndView();
         mv.addObject("comicId", draft.get_id().toString());
+        mv.addObject("currentUser", user);
         mv.setViewName("draw");
 
         return mv;
@@ -65,12 +66,16 @@ public class ComicController {
     public ModelAndView comicPublish(@RequestBody MultiValueMap<String, String> data){
         ObjectId comicId = new ObjectId(data.getFirst("comicId"));
         Comic comic = comicRepository.findBy_id(comicId);
+        String comicData = data.getFirst("comicData");
 
+        comic.setRaw_data(comicData);
         comic.setPublished(true);
+        comic.setPrivacy(Privacy.PUBLIC);
         comicRepository.save(comic);
 
         ModelAndView mv = new ModelAndView();
-        mv.setViewName("userProfile");
+        mv.setViewName("myProfile");
+
         return mv;
     }
 
