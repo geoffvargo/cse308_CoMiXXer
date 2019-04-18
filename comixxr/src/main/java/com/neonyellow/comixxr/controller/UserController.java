@@ -4,6 +4,7 @@ import com.neonyellow.comixxr.model.Comic;
 import com.neonyellow.comixxr.model.User;
 import com.neonyellow.comixxr.repository.UserRepository;
 import com.neonyellow.comixxr.service.ComixUserDetailsService;
+import com.neonyellow.comixxr.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,10 +19,13 @@ import java.util.ArrayList;
 @RequestMapping("/user")
 public class UserController {
     @Autowired
-    private ComixUserDetailsService userService;
+    private ComixUserDetailsService userDetailsService;
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    private UserServiceImpl userService;
 
     @RequestMapping(value = {"/draw"}, method = RequestMethod.POST)
     public ModelAndView getDrawPage(){
@@ -40,8 +44,8 @@ public class UserController {
 
         User currUser = (User) modelAndView.getModel().get("currentUser");
 
-        modelAndView.addObject("myCreations", currUser.getPublishedComics());
-        modelAndView.addObject("myDrafts", currUser.getDrafts());
+        modelAndView.addObject("myCreations", userService.getPublishedComics(currUser));
+        modelAndView.addObject("myDrafts", userService.getDrafts(currUser));
         modelAndView.addObject("subscribers", currUser.getNumOfSubscibers());
         modelAndView.addObject("subscribedTo", currUser.getNumOfSubsriptions());
         modelAndView.addObject("userName", currUser.getFullname());
@@ -92,7 +96,7 @@ public class UserController {
     private ModelAndView getMAVWithUser(){
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByEmail(auth.getName());
+        User user = userDetailsService.findUserByEmail(auth.getName());
         modelAndView.addObject("currentUser", user);
         return modelAndView;
     }
