@@ -1,6 +1,7 @@
 package com.neonyellow.comixxr.model;
 
 import com.neonyellow.comixxr.repository.ComicRepository;
+import com.neonyellow.comixxr.service.UserServiceImpl;
 import lombok.Data;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,7 @@ public class User {
     private String bio;
 
     @Autowired
-    ComicRepository comicRepository;
+    private UserServiceImpl userService;
 
     public User(){
         this._id = new ObjectId();
@@ -47,7 +48,7 @@ public class User {
 
         if (!this.comics.isEmpty()) {
             for (ObjectId id : this.comics) {
-                Comic c = comicRepository.findBy_id(id);
+                Comic c = userService.findComicBy_id(id);
                 if (!c.isPublished()) {
                     ans.add(c);
                 }
@@ -62,7 +63,7 @@ public class User {
 
         if (!this.comics.isEmpty()) {
             for (ObjectId id : this.comics) {
-                Comic c = comicRepository.findBy_id(id);
+                Comic c = userService.findComicBy_id(id);
                 if (c.isPublished()) {
                     ans.add(c);
                 }
@@ -90,7 +91,7 @@ public class User {
     public int getNumRemixes(){
         int size = 0;
         for(ObjectId id : comics){
-            if(comicRepository.findBy_id(id).isRemix())
+            if(userService.findComicBy_id(id).isRemix())
                 size++;
         }
         return size;
