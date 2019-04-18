@@ -2,6 +2,7 @@ package com.neonyellow.comixxr.model;
 
 import com.neonyellow.comixxr.repository.ComicRepository;
 import com.neonyellow.comixxr.service.UserServiceImpl;
+import com.neonyellow.comixxr.service.interfaces.UserService;
 import lombok.Data;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,13 +35,14 @@ public class User {
     private String bio;
 
     @Autowired
-    private UserServiceImpl userService;
+    private UserService userService;
 
     public User(){
         this._id = new ObjectId();
         this.subscribers = new ArrayList<>();
         this.subscriptions = new ArrayList<>();
         this.comics = new ArrayList<>();
+        userService = new UserServiceImpl();
     }
 
     public ArrayList<Comic> getDrafts() {

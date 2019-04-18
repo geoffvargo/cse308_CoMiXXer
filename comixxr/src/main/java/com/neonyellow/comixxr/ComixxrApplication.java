@@ -14,6 +14,7 @@ public class ComixxrApplication {
 		SpringApplication.run(ComixxrApplication.class, args);
 	}
 
+
 	@Bean
 	CommandLineRunner init(RoleRepository roleRepository) {
 
