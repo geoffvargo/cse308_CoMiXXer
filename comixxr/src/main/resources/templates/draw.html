@@ -16,6 +16,7 @@
 <body id="page-top">
     <div layout:fragment="content" id="content-wrapper">
         <span id="current-user" th:text="${currentUser.getFullname()}" hidden></span>
+        <input type="hidden" id="comicId" th:value="${comicId}">
         <div class="container-fluid">
         <h1 class="text-center mb-4">Edit a Comic</h1>
           <div class="row">
@@ -83,7 +84,7 @@
                         </div>
                         <button z-click="Download" z-show-popup="my-menu">Download</button>
                         <button z-click="onSave()">Save</button>
-                        <button z-click="onSaveAs()">Save as</button>
+                        <button z-click="onPublish()">Publish</button>
                         <div z-has="AnyNode">
                             <h3>Shape options</h3>
                             <button z-click="deleteNodes()">Delete</button>
@@ -182,11 +183,13 @@
                     Zwibbler.enableConsoleLogging();
                     function ZwibblerController(ctx){
                         var saved = null;
+                        var id = null;
 
                         ctx.onSave = function() {
                             saved = ctx.save("zwibbler3");
+                            id = $("#comicId").val();
 
-                            $.post("/user/comic/save", {comicData: saved})
+                            $.post("/user/comic/save", {comicData: saved, comicId: id})
                                 .done(function() {
                                     alert("Comic saved");
                                 })
@@ -195,6 +198,19 @@
                                 });
                             //$("#loadButton").removeAttr("disabled");
                         };
+
+                        ctx.onPublish = function () {
+                            saved = ctx.save("zwibbler3");
+                            id = $("#comicId").val();
+
+                            $.post("/user/comic/publish", {comicData: saved, comicId: id})
+                                .done(function () {
+                                    alert("Comic published");
+                                })
+                                .fail(function () {
+                                    alert("error")
+                                });
+                        }
 
                         // ctx.onLoad = function() {
                         //     ctx.load("zwibbler3", saved);
