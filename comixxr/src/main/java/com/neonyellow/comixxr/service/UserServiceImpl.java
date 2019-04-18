@@ -58,4 +58,13 @@ public class UserServiceImpl implements UserService {
 
         return ans;
     }
+
+    public int getNumRemixes(User user){
+        int size = 0;
+        for(ObjectId id : user.getComics()){
+            if(this.findComicBy_id(id).isRemix())
+                size++;
+        }
+        return size;
+    }
 }
