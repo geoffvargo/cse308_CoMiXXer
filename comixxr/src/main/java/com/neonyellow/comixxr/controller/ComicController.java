@@ -1,12 +1,10 @@
 package com.neonyellow.comixxr.controller;
 
-import com.neonyellow.comixxr.model.Comic;
-import com.neonyellow.comixxr.model.Genre;
-import com.neonyellow.comixxr.model.Privacy;
-import com.neonyellow.comixxr.model.User;
+import com.neonyellow.comixxr.model.*;
 import com.neonyellow.comixxr.repository.UserRepository;
 import com.neonyellow.comixxr.service.ComicService;
 import com.neonyellow.comixxr.service.ComixUserDetailsService;
+import com.neonyellow.comixxr.service.PostService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -23,6 +21,8 @@ public class ComicController {
     private ComixUserDetailsService userDetailsService;
     @Autowired
     private ComicService comicService;
+    @Autowired
+    private PostService postService;
     @Autowired
     UserRepository userRepository;
 
@@ -64,6 +64,7 @@ public class ComicController {
 
     @RequestMapping(value = {"/publish"}, method = RequestMethod.POST)
     public ModelAndView comicPublish(@RequestBody MultiValueMap<String, String> data){
+        ModelAndView mv = getMAVWithUser();
         ObjectId comicId = new ObjectId(data.getFirst("comicId"));
         Comic comic = comicService.findBy_id(comicId);
         String comicData = data.getFirst("comicData");
@@ -72,6 +73,11 @@ public class ComicController {
         comic.setPublished(true);
         comic.setPrivacy(Privacy.PUBLIC);
         comicService.save(comic);
+
+        Post newPost = new Post(((User)mv.getModel().get("currentUser")).get_id());
+        newPost.setComicId(comicId);
+        postService.save(newPost);
+
 
 //        ModelAndView mv = new ModelAndView();
 //        mv.setViewName("myProfile");

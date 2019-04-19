@@ -15,8 +15,8 @@ public class ComicService implements IComicService {
     @Autowired
     ComicRepository comicRepository;
 
-    public List<Comic> findAllComicsByUserId(Object userId){
-        return null;
+    public List<Comic> findAllByUserId(ObjectId userId){
+        return comicRepository.findAllByUserId(userId);
     }
 
     public Comic findBy_id(ObjectId id){
@@ -27,7 +27,5 @@ public class ComicService implements IComicService {
         comicRepository.save(comic);
     }
 
-    public void deleteComic(ObjectId id) {
-
-    }
+    public void deleteBy_id(ObjectId id) { comicRepository.deleteBy_id(id);}
 }
