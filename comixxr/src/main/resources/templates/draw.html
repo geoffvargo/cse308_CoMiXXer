@@ -17,6 +17,8 @@
     <div layout:fragment="content" id="content-wrapper">
         <span id="current-user" th:text="${currentUser.getFullname()}" hidden></span>
         <input type="hidden" id="comicId" th:value="${comicId}">
+        <input type="hidden" id="raw_data" th:value="${raw_data}">
+        <input type="hidden" id="isLoad" th:value="${isLoad}">
         <div class="container-fluid">
 <!--        <h1 class="text-center mb-4">Edit a Comic</h1>-->
           <div class="row">
@@ -183,6 +185,13 @@
                     function ZwibblerController(ctx){
                         var saved = null;
                         var id = null;
+                        var isLoad = $("#isLoad").val();
+                        var raw_data;
+
+                        if(isLoad === true){
+                            raw_data = $("#raw_data").val();
+                            ctx.load("zwibbler3", raw_data);
+                        }
 
                         ctx.onSave = function() {
                             saved = ctx.save("zwibbler3");
