@@ -213,7 +213,8 @@
 
                             $.post("/user/comic/publish", {comicData: saved, comicId: id})
                                 .done(function () {
-                                    alert("Comic published");
+                                    // alert("Comic published");
+                                    window.location.replace('/user/myProfile');
                                 })
                                 .fail(function () {
                                     alert("error")
