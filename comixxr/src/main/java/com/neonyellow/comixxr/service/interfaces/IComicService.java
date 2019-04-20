@@ -6,12 +6,12 @@ import org.bson.types.ObjectId;
 import java.util.List;
 
 public interface IComicService {
-    List<Comic> findAllByUserId(ObjectId userId);
+    List<Comic> findAllComicsByUserId(ObjectId userId);
 
     Comic findBy_id(ObjectId id);
 
     void save(Comic comic);
 
-    void deleteBy_id(ObjectId id);
+    void deleteComic(ObjectId id);
 
 }
