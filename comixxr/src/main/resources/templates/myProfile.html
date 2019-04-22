@@ -24,7 +24,7 @@
                     <a class="card-underline no-a" th:href="@{comic/viewComic/${creation.get_id()}}">
                       <img class="card-img-top" th:src="${creation.getThumbnail()}" alt="Card!">
                       <div class="card-body h-25 p-2">
-                        <h6 class="card-text text-center" th:value="${creation.getTitle()}">
+                        <h6 class="card-text text-center" th:text="${creation.getTitle()}">
                           <a class="no-a" href="currentComicRemixes.html">
                             <span th:if="${creation.isInSeries()}" class="badge badge-secondary" data-toggle="tooltip" data-placement="right" title="Series"><i class="fas fa-random"></i></span>
                           </a>
