@@ -1,20 +1,31 @@
 package com.neonyellow.comixxr.model;
 
 public enum Genre {
-    HORROR,
-    TEEN,
-    FANTASY,
-    CRIME,
-    ROMANCE,
-    MANGA,
-    ALTERNATIVE,
-    GAG,
-    SCIFI,
-    SUPERHERO,
-    CHILD,
-    WAR,
-    DAILY,
-    WESTERN,
-    ABSTRACT,
-    NA
+    HORROR("HORROR"),
+    TEEN("TEEN"),
+    FANTASY("FANTASY"),
+    CRIME("CRIME"),
+    ROMANCE("ROMANCE"),
+    MANGA("MANGA"),
+    ALTERNATIVE("ALTERNATIVE"),
+    GAG("GAG"),
+    SCIFI("SCIFI"),
+    SUPERHERO("SUPERHERO"),
+    CHILD("CHILD"),
+    WAR("WAR"),
+    DAILY("DAILY"),
+    WESTERN("WESTERN"),
+    ABSTRACT("ABSTRACT"),
+    NA("NA");
+
+    private String genreCode;
+
+    Genre(String genre) {
+        this.genreCode = genre;
+    }
+
+    @Override
+    public String toString() {
+        return genreCode;
+    }
 }
