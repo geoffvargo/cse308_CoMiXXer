@@ -8,13 +8,13 @@ import org.bson.types.ObjectId;
 import java.util.List;
 
 public interface IComicService {
-    List<Comic> findAllComicsByUserId(ObjectId userId);
+    List<Comic> findAllByUserId(ObjectId userId);
 
     Comic findBy_id(ObjectId id);
 
     void save(Comic comic);
 
-//    void deleteComic(ObjectId id);
+    void delete(ObjectId id);
 
     List<Comic> findAllSortedByGenreDESC();
 
