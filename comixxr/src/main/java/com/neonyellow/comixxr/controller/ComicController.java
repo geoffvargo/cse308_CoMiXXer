@@ -1,21 +1,16 @@
 package com.neonyellow.comixxr.controller;
 
-import com.neonyellow.comixxr.model.Comic;
-import com.neonyellow.comixxr.model.Genre;
-import com.neonyellow.comixxr.model.Privacy;
-import com.neonyellow.comixxr.model.User;
-import com.neonyellow.comixxr.repository.ComicRepository;
+import com.neonyellow.comixxr.model.*;
 import com.neonyellow.comixxr.repository.UserRepository;
+import com.neonyellow.comixxr.service.ComicService;
 import com.neonyellow.comixxr.service.ComixUserDetailsService;
+import com.neonyellow.comixxr.service.PostService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @RestController
@@ -23,11 +18,13 @@ import org.springframework.web.servlet.ModelAndView;
 public class ComicController {
 
     @Autowired
-    private ComixUserDetailsService userService;
+    private ComixUserDetailsService userDetailsService;
+    @Autowired
+    private ComicService comicService;
+    @Autowired
+    private PostService postService;
     @Autowired
     UserRepository userRepository;
-    @Autowired
-    ComicRepository comicRepository;
 
     @RequestMapping(value = {"createDraft"}, method = RequestMethod.POST)
     public ModelAndView createDraft(@RequestBody MultiValueMap<String,String> formData){
@@ -40,7 +37,7 @@ public class ComicController {
         draft.setGenre(getGenre(formData.getFirst("genre")));
         draft.setAuthor(user.getFullname());
 
-        comicRepository.save(draft);
+        comicService.save(draft);
 
         user.addToComics(draft);
         userRepository.save(user);
@@ -56,25 +53,31 @@ public class ComicController {
     @RequestMapping(value = {"/save"}, method = RequestMethod.POST)
     public ModelAndView comicSave(@RequestBody MultiValueMap<String,String> data){
         ObjectId comicId = new ObjectId(data.getFirst("comicId"));
-        Comic comic = comicRepository.findBy_id(comicId);
+        Comic comic = comicService.findBy_id(comicId);
         String comicData = data.getFirst("comicData");
 
         comic.setRaw_data(comicData);
-        comicRepository.save(comic);
+        comicService.save(comic);
 
         return null;
     }
 
     @RequestMapping(value = {"/publish"}, method = RequestMethod.POST)
     public ModelAndView comicPublish(@RequestBody MultiValueMap<String, String> data){
+        ModelAndView mv = getMAVWithUser();
         ObjectId comicId = new ObjectId(data.getFirst("comicId"));
-        Comic comic = comicRepository.findBy_id(comicId);
+        Comic comic = comicService.findBy_id(comicId);
         String comicData = data.getFirst("comicData");
 
         comic.setRaw_data(comicData);
         comic.setPublished(true);
         comic.setPrivacy(Privacy.PUBLIC);
-        comicRepository.save(comic);
+        comicService.save(comic);
+
+        Post newPost = new Post(((User)mv.getModel().get("currentUser")).get_id());
+        newPost.setComicId(comicId);
+        postService.save(newPost);
+
 
 //        ModelAndView mv = new ModelAndView();
 //        mv.setViewName("myProfile");
@@ -82,10 +85,18 @@ public class ComicController {
         return null;
     }
 
-    @RequestMapping(value = {"/load"}, method = RequestMethod.GET)
-    public ModelAndView comicLoad(){
+    @RequestMapping(value = {"/load/{comicId}"}, method = RequestMethod.GET)
+    public ModelAndView comicLoad(@PathVariable("comicId") String comicId){
+        ModelAndView mv = getMAVWithUser();
+        mv.setViewName("draw");
 
-        return null;
+        ObjectId comicid = new ObjectId(comicId);
+        String raw_data = comicService.findBy_id(comicid).getRaw_data();
+
+        mv.addObject("isLoad", true);
+        mv.addObject("raw_data", raw_data);
+
+        return mv;
     }
 
     private Genre getGenre(String genre){
@@ -138,5 +149,13 @@ public class ComicController {
             default:
                 return Privacy.UNLISTED;
         }
+    }
+
+    private ModelAndView getMAVWithUser(){
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userDetailsService.findUserByEmail(auth.getName());
+        modelAndView.addObject("currentUser", user);
+        return modelAndView;
     }
 }
