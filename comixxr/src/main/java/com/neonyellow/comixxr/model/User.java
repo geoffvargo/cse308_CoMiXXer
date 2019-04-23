@@ -28,6 +28,7 @@ public class User {
     private List<ObjectId> subscribers;
     private List<ObjectId> subscriptions;
     private List<ObjectId> comics;
+    private List<ComicCollection> collections;
     private String bio;
 
     public User(){
@@ -35,6 +36,7 @@ public class User {
         this.subscribers = new ArrayList<>();
         this.subscriptions = new ArrayList<>();
         this.comics = new ArrayList<>();
+        this.collections = new ArrayList<>();
     }
 
     public void addToComics(Comic comic) {

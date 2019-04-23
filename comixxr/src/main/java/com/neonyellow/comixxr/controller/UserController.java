@@ -62,8 +62,15 @@ public class UserController {
     /*GET CURRENT USER CURATIONS FROM DATABASE*/
     @RequestMapping(value = {"/curations"}, method = RequestMethod.GET)
     public ModelAndView getCurations(){
+        ModelAndView modelAndView = getMAVWithUser();
 
-        return null;
+        User currUser = (User) modelAndView.getModel().get("currentUser");
+
+        modelAndView.addObject("myCurations", currUser.getCollections());
+
+        modelAndView.setViewName("curations");
+
+        return modelAndView;
     }
 
     /*GET LATEST POSTS OF CURRENT USER'S SUBSCRIPTIONS*/
