@@ -21,8 +21,8 @@
               <div class="row scrollable-x no-fw scrollbar scrollbar-primary">
                 <div th:each="creation : ${myCreations}" class="col-3">
                   <div class="card bg-info d-inline-block mb-4 mx-1" style="max-width:14rem">
-                    <a class="card-underline no-a" th:href="@{comic/viewComic/${creation.get_id()}}">
-                      <img class="card-img-top" th:src="${creation.getThumbnail()}" alt="Card!">
+                    <a class="card-underline no-a" th:href="@{comic/viewComic/__${creation.get_id()}__}">
+                      <img class="card-img-top img-fluid" alt="Card!" src="img/portfolio/game.png">
                       <div class="card-body h-25 p-2">
                         <h6 class="card-text text-center" th:value="${creation.getTitle()}">
                           <a class="no-a" href="currentComicRemixes.html">
