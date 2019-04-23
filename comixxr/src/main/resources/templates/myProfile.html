@@ -62,7 +62,7 @@
               <div class="row scrollable-x no-fw scrollbar scrollbar-primary">
                 <div th:each="draft : ${myDrafts}" class="col-3">
                   <div class="card bg-info d-inline-block mb-4 mx-1" style="max-width:14rem">
-                    <a class="card-underline no-a">
+                    <a class="card-underline no-a" th:href="@{/user/comic/load/__${draft.get_id()}__}">
                       <img class="card-img-top" th:src="${draft.getThumbnail()}" alt="Card!">
                       <div class="card-body h-25 p-2">
                         <h6 class="card-text text-center" th:text="${draft.getTitle()}">
