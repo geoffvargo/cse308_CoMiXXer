@@ -30,7 +30,7 @@ public class ComicService implements IComicService {
     public void save(Comic comic) {
         comicRepository.save(comic);
     }
-    
+
     public void delete(ObjectId id) {comicRepository.deleteBy_id(id);}
 
     public List<Comic> findAllSortedByGenreDESC() {

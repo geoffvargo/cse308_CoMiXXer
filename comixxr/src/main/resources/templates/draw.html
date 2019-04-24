@@ -87,6 +87,7 @@
                         <button z-click="Download" z-show-popup="my-menu">Download</button>
                         <button z-click="onSave()">Save</button>
                         <button z-click="onPublish()">Publish</button>
+                        <button id="loadButton" z-click="onLoad()" >Load</button>
                         <div z-has="AnyNode">
                             <h3>Shape options</h3>
                             <button z-click="deleteNodes()">Delete</button>
@@ -185,13 +186,7 @@
                     function ZwibblerController(ctx){
                         var saved = null;
                         var id = null;
-                        var isLoad = $("#isLoad").val();
                         var raw_data;
-
-                        if(isLoad === true){
-                            raw_data = $("#raw_data").val();
-                            ctx.load("zwibbler3", raw_data);
-                        }
 
                         ctx.onSave = function() {
                             saved = ctx.save("zwibbler3");
@@ -204,7 +199,6 @@
                                 .fail(function () {
                                     alert("error");
                                 });
-                            //$("#loadButton").removeAttr("disabled");
                         };
 
                         ctx.onPublish = function () {
@@ -219,11 +213,13 @@
                                 .fail(function () {
                                     alert("error")
                                 });
-                        }
+                        };
 
-                        // ctx.onLoad = function() {
-                        //     ctx.load("zwibbler3", saved);
-                        // };
+                        ctx.onLoad = function() {
+                            raw_data = $("#raw_data").val();
+                            if(raw_data !== null)
+                                ctx.load("zwibbler3", raw_data);
+                        };
                     }
                 </script>
 
