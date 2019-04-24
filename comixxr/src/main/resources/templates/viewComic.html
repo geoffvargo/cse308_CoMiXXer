@@ -19,8 +19,9 @@
         <div class="row">
           <div class="col-4"></div>
           <div class="col-4 mb-3">
-            <h1 class="text-center d-inline" th:value="${comic.getTitle()}"></h1>
+            <h1 class="text-center d-inline" th:text="${comic.getTitle()}"></h1>
             <button class="btn btn-info d-inline mx-4 mb-3" id="toggleViewBtn" data-mode="right"><i class="fas fa-fw fa-angle-double-right" id="toggleViewIcon"></i></button>
+            <h4 class="text-center d-inline" th:text="${comic.getAuthor()}"></h4>
           </div>
           <div class="col-4"></div>
         </div>
