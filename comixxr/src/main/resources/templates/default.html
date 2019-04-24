@@ -116,11 +116,11 @@
                 <span>Create a Curation</span>
             </a>
             <div class="dropdown-menu">
-                <form class="dropdown-item">
+                <form class="dropdown-item" th:action="@{/user/createCuration}" method="post">
                     <div class="form-group">
                         <input class="form-control" type="text" placeholder="Curation Name..."></input>
                     </div>
-                    <button class="btn btn-secondary" href="#">Create Curation</button>
+                    <button class="btn btn-secondary" type="submit">Create Curation</button>
                 </form>
             </div>
         </li>

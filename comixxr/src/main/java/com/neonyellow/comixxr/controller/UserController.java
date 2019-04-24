@@ -1,6 +1,7 @@
 package com.neonyellow.comixxr.controller;
 
 import com.neonyellow.comixxr.model.Comic;
+import com.neonyellow.comixxr.model.ComicCollection;
 import com.neonyellow.comixxr.model.Genre;
 import com.neonyellow.comixxr.model.User;
 import com.neonyellow.comixxr.service.ComicService;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/user")
@@ -35,6 +37,15 @@ public class UserController {
         //TODO: here add the comic to the user
         ModelAndView modelAndView = getMAVWithUser();
         modelAndView.setViewName("draw");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = {"/user/createCuration"}, method = RequestMethod.POST)
+    public ModelAndView createCuration() {
+        ModelAndView modelAndView = getMAVWithUser();
+
+        modelAndView.setViewName("createCuration");
+
         return modelAndView;
     }
 
@@ -85,7 +96,8 @@ public class UserController {
 
         User currUser = (User) modelAndView.getModel().get("currentUser");
 
-        modelAndView.addObject("myCurations", currUser.getCollections());
+        List<ComicCollection> collections = currUser.getCollections();
+        modelAndView.addObject("myCurations", collections);
 
         modelAndView.setViewName("curations");
 
