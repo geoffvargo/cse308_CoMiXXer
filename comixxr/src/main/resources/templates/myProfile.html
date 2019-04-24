@@ -21,8 +21,8 @@
               <div class="row scrollable-x no-fw scrollbar scrollbar-primary">
                 <div th:each="creation : ${myCreations}" class="col-3">
                   <div class="card bg-info d-inline-block mb-4 mx-1" style="max-width:14rem">
-                    <a class="card-underline no-a" th:href="@{comic/viewComic/${creation.get_id()}}">
-                      <img class="card-img-top" th:src="${creation.getThumbnail()}" alt="Card!">
+                    <a class="card-underline no-a" th:href="@{/user/viewComic/__${creation.get_id()}__}">
+                      <img class="card-img-top img-fluid" alt="Card!" src="/img/portfolio/game.png">
                       <div class="card-body h-25 p-2">
                         <h6 class="card-text text-center" th:text="${creation.getTitle()}">
                           <a class="no-a" href="currentComicRemixes.html">
@@ -36,9 +36,9 @@
                         <div class="col-sm-4 text-left"><i class="fas fa-random"></i></div>
                       </div>
                       <div class="row">
-                        <div class="col-sm-4 text-right pr-0"><small th:value="${creation.getTotalVotes()}"></small></div>
-                        <div class="col-sm-4 text-center px-0"><small th:value="${creation.getTotalComments()}"></small></div>
-                        <div class="col-sm-4 text-left pl-0"><small></small></div>
+                        <div class="col-sm-4 text-right pr-0"><small th:text="${creation.getTotalVotes()}"></small></div>
+                        <div class="col-sm-4 text-center px-0"><small th:text="${creation.getTotalComments()}"></small></div>
+                        <div class="col-sm-4 text-left pl-0"><small th:text="${creation.getTotalComments()}"></small></div>
                       </div>
                     </a>
                     <div class="row">
@@ -62,7 +62,7 @@
               <div class="row scrollable-x no-fw scrollbar scrollbar-primary">
                 <div th:each="draft : ${myDrafts}" class="col-3">
                   <div class="card bg-info d-inline-block mb-4 mx-1" style="max-width:14rem">
-                    <a class="card-underline no-a">
+                    <a class="card-underline no-a" th:href="@{/user/comic/load/__${draft.get_id()}__}">
                       <img class="card-img-top" th:src="${draft.getThumbnail()}" alt="Card!">
                       <div class="card-body h-25 p-2">
                         <h6 class="card-text text-center" th:text="${draft.getTitle()}">

@@ -10,6 +10,6 @@ import java.util.List;
 public interface ComicRepository extends MongoRepository<Comic, ObjectId > {
     Comic findBy_id(ObjectId _id);
     List<Comic> findAllByUserId(ObjectId userId);
-    void deleteById(ObjectId id);
+    void deleteBy_id(ObjectId id);
     List<Comic> findAllByGenre(Genre genre);
 }

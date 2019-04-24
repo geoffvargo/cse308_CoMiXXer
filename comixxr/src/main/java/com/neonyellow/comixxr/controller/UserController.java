@@ -1,12 +1,16 @@
 package com.neonyellow.comixxr.controller;
 
 import com.neonyellow.comixxr.model.Comic;
+import com.neonyellow.comixxr.model.Genre;
 import com.neonyellow.comixxr.model.User;
+import com.neonyellow.comixxr.service.ComicService;
 import com.neonyellow.comixxr.service.ComixUserDetailsService;
 import com.neonyellow.comixxr.service.UserService;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,6 +26,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private ComicService comicService;
 
     @RequestMapping(value = {"/draw"}, method = RequestMethod.POST)
     public ModelAndView getDrawPage(){
@@ -47,6 +54,18 @@ public class UserController {
         modelAndView.addObject("numRemixes", userService.getNumRemixes(currUser));
 
         modelAndView.setViewName("myProfile");
+
+        return modelAndView;
+    }
+
+    @RequestMapping(value = {"/browse/{genre}"}, method = RequestMethod.GET)
+    public ModelAndView comicsByGenre(@PathVariable("genre") Genre genre) {
+        ModelAndView modelAndView = getMAVWithUser();
+
+        modelAndView.addObject("comics", comicService.findAllByGenre(genre));
+        modelAndView.addObject("category", genre.toString());
+
+        modelAndView.setViewName("singlesGenre");
 
         return modelAndView;
     }
@@ -77,6 +96,18 @@ public class UserController {
     @RequestMapping(value = {"/subscriptions"}, method = RequestMethod.GET)
     public ModelAndView getSubsciptions(){
         return null;
+    }
+
+    /*GET COMIC TO VIEW*/
+    @RequestMapping(value = "/viewComic/{comicId}", method = RequestMethod.GET)
+    public ModelAndView getComic(@PathVariable String comicId){
+        Comic comic = comicService.findBy_id(new ObjectId(comicId));
+        ModelAndView modelAndView = getMAVWithUser();
+        modelAndView.setViewName("viewComic");
+        modelAndView.addObject("numPages",3);
+        modelAndView.addObject("comic",comic);
+        //TODO: save all pages to img/comicPages/pagei
+        return modelAndView;
     }
 
 //    /*GET USER BROWSE PAGE*/

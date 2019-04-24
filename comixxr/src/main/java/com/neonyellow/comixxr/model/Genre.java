@@ -5,6 +5,7 @@ public enum Genre {
     TEEN("TEEN"),
     FANTASY("FANTASY"),
     CRIME("CRIME"),
+    COMEDY("COMEDY"),
     ROMANCE("ROMANCE"),
     MANGA("MANGA"),
     ALTERNATIVE("ALTERNATIVE"),
@@ -16,6 +17,7 @@ public enum Genre {
     DAILY("DAILY"),
     WESTERN("WESTERN"),
     ABSTRACT("ABSTRACT"),
+    ADVENTURE("ADVENTURE"),
     NA("NA");
 
     private String genreCode;

@@ -23,10 +23,6 @@ public class ComicService implements IComicService {
         return comicRepository.findAllByUserId(userId);
     }
 
-    public List<Comic> findAllComicsByUserId(ObjectId userId) {
-        return comicRepository.findAllByUserId(userId);
-    }
-
     public Comic findBy_id(ObjectId id) {
         return comicRepository.findBy_id(id);
     }
@@ -34,6 +30,8 @@ public class ComicService implements IComicService {
     public void save(Comic comic) {
         comicRepository.save(comic);
     }
+    
+    public void delete(ObjectId id) {comicRepository.deleteBy_id(id);}
 
     public List<Comic> findAllSortedByGenreDESC() {
         return comicRepository.findAll(new Sort(Sort.Direction.DESC, "genre"));
