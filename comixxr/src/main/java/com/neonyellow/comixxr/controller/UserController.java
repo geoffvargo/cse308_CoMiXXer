@@ -1,6 +1,7 @@
 package com.neonyellow.comixxr.controller;
 
 import com.neonyellow.comixxr.model.Comic;
+import com.neonyellow.comixxr.model.Genre;
 import com.neonyellow.comixxr.model.User;
 import com.neonyellow.comixxr.service.ComicService;
 import com.neonyellow.comixxr.service.ComixUserDetailsService;
@@ -53,6 +54,18 @@ public class UserController {
         modelAndView.addObject("numRemixes", userService.getNumRemixes(currUser));
 
         modelAndView.setViewName("myProfile");
+
+        return modelAndView;
+    }
+
+    @RequestMapping(value = {"/comicsByGenre"}, method = RequestMethod.GET)
+    public ModelAndView comicsByGenre(@PathVariable("genre") Genre genre) {
+        ModelAndView modelAndView = getMAVWithUser();
+
+        modelAndView.addObject("comics", comicService.findAllByGenre(genre));
+        modelAndView.addObject("category", genre.toString());
+
+        modelAndView.setViewName("comicsByGenre");
 
         return modelAndView;
     }
