@@ -58,14 +58,14 @@ public class UserController {
         return modelAndView;
     }
 
-    @RequestMapping(value = {"/comicsByGenre"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/browse/{genre}"}, method = RequestMethod.GET)
     public ModelAndView comicsByGenre(@PathVariable("genre") Genre genre) {
         ModelAndView modelAndView = getMAVWithUser();
 
         modelAndView.addObject("comics", comicService.findAllByGenre(genre));
         modelAndView.addObject("category", genre.toString());
 
-        modelAndView.setViewName("comicsByGenre");
+        modelAndView.setViewName("singlesGenre");
 
         return modelAndView;
     }
