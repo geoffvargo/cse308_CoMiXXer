@@ -45,6 +45,7 @@ public class ComicController {
         ModelAndView mv = new ModelAndView();
         mv.addObject("comicId", draft.get_id().toString());
         mv.addObject("currentUser", user);
+        mv.addObject("isLoad", "false");
         mv.setViewName("draw");
 
         return mv;
@@ -78,10 +79,6 @@ public class ComicController {
         newPost.setComicId(comicId);
         postService.save(newPost);
 
-
-//        ModelAndView mv = new ModelAndView();
-//        mv.setViewName("myProfile");
-
         return null;
     }
 
@@ -93,7 +90,7 @@ public class ComicController {
         ObjectId comicid = new ObjectId(comicId);
         String raw_data = comicService.findBy_id(comicid).getRaw_data();
 
-        mv.addObject("isLoad", true);
+        mv.addObject("isLoad", "true");
         mv.addObject("raw_data", raw_data);
 
         return mv;
