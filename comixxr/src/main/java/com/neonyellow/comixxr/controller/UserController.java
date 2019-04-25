@@ -82,7 +82,11 @@ public class UserController {
     @RequestMapping(value = {"/curations"}, method = RequestMethod.GET)
     public ModelAndView getCurations(){
 
-        return null;
+        ModelAndView modelAndView = getMAVWithUser();
+
+        modelAndView.setViewName("curations");
+
+        return modelAndView;
     }
 
     @RequestMapping(value = {"/userSettings"}, method= RequestMethod.GET)
@@ -98,7 +102,16 @@ public class UserController {
     /*GET LATEST POSTS OF CURRENT USER'S SUBSCRIPTIONS*/
     @RequestMapping(value = {"/subscriptions"}, method = RequestMethod.GET)
     public ModelAndView getSubsciptions(){
-        return null;
+        ModelAndView modelAndView = getMAVWithUser();
+
+        User currUser = (User) modelAndView.getModel().get("currentUser");
+//        ArrayList<>
+
+        modelAndView.addObject("subscriptions", currUser.getSubscriptions());
+
+        modelAndView.setViewName("subscriptions");
+
+        return modelAndView;
     }
 
     /*GET COMIC TO VIEW*/
