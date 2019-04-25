@@ -10,10 +10,8 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
@@ -76,6 +74,17 @@ public class UserController {
         //TODO: add creations, drafts, user information for different user
         modelAndView.setViewName("userProfile");
         return modelAndView;
+    }
+
+    @RequestMapping(value = {"/updateBio"}, method = RequestMethod.POST)
+    public ModelAndView updateUserBio(@RequestBody MultiValueMap<String,String> data){
+        ModelAndView mv = getMAVWithUser();
+        User user = (User)mv.getModel().get("currentUser");
+
+        user.setBio(data.getFirst("bioText"));
+        userService.save(user);
+        mv.setViewName("userSettings");
+        return mv;
     }
 
     /*GET CURRENT USER CURATIONS FROM DATABASE*/
