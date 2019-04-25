@@ -85,6 +85,16 @@ public class UserController {
         return null;
     }
 
+    @RequestMapping(value = {"/userSettings"}, method= RequestMethod.GET)
+    public ModelAndView getUserSettings(){
+        ModelAndView modelAndView = getMAVWithUser();
+        modelAndView.setViewName("userSettings");
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userDetailsService.findUserByEmail(auth.getName());
+        modelAndView.addObject("currentBio",user.getBio());
+        return modelAndView;
+    }
+
     /*GET LATEST POSTS OF CURRENT USER'S SUBSCRIPTIONS*/
     @RequestMapping(value = {"/subscriptions"}, method = RequestMethod.GET)
     public ModelAndView getSubsciptions(){
