@@ -20,6 +20,10 @@ public class UserService implements IUserService {
     @Autowired
     ComicRepository comicRepository;
 
+    public void save(User user) {
+        userRepository.save(user);
+    }
+
     public Comic findComicBy_id(ObjectId id){
       return comicRepository.findBy_id(id);
     }
