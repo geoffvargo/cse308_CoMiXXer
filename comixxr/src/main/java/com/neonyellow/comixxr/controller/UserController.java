@@ -36,10 +36,35 @@ public class UserController {
         User currUser = (User) modelAndView.getModel().get("currentUser");
         User otherUser = userService.findUserByEmail(email);
 
-        currUser.addToSubscriptions(otherUser);
-        otherUser.addSubsciber(currUser);
+        if (otherUser != null && !currUser.getSubscriptions().contains((Object)(otherUser.get_id()))) {
+            currUser.addToSubscriptions(otherUser);
+            otherUser.addSubsciber(currUser);
 
-        modelAndView.setViewName("mySubscriptions");
+            userService.save(currUser);
+            userService.save(otherUser);
+        }
+
+        modelAndView.setViewName("addToMySubscriptions");
+
+        return modelAndView;
+    }
+
+    @RequestMapping(value = {"/unsubscribeFromUser"}, method = RequestMethod.POST)
+    public ModelAndView unsubscribeFromUser(@PathVariable("email") String email) {
+        ModelAndView modelAndView = getMAVWithUser();
+
+        User currUser = (User) modelAndView.getModel().get("currentUser");
+        User otherUser = userService.findUserByEmail(email);
+
+        if (otherUser != null && currUser.getSubscriptions().contains((Object)(otherUser.get_id()))) {
+            currUser.removeFromSubscriptions(otherUser);
+            otherUser.removeFromSubscribers(currUser);
+
+            userService.save(currUser);
+            userService.save(otherUser);
+        }
+
+        modelAndView.setViewName("removeFromMySubscriptions");
 
         return modelAndView;
     }

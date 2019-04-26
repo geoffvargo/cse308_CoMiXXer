@@ -70,4 +70,16 @@ public class User {
             this.subscribers.add(user.get_id());
         }
     }
+
+    public void removeFromSubscriptions(User user) {
+        if (user != null) {
+            this.subscriptions.remove(user.get_id());
+        }
+    }
+
+    public void removeFromSubscribers(User user) {
+        if (user != null) {
+            this.subscribers.remove(user.get_id());
+        }
+    }
 }
