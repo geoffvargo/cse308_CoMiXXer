@@ -3,6 +3,7 @@ package com.neonyellow.comixxr.controller;
 import com.neonyellow.comixxr.model.Comic;
 import com.neonyellow.comixxr.model.Genre;
 import com.neonyellow.comixxr.model.User;
+import com.neonyellow.comixxr.repository.UserRepository;
 import com.neonyellow.comixxr.service.ComicService;
 import com.neonyellow.comixxr.service.ComixUserDetailsService;
 import com.neonyellow.comixxr.service.UserService;
@@ -27,6 +28,21 @@ public class UserController {
 
     @Autowired
     private ComicService comicService;
+
+    @RequestMapping(value = {"/subscribeToUser"}, method = RequestMethod.POST)
+    public ModelAndView subscribeToUser(@PathVariable("otherUser") String email) {
+        ModelAndView modelAndView = getMAVWithUser();
+
+        User currUser = (User) modelAndView.getModel().get("currentUser");
+        User otherUser = userService.findUserByEmail(email);
+
+        currUser.addToSubscriptions(otherUser);
+        otherUser.addSubsciber(currUser);
+
+        modelAndView.setViewName("mySubscriptions");
+
+        return modelAndView;
+    }
 
     @RequestMapping(value = {"/draw"}, method = RequestMethod.POST)
     public ModelAndView getDrawPage(){

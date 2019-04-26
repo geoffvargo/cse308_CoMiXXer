@@ -58,4 +58,16 @@ public class User {
             this.curations.add(curation);
         }
     }
+
+    public void addToSubscriptions(User user) {
+        if (user != null) {
+            this.subscriptions.add(user.get_id());
+        }
+    }
+
+    public void addSubsciber(User user) {
+        if (user != null) {
+            this.subscribers.add(user.get_id());
+        }
+    }
 }
