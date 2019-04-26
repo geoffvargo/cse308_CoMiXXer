@@ -88,12 +88,24 @@ public class UserController {
     }
 
     /*GET CURRENT USER CURATIONS FROM DATABASE*/
-    @RequestMapping(value = {"/curations"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/{curations}"}, method = RequestMethod.GET)
     public ModelAndView getCurations(){
 
         ModelAndView modelAndView = getMAVWithUser();
+        String title = "My Curations";
+
+        modelAndView.addObject("myCurations", title);
 
         modelAndView.setViewName("curations");
+
+        return modelAndView;
+    }
+
+    @RequestMapping(value = {"/topComics"}, method = RequestMethod.GET)
+    public ModelAndView getTopComics() {
+        ModelAndView modelAndView = getMAVWithUser();
+
+        modelAndView.setViewName("topComics");
 
         return modelAndView;
     }

@@ -45,4 +45,12 @@ public class ComicService implements IComicService {
         return comicRepository.findAllByGenre(genre);
     }
 
+//    public List<Comic> findTopRated() {
+//        ArrayList<Comic> temp;
+////        for (Genre g : temp = comicRepository.findAllByGenre(g)) {
+////        }
+//
+//        return null;
+//    }
+
 }

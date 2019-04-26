@@ -21,43 +21,44 @@
                 <div class="col-9 w-bio">
                     <h5 class="text-left my-4">My Curations</h5>
                     <div class="row scrollable-x no-fw scrollbar scrollbar-primary">
-<!--                        <div th:href="$@{curations}" class="col-3">-->
-<!--&lt;!&ndash;                            <div class="card bg-info d-inline-block mb-4 mx-1" style="max-width:14rem">&ndash;&gt;-->
-<!--&lt;!&ndash;                                <a class="card-underline no-a" th:href="">&ndash;&gt;-->
-<!--&lt;!&ndash;                                    <div class="card-body h-25 p-2">&ndash;&gt;-->
-<!--&lt;!&ndash;                                        &lt;!&ndash;                                            <h6 class="card-text text-center" th:text="${curation.getTitle()}">&ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;                                        <h6 class="card-text text-center" th:text="test">&ndash;&gt;-->
-<!--&lt;!&ndash;                                            <a class="no-a" href="currentComicRemixes.html">&ndash;&gt;-->
-<!--&lt;!&ndash;                                                &lt;!&ndash;                                                    <span th:if="${curation.isInSeries()}" class="badge badge-secondary" data-toggle="tooltip" data-placement="right" title="Series"><i class="fas fa-random"></i></span>&ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;                                            </a>&ndash;&gt;-->
-<!--&lt;!&ndash;                                        </h6>&ndash;&gt;-->
-<!--&lt;!&ndash;                                    </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                                    <div class="row">&ndash;&gt;-->
-<!--&lt;!&ndash;                                        <div class="col-sm-4 text-right"><i class="fas fa-chevron-up"></i></div>&ndash;&gt;-->
-<!--&lt;!&ndash;                                        <div class="col-sm-4 text-center"><i class="fas fa-comment-dots"></i></div>&ndash;&gt;-->
-<!--&lt;!&ndash;                                        <div class="col-sm-4 text-left"><i class="fas fa-random"></i></div>&ndash;&gt;-->
-<!--&lt;!&ndash;                                    </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                                    <div class="row">&ndash;&gt;-->
-<!--&lt;!&ndash;                                        &lt;!&ndash;                                            <div class="col-sm-4 text-right pr-0"><small th:value="${curation.getTotalVotes()}"></small></div>&ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;                                        &lt;!&ndash;                                            <div class="col-sm-4 text-center px-0"><small th:value="${curation.getTotalComments()}"></small></div>&ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;                                        <div class="col-sm-4 text-left pl-0"><small></small></div>&ndash;&gt;-->
-<!--&lt;!&ndash;                                    </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                                </a>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <div class="row">&ndash;&gt;-->
-<!--&lt;!&ndash;                                    <div class="col-3 mt-1 pr-0 text-center"><i class="fas fa-globe"></i></div>&ndash;&gt;-->
-<!--&lt;!&ndash;                                    <div class="col btn-group dropright">&ndash;&gt;-->
-<!--&lt;!&ndash;                                        <button class="btn btn-info text-right" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&ndash;&gt;-->
-<!--&lt;!&ndash;                                            <i class="fas fa-bars"></i>&ndash;&gt;-->
-<!--&lt;!&ndash;                                        </button>&ndash;&gt;-->
-<!--&lt;!&ndash;                                        &lt;!&ndash;                                            <div class="dropdown-menu">&ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;                                        &lt;!&ndash;                                                <a class="dropdown-item" th:href="@{comic/editComic/${creation.get_id()}}">Edit</a>&ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;                                        &lt;!&ndash;                                                <a class="dropdown-item" th:href="@{comic/removeComic/${creation.get_id()}}">Remove</a>&ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;                                        &lt;!&ndash;                                                <a class="dropdown-item" href="#">Add To Curation</a>&ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;                                        &lt;!&ndash;                                            </div>&ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;                                    </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                                </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                            </div>&ndash;&gt;-->
-<!--                        </div>-->
+                        <div class="col-3">
+                            <span th:text="${myCurations}"></span>
+<!--                            <div class="card bg-info d-inline-block mb-4 mx-1" style="max-width:14rem">-->
+<!--                                <a class="card-underline no-a" th:href="">-->
+<!--                                    <div class="card-body h-25 p-2">-->
+<!--                                        &lt;!&ndash;                                            <h6 class="card-text text-center" th:text="${curation.getTitle()}">&ndash;&gt;-->
+<!--                                        <h6 class="card-text text-center" th:text="test">-->
+<!--                                            <a class="no-a" href="currentComicRemixes.html">-->
+<!--                                                &lt;!&ndash;                                                    <span th:if="${curation.isInSeries()}" class="badge badge-secondary" data-toggle="tooltip" data-placement="right" title="Series"><i class="fas fa-random"></i></span>&ndash;&gt;-->
+<!--                                            </a>-->
+<!--                                        </h6>-->
+<!--                                    </div>-->
+<!--                                    <div class="row">-->
+<!--                                        <div class="col-sm-4 text-right"><i class="fas fa-chevron-up"></i></div>-->
+<!--                                        <div class="col-sm-4 text-center"><i class="fas fa-comment-dots"></i></div>-->
+<!--                                        <div class="col-sm-4 text-left"><i class="fas fa-random"></i></div>-->
+<!--                                    </div>-->
+<!--                                    <div class="row">-->
+<!--                                        &lt;!&ndash;                                            <div class="col-sm-4 text-right pr-0"><small th:value="${curation.getTotalVotes()}"></small></div>&ndash;&gt;-->
+<!--                                        &lt;!&ndash;                                            <div class="col-sm-4 text-center px-0"><small th:value="${curation.getTotalComments()}"></small></div>&ndash;&gt;-->
+<!--                                        <div class="col-sm-4 text-left pl-0"><small></small></div>-->
+<!--                                    </div>-->
+<!--                                </a>-->
+<!--                                <div class="row">-->
+<!--                                    <div class="col-3 mt-1 pr-0 text-center"><i class="fas fa-globe"></i></div>-->
+<!--                                    <div class="col btn-group dropright">-->
+<!--                                        <button class="btn btn-info text-right" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+<!--                                            <i class="fas fa-bars"></i>-->
+<!--                                        </button>-->
+<!--                                        &lt;!&ndash;                                            <div class="dropdown-menu">&ndash;&gt;-->
+<!--                                        &lt;!&ndash;                                                <a class="dropdown-item" th:href="@{comic/editComic/${creation.get_id()}}">Edit</a>&ndash;&gt;-->
+<!--                                        &lt;!&ndash;                                                <a class="dropdown-item" th:href="@{comic/removeComic/${creation.get_id()}}">Remove</a>&ndash;&gt;-->
+<!--                                        &lt;!&ndash;                                                <a class="dropdown-item" href="#">Add To Curation</a>&ndash;&gt;-->
+<!--                                        &lt;!&ndash;                                            </div>&ndash;&gt;-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+                        </div>
                     </div>
                 </div>
             </div>

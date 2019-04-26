@@ -28,15 +28,15 @@ public class User {
     private List<ObjectId> subscribers;
     private List<ObjectId> subscriptions;
     private List<ObjectId> comics;
-    private List<ComicCollection> collections;
+    private List<ComicCollection> curations;
     private String bio;
 
     public User(){
         this._id = new ObjectId();
         this.subscribers = new ArrayList<>();
         this.subscriptions = new ArrayList<>();
+        this.curations = new ArrayList<>();
         this.comics = new ArrayList<>();
-        this.collections = new ArrayList<>();
     }
 
     public void addToComics(Comic comic) {
@@ -51,5 +51,11 @@ public class User {
 
     public int getNumOfSubsriptions() {
         return this.subscriptions.size();
+    }
+
+    public void addCuration(ComicCollection curation) {
+        if (curation != null) {
+            this.curations.add(curation);
+        }
     }
 }
