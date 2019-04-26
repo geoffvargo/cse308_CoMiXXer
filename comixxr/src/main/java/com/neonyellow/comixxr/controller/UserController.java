@@ -30,7 +30,7 @@ public class UserController {
     private ComicService comicService;
 
     @RequestMapping(value = {"/subscribeToUser"}, method = RequestMethod.POST)
-    public ModelAndView subscribeToUser(@PathVariable("otherUser") String email) {
+    public ModelAndView subscribeToUser(@PathVariable("email") String email) {
         ModelAndView modelAndView = getMAVWithUser();
 
         User currUser = (User) modelAndView.getModel().get("currentUser");
