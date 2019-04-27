@@ -129,7 +129,7 @@ public class UserController {
     }
 
     /*GET CURRENT USER CURATIONS FROM DATABASE*/
-    @RequestMapping(value = {"/{curations}"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/curations"}, method = RequestMethod.GET)
     public ModelAndView getCurations(){
 
         ModelAndView modelAndView = getMAVWithUser();
