@@ -29,8 +29,8 @@ public class UserController {
     @Autowired
     private ComicService comicService;
 
-    @RequestMapping(value = {"/subscribeToUser"}, method = RequestMethod.POST)
-    public ModelAndView subscribeToUser(@PathVariable("email") String email) {
+    @RequestMapping(value = {"/subscribeToUser/{email}"}, method = RequestMethod.POST)
+    public ModelAndView subscribeToUser(@PathVariable String email) {
         ModelAndView modelAndView = getMAVWithUser();
 
         User currUser = (User) modelAndView.getModel().get("currentUser");
@@ -49,8 +49,8 @@ public class UserController {
         return modelAndView;
     }
 
-    @RequestMapping(value = {"/unsubscribeFromUser"}, method = RequestMethod.POST)
-    public ModelAndView unsubscribeFromUser(@PathVariable("email") String email) {
+    @RequestMapping(value = {"/unsubscribeFromUser/{email}"}, method = RequestMethod.POST)
+    public ModelAndView unsubscribeFromUser(@PathVariable String email) {
         ModelAndView modelAndView = getMAVWithUser();
 
         User currUser = (User) modelAndView.getModel().get("currentUser");
