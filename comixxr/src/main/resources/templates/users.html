@@ -15,7 +15,7 @@
 <body id="page-top">
     <div layout:fragment="content" id="content-wrapper">
       <div class="container-fluid">
-        <h1 class="text-center mb-4">Curations</h1>
+        <h1 class="text-center mb-4" th:text="${titleText}"></h1>
         <div class="row scrollable-y scrollbar scrollbar-primary mh-smaller">
           <div th:each="user : ${users}" class="col-3">
 

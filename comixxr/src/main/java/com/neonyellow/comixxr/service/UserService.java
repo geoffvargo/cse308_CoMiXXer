@@ -33,6 +33,14 @@ public class UserService implements IUserService {
         return userRepository.findAllByEnabled(true);
     }
 
+    public List<User> getUserListByIds(List<ObjectId> userIds){
+        List<User> users = new ArrayList();
+        for(ObjectId id : userIds){
+            users.add(userRepository.findBy_id(id));
+        }
+        return users;
+    }
+
     public void save(User user) {
         userRepository.save(user);
     }

@@ -120,6 +120,7 @@ public class UserController {
         List<User> users = userService.getUserList();
         users.remove(modelAndView.getModel().get("currentUser"));
         modelAndView.addObject("users",users);
+        modelAndView.addObject("titleText","Users");
         modelAndView.setViewName("users");
         return modelAndView;
     }
@@ -129,6 +130,9 @@ public class UserController {
         ModelAndView modelAndView = getMAVWithUser();
 
         User currUser = (User) modelAndView.getModel().get("currentUser");
+        if(user.toString() == currUser.get_id().toString()){
+            return new ModelAndView("redirect:/user/myProfile");
+        }
         User profileUser = userService.findUserById(user);
         modelAndView.addObject("myCreations", userService.getPublishedComics(profileUser));
         modelAndView.addObject("subscribers", profileUser.getNumOfSubscibers());
@@ -189,17 +193,29 @@ public class UserController {
     }
 
     /*GET LATEST POSTS OF CURRENT USER'S SUBSCRIPTIONS*/
-    @RequestMapping(value = {"/subscriptions"}, method = RequestMethod.GET)
-    public ModelAndView getSubsciptions(){
+    @RequestMapping(value = {"/getSubscribedTo/{userId}"}, method = RequestMethod.GET)
+    public ModelAndView getSubsciptions(@PathVariable ObjectId userId){
         ModelAndView modelAndView = getMAVWithUser();
+        User currUser = (User)modelAndView.getModel().get("currentUser");
+        User profileUser = userService.findUserById(userId);
+        List<ObjectId> userIds = profileUser.getSubscriptions();
+        List<User> users = userService.getUserListByIds(userIds);
+        modelAndView.addObject("users",users);
+        modelAndView.addObject("titleText","Subscriptions - " + profileUser.getFullname());
+        modelAndView.setViewName("users");
+        return modelAndView;
+    }
 
-        User currUser = (User) modelAndView.getModel().get("currentUser");
-//        ArrayList<>
-
-        modelAndView.addObject("subscriptions", currUser.getSubscriptions());
-
-        modelAndView.setViewName("subscriptions");
-
+    @RequestMapping(value = {"/getSubscribers/{userId}"}, method = RequestMethod.GET)
+    public ModelAndView getSubscibers(@PathVariable ObjectId userId){
+        ModelAndView modelAndView = getMAVWithUser();
+        User currUser = (User)modelAndView.getModel().get("currentUser");
+        User profileUser = userService.findUserById(userId);
+        List<ObjectId> userIds = profileUser.getSubscribers();
+        List<User> users = userService.getUserListByIds(userIds);
+        modelAndView.addObject("users",users);
+        modelAndView.addObject("titleText","Subscribers - " + profileUser.getFullname());
+        modelAndView.setViewName("users");
         return modelAndView;
     }
 
