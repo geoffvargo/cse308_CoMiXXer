@@ -30,7 +30,7 @@ public class UserController {
     @Autowired
     private ComicService comicService;
 
-    @RequestMapping(value = {"/subscribeToUser/{userId}"}, method = RequestMethod.POST)
+    @RequestMapping(value = {"/subscribeToUser/{userId}"}, method = RequestMethod.GET)
     public boolean subscribeToUser(@PathVariable ObjectId userId) {
         boolean ans = false;
         ModelAndView modelAndView = getMAVWithUser();
@@ -52,7 +52,7 @@ public class UserController {
         return ans;
     }
 
-    @RequestMapping(value = {"/unsubscribeFromUser/{userId}"}, method = RequestMethod.POST)
+    @RequestMapping(value = {"/unsubscribeFromUser/{userId}"}, method = RequestMethod.GET)
     public boolean unsubscribeFromUser(@PathVariable ObjectId userId) {
         boolean ans = false;
         ModelAndView modelAndView = getMAVWithUser();
@@ -144,14 +144,14 @@ public class UserController {
     }
 
     @RequestMapping(value = {"/updateBio"}, method = RequestMethod.POST)
-    public ModelAndView updateUserBio(@RequestBody MultiValueMap<String,String> data){
+    public boolean updateUserBio(@RequestBody MultiValueMap<String,String> data){
         ModelAndView mv = getMAVWithUser();
         User user = (User)mv.getModel().get("currentUser");
 
         user.setBio(data.getFirst("bioText"));
         userService.save(user);
         mv.setViewName("userSettings");
-        return mv;
+        return true;
     }
 
     /*GET CURRENT USER CURATIONS FROM DATABASE*/

@@ -63,28 +63,37 @@ $(document).ready(function(){
       $("#viewPane").html(upperCarousel+lowerCarousel);
     }
   }
-  $("#toggleViewBtn").click(toggleViewfn())
-});
-function toggleSubscribed(profileUserId){
-  if($("#subscribe_btn").value() === "Subscribe"){
-    $.get("user/subscribeToUser/"+profileUserId,
-        function(data){
-          if(data){
-            $("#subscribe_btn").value("Subscribed");
-            $("#subscribe_btn").addClass("btn-secondary");
-            $("#subscribe_btn").removeClass("btn-dark");
-          }
+  $("#toggleViewBtn").click(function(){toggleViewfn()});
+    $("#subscribe_btn").click(function(){toggleSubscribed()});
+    toggleSubscribed = function(){
+      var profileUserId = $("#userid").val();
+      if ($("#subscribe_btn").text() === "Subscribe") {
+        $.get("/user/subscribeToUser/" + profileUserId,
+            function (data) {
+              if (data) {
+                $("#subscribe_btn").text("Subscribed");
+                $("#subscribe_btn").removeClass("btn-secondary");
+                $("#subscribe_btn").addClass("btn-dark");
+              }
 
-        });
+            });
+      } else {
+        $.get("/user/unsubscribeFromUser/" + profileUserId,
+            function (data) {
+              if (data) {
+                $("#subscribe_btn").text("Subscribe");
+                $("#subscribe_btn").removeClass("btn-dark");
+                $("#subscribe_btn").addClass("btn-secondary");
+              }
+            });
+      }
+    }
+  });
+  var updateBio = function(){
+    var data = $("#bioText").val();
+    $.post("/user/updateBio",{"bioText" : data},function(){
+      alert("Bio updated successfully!");
+    })
+    return false;
   }
-  else{
-    $.get("user/unsubscribeFromUser/"+profileUserId,
-        function(data){
-          if(data){
-            $("#subscribe_btn").value("Subscribe");
-            $("#subscribe_btn").addClass("btn-dark");
-            $("#subscribe_btn").removeClass("btn-secondary");
-          }
-        });
-  }
-}x
+
