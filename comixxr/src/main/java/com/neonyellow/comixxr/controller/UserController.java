@@ -128,7 +128,7 @@ public class UserController {
         ModelAndView modelAndView = getMAVWithUser();
 
         User currUser = (User) modelAndView.getModel().get("currentUser");
-        User profileUser = userService.findUserBy_id(user);
+        User profileUser = userService.findUserById(user);
         modelAndView.addObject("myCreations", userService.getPublishedComics(profileUser));
         modelAndView.addObject("subscribers", profileUser.getNumOfSubscibers());
         modelAndView.addObject("subscribedTo", profileUser.getNumOfSubsriptions());
