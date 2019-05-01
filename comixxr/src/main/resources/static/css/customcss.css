@@ -106,3 +106,7 @@ background-color: #575656; }
 .w-bio{
   width:100vw;
 }
+
+.bio-wrap{
+  word-wrap: break-word;
+}

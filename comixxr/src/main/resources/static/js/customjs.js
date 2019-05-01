@@ -90,7 +90,6 @@ $(document).ready(function(){
       $("#viewPane").html(upperCarousel+lowerCarousel);
     }
   }
-  $("#toggleViewBtn").click(function(){toggleViewfn()});
     $("#subscribe_btn").click(function(){toggleSubscribed()});
     toggleSubscribed = function(){
       var profileUserId = $("#userid").val();
