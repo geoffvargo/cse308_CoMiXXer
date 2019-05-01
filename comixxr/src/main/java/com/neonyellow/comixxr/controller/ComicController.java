@@ -51,6 +51,56 @@ public class ComicController {
         return mv;
     }
 
+    @RequestMapping(value = {"upvote/{comicId}"}, method = RequestMethod.GET)
+    public boolean upVote(@PathVariable("comicId") ObjectId comicId){
+        Comic c = comicService.findBy_id(comicId);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userDetailsService.findUserByEmail(auth.getName());
+        for(ObjectId id : c.getDownVote()){
+            if(id.equals(user.get_id())){
+                c.removeDownvote(id);
+                break;
+            }
+        }
+        boolean exists = false;
+        for(ObjectId id : c.getUpVote()){
+            if(id.equals(user.get_id())){
+                exists = true;
+                break;
+            }
+        }
+        if(!exists){
+            c.addUpvote(user.get_id());
+        }
+        comicService.save(c);
+        return true;
+    }
+
+    @RequestMapping(value = {"downvote/{comicId}"}, method = RequestMethod.GET)
+    public boolean downVote(@PathVariable("comicId") ObjectId comicId){
+        Comic c = comicService.findBy_id(comicId);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userDetailsService.findUserByEmail(auth.getName());
+        for(ObjectId id : c.getUpVote()){
+            if(id.equals(user.get_id())){
+                c.removeUpvote(id);
+                break;
+            }
+        }
+        boolean exists = false;
+        for(ObjectId id : c.getDownVote()){
+            if(id.equals(user.get_id())){
+                exists = true;
+                break;
+            }
+        }
+        if(!exists){
+            c.addDownvote(user.get_id());
+        }
+        comicService.save(c);
+        return true;
+    }
+
     @RequestMapping(value = {"/save"}, method = RequestMethod.POST)
     public ModelAndView comicSave(@RequestBody MultiValueMap<String,String> data){
         ObjectId comicId = new ObjectId(data.getFirst("comicId"));

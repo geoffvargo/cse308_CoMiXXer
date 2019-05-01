@@ -4,6 +4,33 @@ $(document).ready(function(){
   if($("#viewPane").length){
     toggleViewfn();
   }
+  $("#upvote_btn").click(function(){
+    $.get("/user/comic/upvote/"+$("#comicId").val(),function(){
+      if($("#downvote_btn").hasClass("btn-secondary")){
+        $("#totalVotes").text(parseInt($("#totalVotes").text())+1 + "");
+      }
+      $("#upvote_btn").removeClass("btn-info");
+      $("#upvote_btn").addClass("btn-secondary");
+      $("#downvote_btn").removeClass("btn-secondary");
+      $("#downvote_btn").addClass("btn-info");
+      $("#totalVotes").text(parseInt($("#totalVotes").text())+1 + "");
+    })
+  })
+
+  $("#downvote_btn").click(function(){
+    $.get("/user/comic/downvote/"+$("#comicId").val(),function(){
+      if($("#upvote_btn").hasClass("btn-secondary")){
+        $("#totalVotes").text(parseInt($("#totalVotes").text())-1 + "");
+      }
+      $("#upvote_btn").addClass("btn-info");
+      $("#upvote_btn").removeClass("btn-secondary");
+      $("#downvote_btn").addClass("btn-secondary");
+      $("#downvote_btn").removeClass("btn-info");
+      $("#totalVotes").text(parseInt($("#totalVotes").text())-1 + "");
+
+    })
+  })
+
   $("#toggleViewBtn").click(function(){
     toggleViewfn();
   });

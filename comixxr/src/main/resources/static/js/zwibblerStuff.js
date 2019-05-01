@@ -29,7 +29,7 @@ function ZwibblerController(ctx){
                 alert("error")
             });
     };
-    
+
     $(document).ready(function(){
         if($("#isLoad").val()){
             raw_data = $("#raw_data").val();

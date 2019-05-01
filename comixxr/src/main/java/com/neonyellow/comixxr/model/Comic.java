@@ -6,6 +6,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -22,8 +23,8 @@ public class Comic {
     private ObjectId parent;
     private List<ObjectId> remixes;
     private boolean isRemix;
-    private int upVote;
-    private int downVote;
+    private List<ObjectId> upVote;
+    private List<ObjectId> downVote;
     private LocalDateTime age;
     private boolean isPublished;
     private Privacy privacy = Privacy.PRIVATE;
@@ -34,6 +35,8 @@ public class Comic {
         this.userId = userId;
         this.age = LocalDateTime.now();
         isInSeries = false;
+        this.upVote = new ArrayList();
+        this.downVote = new ArrayList();
     }
 
     /**
@@ -45,7 +48,7 @@ public class Comic {
     }
 
     public int getTotalVotes(){
-        return upVote-downVote;
+        return upVote.size()-downVote.size();
     }
 
     public int getTotalComments(){
@@ -54,5 +57,37 @@ public class Comic {
 
     public int getTotalRemixes(){
         return remixes.size();
+    }
+
+    public boolean containsUpvote(ObjectId id){
+        for(ObjectId id2 : upVote){
+            if(id2.equals(id))
+                return true;
+        }
+        return false;
+    }
+
+    public boolean containsDownvote(ObjectId id){
+        for(ObjectId id2 : downVote){
+            if(id2.equals(id))
+                return true;
+        }
+        return false;
+    }
+
+    public void addUpvote(ObjectId id){
+        upVote.add(id);
+    }
+
+    public void removeUpvote(ObjectId id){
+        upVote.remove(id);
+    }
+
+    public void addDownvote(ObjectId id){
+        downVote.add(id);
+    }
+
+    public void removeDownvote(ObjectId id){
+        downVote.remove(id);
     }
 }
