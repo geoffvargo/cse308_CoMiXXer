@@ -118,6 +118,7 @@ public class UserController {
     public ModelAndView getUsers(){
         ModelAndView modelAndView = getMAVWithUser();
         List<User> users = userService.getUserList();
+        users.remove(modelAndView.getModel().get("currentUser"));
         modelAndView.addObject("users",users);
         modelAndView.setViewName("users");
         return modelAndView;
@@ -135,7 +136,7 @@ public class UserController {
         modelAndView.addObject("userName", profileUser.getFullname());
         modelAndView.addObject("userBio", profileUser.getBio());
         modelAndView.addObject("numRemixes", userService.getNumRemixes(profileUser));
-        modelAndView.addObject("isSubscribed",currUser.getSubscriptions().contains(profileUser));
+        modelAndView.addObject("isSubscribed",currUser.getSubscriptions().contains(profileUser.get_id()));
         modelAndView.addObject("profileUser",profileUser);
 
         modelAndView.setViewName("userProfile");
