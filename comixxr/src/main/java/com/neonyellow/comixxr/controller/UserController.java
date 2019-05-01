@@ -30,12 +30,13 @@ public class UserController {
     @Autowired
     private ComicService comicService;
 
-    @RequestMapping(value = {"/subscribeToUser/{email}"}, method = RequestMethod.POST)
-    public boolean subscribeToUser(@PathVariable String email) {
+    @RequestMapping(value = {"/subscribeToUser/{userId}"}, method = RequestMethod.POST)
+    public boolean subscribeToUser(@PathVariable ObjectId userId) {
+        boolean ans = false;
         ModelAndView modelAndView = getMAVWithUser();
 
         User currUser = (User) modelAndView.getModel().get("currentUser");
-        User otherUser = userService.findUserByEmail(email);
+        User otherUser = userService.findUserById(userId);
 
         if (otherUser != null && !currUser.getSubscriptions().contains((Object)(otherUser.get_id()))) {
             currUser.addToSubscriptions(otherUser);
@@ -43,19 +44,21 @@ public class UserController {
 
             userService.save(currUser);
             userService.save(otherUser);
+            ans = true;
         }
 
         modelAndView.setViewName("addToMySubscriptions");
 
-        return true;
+        return ans;
     }
 
-    @RequestMapping(value = {"/unsubscribeFromUser/{email}"}, method = RequestMethod.POST)
-    public ModelAndView unsubscribeFromUser(@PathVariable String email) {
+    @RequestMapping(value = {"/unsubscribeFromUser/{userId}"}, method = RequestMethod.POST)
+    public boolean unsubscribeFromUser(@PathVariable ObjectId userId) {
+        boolean ans = false;
         ModelAndView modelAndView = getMAVWithUser();
 
         User currUser = (User) modelAndView.getModel().get("currentUser");
-        User otherUser = userService.findUserByEmail(email);
+        User otherUser = userService.findUserById(userId);
 
         if (otherUser != null && currUser.getSubscriptions().contains((Object)(otherUser.get_id()))) {
             currUser.removeFromSubscriptions(otherUser);
@@ -63,11 +66,12 @@ public class UserController {
 
             userService.save(currUser);
             userService.save(otherUser);
+            ans = true;
         }
 
         modelAndView.setViewName("removeFromMySubscriptions");
 
-        return modelAndView;
+        return ans;
     }
 
     @RequestMapping(value = {"/draw"}, method = RequestMethod.POST)

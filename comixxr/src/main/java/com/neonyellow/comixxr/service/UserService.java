@@ -25,7 +25,7 @@ public class UserService implements IUserService {
         return userRepository.findByEmail(email);
     }
 
-    public User findUserBy_id(ObjectId id){
+    public User findUserByIId(ObjectId id){
         return userRepository.findBy_id(id);
     }
 
