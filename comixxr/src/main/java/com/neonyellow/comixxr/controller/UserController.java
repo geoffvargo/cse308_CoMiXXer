@@ -130,7 +130,7 @@ public class UserController {
         ModelAndView modelAndView = getMAVWithUser();
 
         User currUser = (User) modelAndView.getModel().get("currentUser");
-        if(user.toString() == currUser.get_id().toString()){
+        if(user.equals(currUser.get_id())){
             return new ModelAndView("redirect:/user/myProfile");
         }
         User profileUser = userService.findUserById(user);
@@ -201,7 +201,7 @@ public class UserController {
         List<ObjectId> userIds = profileUser.getSubscriptions();
         List<User> users = userService.getUserListByIds(userIds);
         modelAndView.addObject("users",users);
-        modelAndView.addObject("titleText","Subscriptions - " + profileUser.getFullname());
+        modelAndView.addObject("titleText",profileUser.getFullname() + "'s Subscriptions");
         modelAndView.setViewName("users");
         return modelAndView;
     }
@@ -214,7 +214,7 @@ public class UserController {
         List<ObjectId> userIds = profileUser.getSubscribers();
         List<User> users = userService.getUserListByIds(userIds);
         modelAndView.addObject("users",users);
-        modelAndView.addObject("titleText","Subscribers - " + profileUser.getFullname());
+        modelAndView.addObject("titleText",profileUser.getFullname() + "'s Subscribers");
         modelAndView.setViewName("users");
         return modelAndView;
     }

@@ -2,6 +2,7 @@ package com.neonyellow.comixxr.controller;
 
 import com.neonyellow.comixxr.model.User;
 import com.neonyellow.comixxr.service.ComixUserDetailsService;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -22,6 +23,11 @@ public class HomeController {
     public ModelAndView getIndex(){
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (!(auth instanceof AnonymousAuthenticationToken)) {
+
+            /* The user is logged in :) */
+            return new ModelAndView("forward:/browse");
+        }
         User user = userService.findUserByEmail(auth.getName());
         modelAndView.setViewName("index");
 
