@@ -192,6 +192,21 @@ public class UserController {
         return modelAndView;
     }
 
+    @RequestMapping(value = {"/mySubscriptions"}, method = RequestMethod.GET)
+    public ModelAndView getMySubscriptions() {
+        ModelAndView modelAndView = getMAVWithUser();
+
+        User currUser = (User) modelAndView.getModel().get("currentUser");
+        List<ObjectId> userIds = currUser.getSubscriptions();
+        List<User> users = userService.getUserListByIds(userIds);
+
+        modelAndView.addObject("users",users);
+        modelAndView.addObject("titleText",currUser.getFullname() + "'s Subscriptions");
+        modelAndView.setViewName("users");
+
+        return modelAndView;
+    }
+
     /*GET LATEST POSTS OF CURRENT USER'S SUBSCRIPTIONS*/
     @RequestMapping(value = {"/getSubscribedTo/{userId}"}, method = RequestMethod.GET)
     public ModelAndView getSubsciptions(@PathVariable ObjectId userId){
