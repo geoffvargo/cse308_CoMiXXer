@@ -83,3 +83,4 @@ comixxer/.idea/workspace.xml
 comixxer/target/classes/application.properties
 comixxer/target/classes/com/neonyellow/comixxer/ComixxerApplication.class
 .idea/mongoSettings.xml
+comixxr/src/test/java/com/neonyellow/comixxr/controller/UserControllerTest.java
