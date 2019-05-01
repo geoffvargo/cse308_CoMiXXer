@@ -64,5 +64,27 @@ $(document).ready(function(){
     }
   }
   $("#toggleViewBtn").click(toggleViewfn())
-
 });
+function toggleSubscribed(profileUserId){
+  if($("#subscribe_btn").value() === "Subscribe"){
+    $.get("user/subscribeToUser/"+profileUserId,
+        function(data){
+          if(data){
+            $("#subscribe_btn").value("Subscribed");
+            $("#subscribe_btn").addClass("btn-secondary");
+            $("#subscribe_btn").removeClass("btn-dark");
+          }
+
+        });
+  }
+  else{
+    $.get("user/unsubscribeFromUser/"+profileUserId,
+        function(data){
+          if(data){
+            $("#subscribe_btn").value("Subscribe");
+            $("#subscribe_btn").addClass("btn-dark");
+            $("#subscribe_btn").removeClass("btn-secondary");
+          }
+        });
+  }
+}x

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserService implements IUserService {
@@ -22,6 +23,14 @@ public class UserService implements IUserService {
 
     public User findUserByEmail(String email) {
         return userRepository.findByEmail(email);
+    }
+
+    public User findUserBy_id(ObjectId id){
+        return userRepository.findBy_id(id);
+    }
+
+    public List<User> getUserList(){
+        return userRepository.findAllByEnabled(true);
     }
 
     public void save(User user) {

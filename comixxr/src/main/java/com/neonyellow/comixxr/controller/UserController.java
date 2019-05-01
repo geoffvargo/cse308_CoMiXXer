@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/user")
@@ -30,7 +31,7 @@ public class UserController {
     private ComicService comicService;
 
     @RequestMapping(value = {"/subscribeToUser/{email}"}, method = RequestMethod.POST)
-    public ModelAndView subscribeToUser(@PathVariable String email) {
+    public boolean subscribeToUser(@PathVariable String email) {
         ModelAndView modelAndView = getMAVWithUser();
 
         User currUser = (User) modelAndView.getModel().get("currentUser");
@@ -46,7 +47,7 @@ public class UserController {
 
         modelAndView.setViewName("addToMySubscriptions");
 
-        return modelAndView;
+        return true;
     }
 
     @RequestMapping(value = {"/unsubscribeFromUser/{email}"}, method = RequestMethod.POST)
@@ -109,11 +110,32 @@ public class UserController {
         return modelAndView;
     }
 
-    @RequestMapping(value = {"/userProfile"}, method = RequestMethod.GET)
-    public ModelAndView getUserProfile(){
+    @RequestMapping(value={"/users"},method = RequestMethod.GET)
+    public ModelAndView getUsers(){
         ModelAndView modelAndView = getMAVWithUser();
-        //TODO: add creations, drafts, user information for different user
+        List<User> users = userService.getUserList();
+        modelAndView.addObject("users",users);
+        modelAndView.setViewName("users");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = {"/userProfile/{user}"}, method = RequestMethod.GET)
+    public ModelAndView getUserProfile(@PathVariable ObjectId user){
+        ModelAndView modelAndView = getMAVWithUser();
+
+        User currUser = (User) modelAndView.getModel().get("currentUser");
+        User profileUser = userService.findUserBy_id(user);
+        modelAndView.addObject("myCreations", userService.getPublishedComics(profileUser));
+        modelAndView.addObject("subscribers", profileUser.getNumOfSubscibers());
+        modelAndView.addObject("subscribedTo", profileUser.getNumOfSubsriptions());
+        modelAndView.addObject("userName", profileUser.getFullname());
+        modelAndView.addObject("userBio", profileUser.getBio());
+        modelAndView.addObject("numRemixes", userService.getNumRemixes(profileUser));
+        modelAndView.addObject("isSubscribed",currUser.getSubscriptions().contains(profileUser));
+        modelAndView.addObject("profileUser",profileUser);
+
         modelAndView.setViewName("userProfile");
+
         return modelAndView;
     }
 
