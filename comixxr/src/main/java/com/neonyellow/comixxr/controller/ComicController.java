@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.io.*;
 import java.io.IOException;
 import java.util.List;
+import javax.jws.WebParam;
 import javax.xml.bind.DatatypeConverter;
 
 @RestController
@@ -118,9 +119,9 @@ public class ComicController {
         comic.setRaw_data(comicData);
 
         List<Object> z = data.get("imageData[]");
+
         for (Object ob: z) {
             String pg = (String)ob;
-            //createComicPageFile(pg);
             comic.getImage_data().add(pg);
         }
 
@@ -129,6 +130,33 @@ public class ComicController {
         return null;
     }
 
+    @RequestMapping(value = {"/viewComic/{comicId}"}, method = RequestMethod.GET)
+    public ModelAndView viewComic(@PathVariable("comicId") String comicId){
+        ModelAndView mv = getMAVWithUser();
+        ObjectId id = new ObjectId(comicId);
+
+        Comic comic = comicService.findBy_id(id);
+
+        List<String> pages = comic.getImage_data();
+
+        int len = pages.size();
+        for(int i = 0; i<len; i++){
+            int pageNum = i+1;
+            createComicPageFile(pages.get(i), String.valueOf(pageNum));
+        }
+
+        mv.addObject("numPages", len);
+        mv.setViewName("viewComic");
+
+        User currUser = (User)mv.getModel().get("currentUser");
+        mv.setViewName("viewComic");
+        mv.addObject("comic",comic);
+        mv.addObject("upvoted",comic.containsUpvote(currUser.get_id()));
+        mv.addObject("downvoted",comic.containsDownvote(currUser.get_id()));
+
+        return mv;
+
+    }
 
 
     @RequestMapping(value = {"/publish"}, method = RequestMethod.POST)
@@ -224,7 +252,7 @@ public class ComicController {
         return modelAndView;
     }
 
-    private void createComicPageFile(String imageURI) {
+    private void createComicPageFile(String imageURI, String pageNum) {
         String fileSeparator = System.getProperty("file.separator");
 
         String[] strings = imageURI.split(",");
@@ -242,9 +270,10 @@ public class ComicController {
         }
         //convert base64 string to binary data
         byte[] data = DatatypeConverter.parseBase64Binary(strings[1]);
-        String path = "img"+fileSeparator+"comicPages"+fileSeparator+"page." + extension;
+
+        String path = "src"+fileSeparator+"main"+fileSeparator+"resources"+fileSeparator+"static"+fileSeparator+"img"+fileSeparator+"comicPages"+fileSeparator+"page"+pageNum+"." + extension;
         File file = new File(path);
-        if(file.mkdirs()){
+
             try {
                 if(file.createNewFile()){
                     OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(file));
@@ -253,7 +282,7 @@ public class ComicController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
+
 
 
 
