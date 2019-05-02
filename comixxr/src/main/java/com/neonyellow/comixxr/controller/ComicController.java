@@ -140,12 +140,13 @@ public class ComicController {
         List<String> pages = comic.getImage_data();
 
         int len = pages.size();
-        for(int i = 0; i<len; i++){
-            int pageNum = i+1;
-            createComicPageFile(pages.get(i), String.valueOf(pageNum));
-        }
+//        for(int i = 0; i<len; i++){
+//            int pageNum = i+1;
+//            createComicPageFile(pages.get(i), String.valueOf(pageNum));
+//        }
 
         mv.addObject("numPages", len);
+        mv.addObject("pages",pages);
         mv.setViewName("viewComic");
 
         User currUser = (User)mv.getModel().get("currentUser");
