@@ -82,6 +82,13 @@ public class HomeController {
         return modelAndView;
     }
 
+    @RequestMapping(value = "/createCuration", method = RequestMethod.GET)
+    public ModelAndView getCreateCuration() {
+        ModelAndView modelAndView = getMAVWithUser();
+        modelAndView.setViewName("createCuration");
+        return modelAndView;
+    }
+
     @RequestMapping(value = "/seriesGenre", method = RequestMethod.GET)
     public ModelAndView getSeriesGenre() {
         ModelAndView modelAndView = getMAVWithUser();
