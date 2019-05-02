@@ -181,9 +181,12 @@ public class UserController {
         ModelAndView modelAndView = getMAVWithUser();
         User currUser = (User) modelAndView.getModel().get("currentUser");
 
-        currUser.addToCuration(curation, comic);
+//        currUser.addToCuration(curation, comic);
 
-        userService.save(currUser);
+        if (currUser.addToCuration(curation, comic)) {
+            userService.save(currUser);
+            ans = true;
+        }
 
         return ans;
     }
