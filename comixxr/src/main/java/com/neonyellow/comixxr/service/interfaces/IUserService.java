@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public interface IUserService {
     Comic findComicBy_id(ObjectId id);
-    ArrayList<Comic> getPublishedComics(User user);
+    ArrayList<Comic> getPublishedComics(User user, boolean isPrivate);
     ArrayList<Comic> getDrafts(User user);
     int getNumRemixes(User user);
 }

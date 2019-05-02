@@ -4,7 +4,6 @@ import com.neonyellow.comixxr.model.Comic;
 import com.neonyellow.comixxr.model.ComicCollection;
 import com.neonyellow.comixxr.model.Genre;
 import com.neonyellow.comixxr.model.User;
-import com.neonyellow.comixxr.repository.UserRepository;
 import com.neonyellow.comixxr.service.ComicService;
 import com.neonyellow.comixxr.service.ComixUserDetailsService;
 import com.neonyellow.comixxr.service.UserService;
@@ -90,7 +89,7 @@ public class UserController {
 
         User currUser = (User) modelAndView.getModel().get("currentUser");
 
-        modelAndView.addObject("myCreations", userService.getPublishedComics(currUser));
+        modelAndView.addObject("myCreations", userService.getPublishedComics(currUser, true));
         modelAndView.addObject("myDrafts", userService.getDrafts(currUser));
         modelAndView.addObject("subscribers", currUser.getNumOfSubscibers());
         modelAndView.addObject("subscribedTo", currUser.getNumOfSubsriptions());
@@ -135,7 +134,7 @@ public class UserController {
             return new ModelAndView("redirect:/user/myProfile");
         }
         User profileUser = userService.findUserById(user);
-        modelAndView.addObject("myCreations", userService.getPublishedComics(profileUser));
+        modelAndView.addObject("myCreations", userService.getPublishedComics(profileUser, false));
         modelAndView.addObject("subscribers", profileUser.getNumOfSubscibers());
         modelAndView.addObject("subscribedTo", profileUser.getNumOfSubsriptions());
         modelAndView.addObject("userName", profileUser.getFullname());
@@ -201,6 +200,11 @@ public class UserController {
         ComicCollection curation = new ComicCollection(currUser.get_id());
 
         curation.setTitle(formData.getFirst("curationName"));
+        if (currUser.addCuration(curation)) {
+            userService.save(currUser);
+            ans = true;
+        }
+
 
         return ans;
     }

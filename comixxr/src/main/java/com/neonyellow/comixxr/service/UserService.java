@@ -2,6 +2,7 @@ package com.neonyellow.comixxr.service;
 
 
 import com.neonyellow.comixxr.model.Comic;
+import com.neonyellow.comixxr.model.Privacy;
 import com.neonyellow.comixxr.model.User;
 import com.neonyellow.comixxr.repository.ComicRepository;
 import com.neonyellow.comixxr.repository.UserRepository;
@@ -64,14 +65,20 @@ public class UserService implements IUserService {
         return ans;
     }
 
-    public ArrayList<Comic> getPublishedComics(User user) {
+    public ArrayList<Comic> getPublishedComics(User user, boolean isPrivate) {
         ArrayList<Comic> ans = new ArrayList<>();
 
         if (!user.getComics().isEmpty()) {
             for (ObjectId id : user.getComics()) {
                 Comic c = this.findComicBy_id(id);
                 if (c.isPublished()) {
-                    ans.add(c);
+                    if (c.getPrivacy() != Privacy.PRIVATE) {
+                        ans.add(c);
+                    } else {
+                        if (isPrivate) {
+                            ans.add(c);
+                        }
+                    }
                 }
             }
         }
