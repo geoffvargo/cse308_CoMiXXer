@@ -4,6 +4,7 @@ import com.neonyellow.comixxr.model.Comic;
 import com.neonyellow.comixxr.model.ComicCollection;
 import com.neonyellow.comixxr.model.Genre;
 import com.neonyellow.comixxr.model.User;
+import com.neonyellow.comixxr.service.ComicCollectionService;
 import com.neonyellow.comixxr.service.ComicService;
 import com.neonyellow.comixxr.service.ComixUserDetailsService;
 import com.neonyellow.comixxr.service.UserService;
@@ -29,6 +30,9 @@ public class UserController {
 
     @Autowired
     private ComicService comicService;
+
+    @Autowired
+    private ComicCollectionService comicCollectionService;
 
     @RequestMapping(value = {"/subscribeToUser/{userId}"}, method = RequestMethod.GET)
     public boolean subscribeToUser(@PathVariable ObjectId userId) {
@@ -202,6 +206,7 @@ public class UserController {
         curation.setTitle(formData.getFirst("curationName"));
         if (currUser.addCuration(curation)) {
             userService.save(currUser);
+            comicCollectionService.save(curation);
             ans = true;
         }
 
