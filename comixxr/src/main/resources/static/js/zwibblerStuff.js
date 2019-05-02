@@ -2,12 +2,25 @@ function ZwibblerController(ctx){
     var saved = null;
     var id = null;
     var raw_data;
+    var imgArray = [];
+    var old_page = ctx.getCurrentPage();
+
+    var x = [];
+    var y = [];
 
     ctx.onSave = function() {
-        saved = ctx.save("zwibbler3");
-        id = $("#comicId").val();
+        x[0] = ctx.save("zwibbler3");
+        y[0] = $("#comicId").val();
 
-        $.post("/user/comic/save", {comicData: saved, comicId: id})
+        var page;
+        for(page = 0; page < ctx.getPageCount(); page++) {
+            ctx.setCurrentPage(page);
+            imgArray[page] = ctx.save("png");
+        }
+
+        ctx.setCurrentPage(old_page);
+
+        $.post("/user/comic/save", {comicData: x, imageData: imgArray, comicId: y})
             .done(function() {
                 alert("Comic saved");
             })

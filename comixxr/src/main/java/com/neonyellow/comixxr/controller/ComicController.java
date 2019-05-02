@@ -13,6 +13,10 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.*;
+
+import sun.misc.BASE64Decoder;
+
 @RestController
 @RequestMapping("/user/comic")
 public class ComicController {
@@ -102,16 +106,33 @@ public class ComicController {
     }
 
     @RequestMapping(value = {"/save"}, method = RequestMethod.POST)
-    public ModelAndView comicSave(@RequestBody MultiValueMap<String,String> data){
-        ObjectId comicId = new ObjectId(data.getFirst("comicId"));
-        Comic comic = comicService.findBy_id(comicId);
-        String comicData = data.getFirst("comicData");
+    public ModelAndView comicSave(@RequestBody MultiValueMap<String,String[]> data){
+//        ObjectId comicId = new ObjectId(id);
+//        Comic comic = comicService.findBy_id(comicId);
+//        String comicData = comicD;
+        String[] imgData = data.getFirst("imageData");
 
-        comic.setRaw_data(comicData);
-        comicService.save(comic);
+//        comic.setRaw_data(comicData);
+//
+//        comicService.save(comic);
 
         return null;
     }
+
+//    @RequestMapping(value = {"/view/{comicId}"}, method = RequestMethod.GET)
+//    public String viewComic(@PathVariable("comicId") String comicId){
+//        ModelAndView mv = getMAVWithUser();
+//        mv.setViewName("viewComic");
+//
+//        ObjectId comicid = new ObjectId(comicId);
+//        byte[] pdf_bytes = comicService.findBy_id(comicid).getPdf_data();
+//
+//        String pdfData = new String(pdf_bytes);
+//
+//        String base64encoding = pdfData.split(",")[1];
+//
+//        return pdfData;
+//    }
 
     @RequestMapping(value = {"/publish"}, method = RequestMethod.POST)
     public ModelAndView comicPublish(@RequestBody MultiValueMap<String, String> data){

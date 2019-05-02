@@ -1,6 +1,7 @@
 package com.neonyellow.comixxr.model;
 
 import lombok.Data;
+import org.bson.types.Binary;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -16,6 +17,7 @@ public class Comic {
     private ObjectId _id;
     private ObjectId userId;
     private String raw_data;
+    private byte[] pdf_data;
     private String author;
     private String title;
     private String synopsis;
