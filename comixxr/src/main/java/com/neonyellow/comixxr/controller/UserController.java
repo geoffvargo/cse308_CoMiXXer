@@ -234,21 +234,6 @@ public class UserController {
         return modelAndView;
     }
 
-    /*GET COMIC TO VIEW*/
-    @RequestMapping(value = "/viewComic/{comicId}", method = RequestMethod.GET)
-    public ModelAndView getComic(@PathVariable String comicId){
-        Comic comic = comicService.findBy_id(new ObjectId(comicId));
-        ModelAndView modelAndView = getMAVWithUser();
-        User currUser = (User)modelAndView.getModel().get("currentUser");
-        modelAndView.setViewName("viewComic");
-        modelAndView.addObject("numPages",3);
-        modelAndView.addObject("comic",comic);
-        modelAndView.addObject("upvoted",comic.containsUpvote(currUser.get_id()));
-        modelAndView.addObject("downvoted",comic.containsDownvote(currUser.get_id()));
-        //TODO: save all pages to img/comicPages/pagei
-        return modelAndView;
-    }
-
 //    /*GET USER BROWSE PAGE*/
 //    @RequestMapping(value = {"/browse"}, method = RequestMethod.GET)
 //    public ModelAndView getBrowse(){
