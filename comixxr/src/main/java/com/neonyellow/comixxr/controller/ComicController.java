@@ -120,7 +120,7 @@ public class ComicController {
         List<Object> z = data.get("imageData[]");
         for (Object ob: z) {
             String pg = (String)ob;
-            createComicPageFile(pg);
+            //createComicPageFile(pg);
             comic.getImage_data().add(pg);
         }
 
@@ -244,11 +244,18 @@ public class ComicController {
         byte[] data = DatatypeConverter.parseBase64Binary(strings[1]);
         String path = "img"+fileSeparator+"comicPages"+fileSeparator+"page." + extension;
         File file = new File(path);
-        try (OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(file))) {
-            outputStream.write(data);
-        } catch (IOException e) {
-            e.printStackTrace();
+        if(file.mkdirs()){
+            try {
+                if(file.createNewFile()){
+                    OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(file));
+                    outputStream.write(data);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
+
+
 
 
     }
