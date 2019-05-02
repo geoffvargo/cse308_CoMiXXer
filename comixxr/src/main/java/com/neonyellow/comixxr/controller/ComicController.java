@@ -13,6 +13,11 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.*;
+import java.io.IOException;
+import java.util.List;
+import javax.xml.bind.DatatypeConverter;
+
 @RestController
 @RequestMapping("/user/comic")
 public class ComicController {
@@ -102,16 +107,29 @@ public class ComicController {
     }
 
     @RequestMapping(value = {"/save"}, method = RequestMethod.POST)
-    public ModelAndView comicSave(@RequestBody MultiValueMap<String,String> data){
-        ObjectId comicId = new ObjectId(data.getFirst("comicId"));
+    public ModelAndView comicSave(@RequestBody MultiValueMap<String,Object> data){
+        List<Object> x = data.get("comicId[]");
+        String id = (String)x.get(0);
+        ObjectId comicId = new ObjectId(id);
         Comic comic = comicService.findBy_id(comicId);
-        String comicData = data.getFirst("comicData");
 
+        List<Object> y = data.get("comicData[]");
+        String comicData = (String)y.get(0);
         comic.setRaw_data(comicData);
+
+        List<Object> z = data.get("imageData[]");
+        for (Object ob: z) {
+            String pg = (String)ob;
+            createComicPageFile(pg);
+            comic.getImage_data().add(pg);
+        }
+
         comicService.save(comic);
 
         return null;
     }
+
+
 
     @RequestMapping(value = {"/publish"}, method = RequestMethod.POST)
     public ModelAndView comicPublish(@RequestBody MultiValueMap<String, String> data){
@@ -204,5 +222,34 @@ public class ComicController {
         User user = userDetailsService.findUserByEmail(auth.getName());
         modelAndView.addObject("currentUser", user);
         return modelAndView;
+    }
+
+    private void createComicPageFile(String imageURI) {
+        String fileSeparator = System.getProperty("file.separator");
+
+        String[] strings = imageURI.split(",");
+        String extension;
+        switch (strings[0]) {//check image's extension
+            case "data:image/jpeg;base64":
+                extension = "jpeg";
+                break;
+            case "data:image/png;base64":
+                extension = "png";
+                break;
+            default://should write cases for more images types
+                extension = "jpg";
+                break;
+        }
+        //convert base64 string to binary data
+        byte[] data = DatatypeConverter.parseBase64Binary(strings[1]);
+        String path = "img"+fileSeparator+"comicPages"+fileSeparator+"page." + extension;
+        File file = new File(path);
+        try (OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(file))) {
+            outputStream.write(data);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
     }
 }

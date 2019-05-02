@@ -16,6 +16,7 @@ public class Comic {
     private ObjectId _id;
     private ObjectId userId;
     private String raw_data;
+    private List<String> image_data;
     private String author;
     private String title;
     private String synopsis;
@@ -37,6 +38,7 @@ public class Comic {
         isInSeries = false;
         this.upVote = new ArrayList();
         this.downVote = new ArrayList();
+        this.image_data = new ArrayList<>();
     }
 
     /**
