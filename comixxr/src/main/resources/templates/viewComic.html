@@ -16,9 +16,7 @@
     <div layout:fragment="content" id="content-wrapper">
       <input type="hidden" id="numPages" th:value="${numPages}"/>
       <input type="hidden" id="comicId" th:value="${comic.get_id().toHexString()}"/>
-      <div th:each="page,iStat : ${pages}" id="pageInfo">
-        <input type="hidden" th:id="'page'+ ${iStat.index+1}" th:value="${page}"/>
-      </div>
+      <input th:each="page,iStat : ${pages}" type="hidden" th:id="'page'+ ${iStat.index+1}" th:value="${page}"/>
       <div class="container">
         <div class="row">
           <div class="col-4"></div>
