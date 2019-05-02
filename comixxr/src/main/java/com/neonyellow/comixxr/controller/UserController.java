@@ -3,6 +3,7 @@ package com.neonyellow.comixxr.controller;
 import com.neonyellow.comixxr.model.Comic;
 import com.neonyellow.comixxr.model.ComicCollection;
 import com.neonyellow.comixxr.model.Genre;
+import com.neonyellow.comixxr.model.Privacy;
 import com.neonyellow.comixxr.model.User;
 import com.neonyellow.comixxr.service.ComicCollectionService;
 import com.neonyellow.comixxr.service.ComicService;
@@ -110,7 +111,14 @@ public class UserController {
     public ModelAndView comicsByGenre(@PathVariable("genre") Genre genre) {
         ModelAndView modelAndView = getMAVWithUser();
 
-        modelAndView.addObject("comics", comicService.findAllByGenre(genre));
+        List<Comic> allByGenre = comicService.findAllByGenre(genre);
+
+        ArrayList<Comic> ans = new ArrayList<>();
+
+        allByGenre.forEach(c ->{if (c.getPrivacy() != Privacy.PRIVATE) {  ans.add(c);}});
+
+        modelAndView.addObject("comics", ans);
+
         modelAndView.addObject("category", genre.toString());
 
         modelAndView.setViewName("singlesGenre");
