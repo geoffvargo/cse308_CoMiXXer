@@ -65,12 +65,15 @@ public class User {
         }
     }
 
-    public void addToCuration(ObjectId curation, ObjectId comic) {
+    public boolean addToCuration(ObjectId curation, ObjectId comic) {
+        boolean ans = false;
         int index = Collections.binarySearch(curations, curation);
         if (index >= 0) {
             ComicCollection currCollection = ccRepository.findBy_id(this.curations.get(index));
             currCollection.addToCollection(comic);
+            ans = true;
         }
+        return ans;
     }
 
     public void addToSubscriptions(User user) {
