@@ -1,6 +1,7 @@
 package com.neonyellow.comixxr.controller;
 
 import com.neonyellow.comixxr.model.Comic;
+import com.neonyellow.comixxr.model.ComicCollection;
 import com.neonyellow.comixxr.model.Genre;
 import com.neonyellow.comixxr.model.User;
 import com.neonyellow.comixxr.repository.UserRepository;
@@ -164,13 +165,41 @@ public class UserController {
     public ModelAndView getCurations(){
 
         ModelAndView modelAndView = getMAVWithUser();
-        String title = "My Curations";
+        User currUser = (User) modelAndView.getModel().get("currentUser");
 
-        modelAndView.addObject("myCurations", title);
+        modelAndView.addObject("curationList", currUser.getCurations());
 
         modelAndView.setViewName("curations");
 
         return modelAndView;
+    }
+
+    @RequestMapping(value = {"/addToCurations/{comic}/{curation}"}, method = RequestMethod.POST)
+    public boolean addToCreation(@PathVariable ObjectId comic, @PathVariable ObjectId curation) {
+        boolean ans = false;
+
+        ModelAndView modelAndView = getMAVWithUser();
+        User currUser = (User) modelAndView.getModel().get("currentUser");
+
+        currUser.addToCuration(curation, comic);
+
+        userService.save(currUser);
+
+        return ans;
+    }
+
+    @RequestMapping(value = {"/createNewCuration"}, method = RequestMethod.POST)
+    public boolean createCuration(@RequestBody MultiValueMap<String,String> formData) {
+        boolean ans = false;
+
+        ModelAndView modelAndView = getMAVWithUser();
+        User currUser = (User) modelAndView.getModel().get("currentUser");
+
+        ComicCollection curation = new ComicCollection(currUser.get_id());
+
+        curation.setTitle(formData.getFirst("curationName"));
+
+        return ans;
     }
 
     @RequestMapping(value = {"/topComics"}, method = RequestMethod.GET)

@@ -1,5 +1,7 @@
 package com.neonyellow.comixxr.model;
 
+import com.neonyellow.comixxr.repository.CcRepository;
+
 import lombok.Data;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
@@ -9,6 +11,8 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -28,8 +32,10 @@ public class User {
     private List<ObjectId> subscribers;
     private List<ObjectId> subscriptions;
     private List<ObjectId> comics;
-    private List<ComicCollection> curations;
+    private List<ObjectId> curations;
     private String bio;
+
+    CcRepository ccRepository;
 
     public User(){
         this._id = new ObjectId();
@@ -55,7 +61,15 @@ public class User {
 
     public void addCuration(ComicCollection curation) {
         if (curation != null) {
-            this.curations.add(curation);
+            this.curations.add(curation.get_id());
+        }
+    }
+
+    public void addToCuration(ObjectId curation, ObjectId comic) {
+        int index = Collections.binarySearch(curations, curation);
+        if (index >= 0) {
+            ComicCollection currCollection = ccRepository.findBy_id(this.curations.get(index));
+            currCollection.addToCollection(comic);
         }
     }
 
