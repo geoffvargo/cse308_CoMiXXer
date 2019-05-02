@@ -44,7 +44,7 @@ $(document).ready(function(){
       $("#toggleViewIcon").addClass("fa-angle-double-down");
       var downView = "";
       for(var i = 1; i <= parseInt($("#numPages").val());i++){
-        downView+="<img class='d-md-block w-100' src='/img/comicPages/page"+i+".png' alt='First slide'/>";
+        downView+="<img class='d-md-block w-100' src='"+ $("#page" + i).val()+"' alt='First slide'/>";
       }
       $("#viewPane").html(downView);
       $("#viewPane").addClass("mh-page");
@@ -67,11 +67,11 @@ $(document).ready(function(){
       for(var i = 1; i <= parseInt($("#numPages").val());i++) {
         if(i == 1)
         carouselItems += "<div class='carousel-item active'>" +
-            "<img class='d-md-block w-100' src='/img/comicPages/page"+i+".png' alt='First slide'/>" +
+            "<img class='d-md-block w-100' src='"+ $("#page" + i).val()+"' alt='First slide'/>" +
             "</div>";
         else
           carouselItems += "<div class='carousel-item'>" +
-              "<img class='d-md-block w-100' src='/img/comicPages/page"+i+".png' alt='First slide'/>" +
+              "<img class='d-md-block w-100' src='"+ $("#page" + i).val()+"' alt='First slide'/>" +
               "</div>";
       }
       carouselItems += "</div>";
