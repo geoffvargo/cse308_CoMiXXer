@@ -178,8 +178,10 @@ public class UserController {
         ModelAndView modelAndView = getMAVWithUser();
         User currUser = (User) modelAndView.getModel().get("currentUser");
 
-        modelAndView.addObject("curationList", currUser.getCurations());
+        ArrayList<ComicCollection> curr = new ArrayList<>();
+        currUser.getCurations().forEach(c -> {curr.add(comicCollectionService.findBy_id(c));});
 
+        modelAndView.addObject("curationList", curr);
         modelAndView.setViewName("curations");
 
         return modelAndView;
