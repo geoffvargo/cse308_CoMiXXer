@@ -172,34 +172,50 @@ public class UserController {
     }
 
     /*GET CURRENT USER CURATIONS FROM DATABASE*/
-    @RequestMapping(value = {"/curations"}, method = RequestMethod.GET)
-    public ModelAndView getCurations(){
+    @RequestMapping(value = {"/curations/{userId}"}, method = RequestMethod.GET)
+    public ModelAndView getCurations(@PathVariable ObjectId userId){
 
         ModelAndView modelAndView = getMAVWithUser();
-        User currUser = (User) modelAndView.getModel().get("currentUser");
-
-        modelAndView.addObject("curationList", currUser.getCurations());
-
+        User profileUser = userService.findUserById(userId);
+        modelAndView.addObject("curations", comicCollectionService.getComicsByIds(profileUser.getCurations()));
+        modelAndView.addObject("profileUser",profileUser);
         modelAndView.setViewName("curations");
 
         return modelAndView;
     }
 
-    @RequestMapping(value = {"/addToCurations/{comic}/{curation}"}, method = RequestMethod.POST)
+    /**
+     *
+     * @return List<ComicCollection> to be used in javascript
+     */
+    @RequestMapping(value = {"/getMyCurations"}, method = RequestMethod.GET)
+    public List<ComicCollection> getCurationsObject(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userDetailsService.findUserByEmail(auth.getName());
+        return comicCollectionService.getComicsByIds(user.getCurations());
+    }
+
+    @RequestMapping(value = {"/toggleCuration/{comic}/{curation}"}, method = RequestMethod.GET)
     public boolean addToCreation(@PathVariable ObjectId comic, @PathVariable ObjectId curation) {
         boolean ans = false;
 
         ModelAndView modelAndView = getMAVWithUser();
         User currUser = (User) modelAndView.getModel().get("currentUser");
 
-//        currUser.addToCuration(curation, comic);
-
-        if (currUser.addToCuration(curation, comic)) {
-            userService.save(currUser);
-            ans = true;
-        }
-
+        ans = toggleCuration(curation, comic);
         return ans;
+    }
+
+    public boolean toggleCuration(ObjectId curation, ObjectId comic) {
+        try {
+            ComicCollection currCollection = comicCollectionService.getComicCollectionById(curation);
+            currCollection.toggleComic(comic);
+            comicCollectionService.save(currCollection);
+            return true;
+        }
+        catch(Exception e){
+            return false;
+        }
     }
 
     @RequestMapping(value = {"/createNewCuration"}, method = RequestMethod.POST)
@@ -220,6 +236,20 @@ public class UserController {
 
 
         return ans;
+    }
+
+    @RequestMapping(value = {"/curation/{curationId}"}, method=RequestMethod.GET)
+    public ModelAndView getCuration(@PathVariable("curationId") ObjectId curationId){
+        ComicCollection cc = comicCollectionService.getComicCollectionById(curationId);
+        ModelAndView modelAndView = getMAVWithUser();
+        List<Comic> c = new ArrayList();
+        for(ObjectId id : cc.getComics()){
+            c.add(comicService.findBy_id(id));
+        }
+        modelAndView.addObject("curation",cc);
+        modelAndView.addObject("comics",c);
+        modelAndView.setViewName("viewCuration");
+        return modelAndView;
     }
 
     @RequestMapping(value = {"/topComics"}, method = RequestMethod.GET)

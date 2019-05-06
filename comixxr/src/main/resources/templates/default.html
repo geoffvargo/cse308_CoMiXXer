@@ -99,7 +99,7 @@
                 <span>My Creations</span></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" th:href="@{/user/curations}">
+            <a class="nav-link" th:href="@{/user/curations/__${currentUser.get_id()}__}">
                 <i class="fa fa-fw fa-compass"></i>
                 <span>Curations</span></a>
         </li>
@@ -115,12 +115,12 @@
                 <span>Create a Curation</span>
             </a>
             <div class="dropdown-menu">
-                <form class="dropdown-item" th:action="@{/user/createNewCuration}" method="post">
+                <div class="dropdown-item">
                     <div class="form-group">
-                        <input class="form-control" type="text" name="curationName" placeholder="Curation Name..."></input>
+                        <input class="form-control" type="text" id="curationName" placeholder="Curation Name..."/>
                     </div>
-                    <button class="btn btn-secondary" type="submit">Create Curation</button>
-                </form>
+                    <button class="btn btn-secondary" id="createCuration_btn">Create Curation</button>
+                </div>
             </div>
         </li>
     </ul>

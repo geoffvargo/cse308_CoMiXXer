@@ -4,6 +4,35 @@ $(document).ready(function(){
   if($("#viewPane").length){
     toggleViewfn();
   }
+
+  $("#createCuration_btn").click(function(){
+    $.post("/user/createNewCuration",{'curationName' : $("#curationName").val()},function(data){
+      if(data){
+        alert("Curation created successfully!");
+      }
+    })
+  })
+
+  $("#loadCurations_btn").click(function(){
+    $.get("/user/getMyCurations",function(data){
+      var s = '<div class="btn-group-vertical w-100" role="btn-group">';
+      for(var i = 0; i < data.length; i++){
+        var d = data[i];
+        var comics = d["hexComics"];
+        if(comics.indexOf($("#comicId").val()) >=0) {
+          s += '<button type="button" id="btnid_'+d["hexId"] +'" class="btn btn-secondary" onclick="toggleCuration(\'' + d["hexId"] + '\')">' + d["title"] + '</button>'
+        }
+        else{
+          s += '<button type="button" id="btnid_'+d["hexId"] +'"   class="btn btn-info" onclick="toggleCuration(\'' + d["hexId"] + '\')">' + d["title"] + '</button>'
+
+        }
+      }
+      s += '</div>'
+      $("#curation_dd").html(s);
+      $("#curationBox").attr('hidden',false);
+    });
+  })
+
   $("#upvote_btn").click(function(){
     $.get("/user/comic/upvote/"+$("#comicId").val(),function(){
       if($("#downvote_btn").hasClass("btn-secondary")){
@@ -121,5 +150,24 @@ $(document).ready(function(){
       alert("Bio updated successfully!");
     })
     return false;
+  }
+
+  var toggleCuration = function(id){
+    $.get("/user/toggleCuration/"+$("#comicId").val()+"/"+id,function(data){
+      if(data) {
+        $("#btnid_"+id).addClass("bg-success");
+        setTimeout(function(){
+          $("#curationBox").attr('hidden',true);
+          $("#btnid_"+id).removeClass("bg-success");
+        },500);
+      }
+      else{
+        $("#btnid_"+id).addClass("bg-danger");
+        setTimeout(function(){
+          $("#curationBox").attr('hidden',true);
+          $("#btnid_"+id).removeClass("bg-danger");
+        }, 500);
+      }
+    })
   }
 

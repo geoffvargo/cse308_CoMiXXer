@@ -19,15 +19,32 @@ public class ComicCollection implements Comparable<ComicCollection>{
     private String synopsis = "";
     private boolean isSeries = false;
     private List<ObjectId> comics;
+    private List<String> hexComics;
+    private String hexId;
 
     public ComicCollection(ObjectId userId){
         this._id = new ObjectId();
+        this.hexId = _id.toHexString();
         this.userId = userId;
         this.comics = new ArrayList<>();
+        this.hexComics = new ArrayList<>();
     }
 
     public void addToCollection(ObjectId comic) {
+
         this.comics.add(comic);
+        this.hexComics.add(comic.toHexString());
+    }
+
+    public void toggleComic(ObjectId comic){
+        if(comics.contains(comic)){
+            comics.remove(comic);
+            hexComics.remove(comic.toHexString());
+        }
+        else{
+            comics.add(comic);
+            hexComics.add(comic.toHexString());
+        }
     }
 
     @Override

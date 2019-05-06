@@ -110,3 +110,20 @@ background-color: #575656; }
 .bio-wrap{
   word-wrap: break-word;
 }
+
+.curationBox{
+  position:fixed;
+  margin:auto auto auto auto;
+  left:0;
+  right:0;
+  top:0;
+  bottom:0;
+  z-index: 100;
+  width:25vh;
+  height:25vw;
+  border-radius:5px;
+}
+
+.mh-curation{
+  max-height:70%;
+}

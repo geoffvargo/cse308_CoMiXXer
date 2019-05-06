@@ -8,6 +8,9 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class ComicCollectionService implements IComicCollectionService {
 
@@ -22,5 +25,17 @@ public class ComicCollectionService implements IComicCollectionService {
     @Override
     public void delete(ObjectId id) {
         ccRepository.deleteBy_id(id);
+    }
+
+    public List<ComicCollection> getComicsByIds(List<ObjectId> ids){
+        List<ComicCollection> comicList = new ArrayList();
+            for(ObjectId id : ids){
+                comicList.add(ccRepository.findBy_id(id));
+            }
+        return comicList;
+    }
+
+    public ComicCollection getComicCollectionById(ObjectId id){
+        return ccRepository.findBy_id(id);
     }
 }
