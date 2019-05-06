@@ -1,17 +1,19 @@
 package com.neonyellow.comixxr.model;
 
 import lombok.Data;
+import org.apache.tomcat.jni.Local;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
 @Document(collection = "comic")
-public class Comic {
+public class Comic implements Comparable<Comic>{
     @Id
     private ObjectId _id;
     private ObjectId userId;
@@ -91,5 +93,34 @@ public class Comic {
 
     public void removeDownvote(ObjectId id){
         downVote.remove(id);
+    }
+
+    public String timeToString(){
+        String s = "";
+        LocalDateTime now = LocalDateTime.now();
+        ZoneId zoneId = ZoneId.systemDefault();
+        long dateTime = age.atZone(zoneId).toEpochSecond();
+        long nowTime = now.atZone(zoneId).toEpochSecond();
+        long secondsAgo = nowTime - dateTime;
+        long minutes = secondsAgo/60;
+        long hours = minutes/60;
+        long days = hours/60;
+        if(days > 0){
+            s+=days + " days ago";
+        }
+        else if(hours > 0){
+            s+=hours + " hours ago";
+        }
+        else if(minutes > 0){
+            s+=minutes + " minutes ago";
+        }
+        else{
+            s+="Less than a minute ago";
+        }
+        return s;
+    }
+
+    public int compareTo(Comic c){
+        return c.age.compareTo(age);
     }
 }

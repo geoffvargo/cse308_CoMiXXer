@@ -276,12 +276,10 @@ public class UserController {
         ModelAndView modelAndView = getMAVWithUser();
 
         User currUser = (User) modelAndView.getModel().get("currentUser");
-        List<ObjectId> userIds = currUser.getSubscriptions();
-        List<User> users = userService.getUserListByIds(userIds);
-
-        modelAndView.addObject("users",users);
+        List<Comic> comics = userService.getMostRecentSubscriptionComics(currUser);
         modelAndView.addObject("titleText",currUser.getFullname() + "'s Subscriptions");
-        modelAndView.setViewName("users");
+        modelAndView.addObject("comics",comics);
+        modelAndView.setViewName("subscriptions");
 
         return modelAndView;
     }

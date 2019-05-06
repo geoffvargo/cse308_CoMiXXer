@@ -9,9 +9,12 @@ import com.neonyellow.comixxr.repository.UserRepository;
 import com.neonyellow.comixxr.service.interfaces.IUserService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -88,6 +91,20 @@ public class UserService implements IUserService {
         }
 
         return ans;
+    }
+
+    public List<Comic> getMostRecentSubscriptionComics(User user){
+        List<Comic> comics = new ArrayList();
+        for(ObjectId id : user.getSubscriptions()){
+            User subUser = userRepository.findBy_id(id);
+            for(ObjectId comicId : subUser.getComics()){
+                Comic c = comicRepository.findBy_id(comicId);
+                if(c.getPrivacy() == Privacy.PUBLIC)
+                    comics.add(c);
+            }
+        }
+        Collections.sort(comics);
+        return comics;
     }
 
     public int getNumRemixes(User user){

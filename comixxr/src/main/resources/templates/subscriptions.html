@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{default}" lang="en">
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Comixxer - Browse</title>
+
+</head>
+
+<body id="page-top">
+
+    <div layout:fragment="content" id="content-wrapper">
+      <div class="container-fluid">
+        <h1 class="text-center mb-4">Subscriptions</h1>
+        <div class="row scrollable-y scrollbar scrollbar-primary mh-smaller">
+
+          <div th:each="comic : ${comics}" class="col-6">
+            <div class="media my-4 mr-1" id="comment1">
+              <div class="row">
+                <div class="col-12">
+                  <a th:href="@{/user/userProfile/__${comic.getUserId()}__}" class="float-left mb-3">
+                    <img src="https://bootdey.com/img/Content/user_1.jpg" alt="", class="rounded-circle"/>
+                  </a>
+                </div>
+                <div class="col-12 text-center">
+                  <i class="fas fa-chevron-up"></i>
+                  <span class="text-muted" th:text="${comic.getTotalVotes()}"></span>
+                </div>
+              </div>
+              <div class="media=body">
+                <a class="no-a" th:href="@{/user/comic/viewComic/__${comic.get_id()}__}">
+                  <div class="text-muted float-right">
+                    <div class="text-muted text-sm" th:text="${comic.timeToString()}"></div>
+                  </div>
+                  <div class="text-secondary font-weight-bold" th:text="${comic.getAuthor()}"></div>
+                  <div class=" font-weight-bold mb-1 ml-3" th:text="${comic.getTitle()}"></div>
+                  <img class="img-fluid ml-2" th:src="@{/img/portfolio/comic.png}"/>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /.container-fluid -->
+
+    </div>
+    <!-- /.content-wrapper -->
+
+  <!-- /#wrapper -->
+
+</body>
+
+</html>
