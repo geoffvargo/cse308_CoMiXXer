@@ -55,9 +55,11 @@ public class UserService implements IUserService {
 
         if (!user.getComics().isEmpty()) {
             for (ObjectId id : user.getComics()) {
-                Comic c = this.findComicBy_id(id);
-                if (!c.isPublished()) {
-                    ans.add(c);
+                if (id != null) {
+                    Comic c = this.findComicBy_id(id);
+                    if (c != null && !c.isPublished()) {
+                        ans.add(c);
+                    }
                 }
             }
         }
@@ -70,13 +72,15 @@ public class UserService implements IUserService {
 
         if (!user.getComics().isEmpty()) {
             for (ObjectId id : user.getComics()) {
-                Comic c = this.findComicBy_id(id);
-                if (c.isPublished()) {
-                    if (c.getPrivacy() != Privacy.PRIVATE) {
-                        ans.add(c);
-                    } else {
-                        if (isPrivate) {
+                if (id != null) {
+                    Comic c = this.findComicBy_id(id);
+                    if (c != null && c.isPublished()) {
+                        if (c.getPrivacy() != Privacy.PRIVATE) {
                             ans.add(c);
+                        } else {
+                            if (isPrivate) {
+                                ans.add(c);
+                            }
                         }
                     }
                 }
@@ -89,7 +93,8 @@ public class UserService implements IUserService {
     public int getNumRemixes(User user){
         int size = 0;
         for(ObjectId id : user.getComics()){
-            if(this.findComicBy_id(id).isRemix())
+            Comic temp = this.findComicBy_id(id);
+            if(temp != null && temp.isRemix())
                 size++;
         }
         return size;

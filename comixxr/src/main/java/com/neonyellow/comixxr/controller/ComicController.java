@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.io.*;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.jws.WebParam;
 import javax.xml.bind.DatatypeConverter;
@@ -109,22 +110,8 @@ public class ComicController {
 
     @RequestMapping(value = {"/save"}, method = RequestMethod.POST)
     public ModelAndView comicSave(@RequestBody MultiValueMap<String,Object> data){
-        List<Object> x = data.get("comicId[]");
-        String id = (String)x.get(0);
-        ObjectId comicId = new ObjectId(id);
-        Comic comic = comicService.findBy_id(comicId);
 
-        List<Object> y = data.get("comicData[]");
-        String comicData = (String)y.get(0);
-        comic.setRaw_data(comicData);
-
-        List<Object> z = data.get("imageData[]");
-
-        for (Object ob: z) {
-            String pg = (String)ob;
-            comic.getImage_data().add(pg);
-        }
-
+        Comic comic = (Comic)saveCanvasDataAndImageData(data).get(0);
         comicService.save(comic);
 
         return null;
@@ -140,10 +127,6 @@ public class ComicController {
         List<String> pages = comic.getImage_data();
 
         int len = pages.size();
-//        for(int i = 0; i<len; i++){
-//            int pageNum = i+1;
-//            createComicPageFile(pages.get(i), String.valueOf(pageNum));
-//        }
 
         mv.addObject("numPages", len);
         mv.addObject("pages",pages);
@@ -161,19 +144,16 @@ public class ComicController {
 
 
     @RequestMapping(value = {"/publish"}, method = RequestMethod.POST)
-    public ModelAndView comicPublish(@RequestBody MultiValueMap<String, String> data){
+    public ModelAndView comicPublish(@RequestBody MultiValueMap<String, Object> data){
         ModelAndView mv = getMAVWithUser();
-        ObjectId comicId = new ObjectId(data.getFirst("comicId"));
-        Comic comic = comicService.findBy_id(comicId);
-        String comicData = data.getFirst("comicData");
 
-        comic.setRaw_data(comicData);
+        List<Object> res = saveCanvasDataAndImageData(data);
+        Comic comic = (Comic)res.get(0);
         comic.setPublished(true);
-        comic.setPrivacy(Privacy.PUBLIC);
         comicService.save(comic);
 
         Post newPost = new Post(((User)mv.getModel().get("currentUser")).get_id());
-        newPost.setComicId(comicId);
+        newPost.setComicId((ObjectId)res.get(1));
         postService.save(newPost);
 
         return null;
@@ -288,5 +268,29 @@ public class ComicController {
 
 
 
+    }
+
+    private List<Object> saveCanvasDataAndImageData(MultiValueMap<String, Object> data){
+        List<Object> x = data.get("comicId[]");
+        String id = (String)x.get(0);
+        ObjectId comicId = new ObjectId(id);
+        Comic comic = comicService.findBy_id(comicId);
+
+        List<Object> y = data.get("comicData[]");
+        String canvasData = (String)y.get(0);
+        comic.setRaw_data(canvasData);
+
+        List<Object> z = data.get("imageData[]");
+
+        for (Object ob: z) {
+            String pg = (String)ob;
+            comic.getImage_data().add(pg);
+        }
+
+        List<Object> result = new ArrayList<>();
+        result.add(comic);
+        result.add(comicId);
+
+        return result;
     }
 }

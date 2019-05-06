@@ -10,7 +10,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Comixxer - Browse</title>
+  <title>Comixxer - My Curations</title>
 
 </head>
 
@@ -20,8 +20,7 @@
       <div class="container-fluid">
         <h1 class="text-center mb-4" th:text="${profileUser.getFullname()} + '\'s Curations'"></h1>
         <div class="row scrollable-y scrollbar scrollbar-primary mh-smaller">
-          <div th:each="curation,iStat : ${curations}" class="col-3">
-
+          <div th:each="curation : ${curationList}" class="col-3">
             <div class="card bg-info d-inline-block mb-4 mx-1" style="width:14rem">
               <a class="card-underline no-a" th:href="@{/user/curation/__${curation.get_id()}__}">
                 <img class="card-img-top" src="/img/portfolio/game.png" alt="Card!">
@@ -45,7 +44,6 @@
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </div>

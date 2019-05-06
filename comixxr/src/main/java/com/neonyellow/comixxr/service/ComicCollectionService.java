@@ -17,6 +17,10 @@ public class ComicCollectionService implements IComicCollectionService {
     @Autowired
     private CcRepository ccRepository;
 
+    public ComicCollection findBy_id(ObjectId id) {
+        return ccRepository.findBy_id(id);
+    }
+
     @Override
     public void save(ComicCollection cc) {
         ccRepository.save(cc);
