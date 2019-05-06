@@ -6,4 +6,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface CcRepository extends MongoRepository<ComicCollection, ObjectId> {
     ComicCollection findBy_id(ObjectId _id);
+    void deleteBy_id(ObjectId id);
 }

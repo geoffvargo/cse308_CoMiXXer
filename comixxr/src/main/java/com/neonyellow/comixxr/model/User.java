@@ -59,10 +59,13 @@ public class User {
         return this.subscriptions.size();
     }
 
-    public void addCuration(ComicCollection curation) {
+    public boolean addCuration(ComicCollection curation) {
+        boolean ans = false;
         if (curation != null) {
             this.curations.add(curation.get_id());
+            ans = true;
         }
+        return ans;
     }
 
     public boolean addToCuration(ObjectId curation, ObjectId comic) {

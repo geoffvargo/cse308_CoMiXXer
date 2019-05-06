@@ -10,7 +10,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Comixxer - Browse</title>
+  <title>Comixxer - My Curations</title>
 
 </head>
 
@@ -20,8 +20,7 @@
       <div class="container-fluid">
         <h1 class="text-center mb-4">Curations</h1>
         <div class="row scrollable-y scrollbar scrollbar-primary mh-smaller">
-          <div th:each="curation,iStat : ${curations}" class="col-3">
-
+          <div th:each="curation : ${curationList}" class="col-3">
             <div class="card bg-info d-inline-block mb-4 mx-1" style="width:14rem">
               <a class="card-underline no-a" href="viewCuration.html">
                 <img class="card-img-top" src="img/portfolio/game.png" alt="Card!">
@@ -33,7 +32,7 @@
               <div class="row">
                 <div class="col-3 mt-1 pr-0 text-center"><i class="fas fa-globe"></i></div>
                 <div class="col-2 mt-1 px-0 text-center"><i class="fas fa-columns"></i></div>
-                <div class="col-3 text-left mt-1 pr-0"><small th:text="${curation.getComics.length}"></small></div>
+<!--                <div class="col-3 text-left mt-1 pr-0"><small th:text="${curation.getComics.length}"></small></div>-->
                 <div class="col-4 btn-group dropright text-left">
                   <button class="btn btn-info text-right" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fas fa-bars"></i>
@@ -45,7 +44,6 @@
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </div>

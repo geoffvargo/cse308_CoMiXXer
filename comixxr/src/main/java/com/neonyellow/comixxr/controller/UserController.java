@@ -3,8 +3,9 @@ package com.neonyellow.comixxr.controller;
 import com.neonyellow.comixxr.model.Comic;
 import com.neonyellow.comixxr.model.ComicCollection;
 import com.neonyellow.comixxr.model.Genre;
+import com.neonyellow.comixxr.model.Privacy;
 import com.neonyellow.comixxr.model.User;
-import com.neonyellow.comixxr.repository.UserRepository;
+import com.neonyellow.comixxr.service.ComicCollectionService;
 import com.neonyellow.comixxr.service.ComicService;
 import com.neonyellow.comixxr.service.ComixUserDetailsService;
 import com.neonyellow.comixxr.service.UserService;
@@ -30,6 +31,9 @@ public class UserController {
 
     @Autowired
     private ComicService comicService;
+
+    @Autowired
+    private ComicCollectionService comicCollectionService;
 
     @RequestMapping(value = {"/subscribeToUser/{userId}"}, method = RequestMethod.GET)
     public boolean subscribeToUser(@PathVariable ObjectId userId) {
@@ -90,7 +94,7 @@ public class UserController {
 
         User currUser = (User) modelAndView.getModel().get("currentUser");
 
-        modelAndView.addObject("myCreations", userService.getPublishedComics(currUser));
+        modelAndView.addObject("myCreations", userService.getPublishedComics(currUser, true));
         modelAndView.addObject("myDrafts", userService.getDrafts(currUser));
         modelAndView.addObject("subscribers", currUser.getNumOfSubscibers());
         modelAndView.addObject("subscribedTo", currUser.getNumOfSubsriptions());
@@ -107,7 +111,14 @@ public class UserController {
     public ModelAndView comicsByGenre(@PathVariable("genre") Genre genre) {
         ModelAndView modelAndView = getMAVWithUser();
 
-        modelAndView.addObject("comics", comicService.findAllByGenre(genre));
+        List<Comic> allByGenre = comicService.findAllByGenre(genre);
+
+        ArrayList<Comic> ans = new ArrayList<>();
+
+        allByGenre.forEach(c ->{if (c.getPrivacy() != Privacy.PRIVATE) {  ans.add(c);}});
+
+        modelAndView.addObject("comics", ans);
+
         modelAndView.addObject("category", genre.toString());
 
         modelAndView.setViewName("singlesGenre");
@@ -135,7 +146,7 @@ public class UserController {
             return new ModelAndView("redirect:/user/myProfile");
         }
         User profileUser = userService.findUserById(user);
-        modelAndView.addObject("myCreations", userService.getPublishedComics(profileUser));
+        modelAndView.addObject("myCreations", userService.getPublishedComics(profileUser, false));
         modelAndView.addObject("subscribers", profileUser.getNumOfSubscibers());
         modelAndView.addObject("subscribedTo", profileUser.getNumOfSubsriptions());
         modelAndView.addObject("userName", profileUser.getFullname());
@@ -167,8 +178,10 @@ public class UserController {
         ModelAndView modelAndView = getMAVWithUser();
         User currUser = (User) modelAndView.getModel().get("currentUser");
 
-        modelAndView.addObject("curationList", currUser.getCurations());
+        ArrayList<ComicCollection> curr = new ArrayList<>();
+        currUser.getCurations().forEach(c -> {curr.add(comicCollectionService.findBy_id(c));});
 
+        modelAndView.addObject("curationList", curr);
         modelAndView.setViewName("curations");
 
         return modelAndView;
@@ -201,6 +214,12 @@ public class UserController {
         ComicCollection curation = new ComicCollection(currUser.get_id());
 
         curation.setTitle(formData.getFirst("curationName"));
+        if (currUser.addCuration(curation)) {
+            userService.save(currUser);
+            comicCollectionService.save(curation);
+            ans = true;
+        }
+
 
         return ans;
     }
