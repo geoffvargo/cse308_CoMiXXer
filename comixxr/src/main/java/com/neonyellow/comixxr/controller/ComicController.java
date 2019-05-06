@@ -53,6 +53,8 @@ public class ComicController {
         mv.addObject("comicId", draft.get_id().toString());
         mv.addObject("currentUser", user);
         mv.addObject("isLoad", "false");
+        mv.addObject("active","create_comic");
+
         mv.setViewName("draw");
 
         return mv;
@@ -109,12 +111,10 @@ public class ComicController {
     }
 
     @RequestMapping(value = {"/save"}, method = RequestMethod.POST)
-    public ModelAndView comicSave(@RequestBody MultiValueMap<String,Object> data){
+    public void comicSave(@RequestBody MultiValueMap<String,Object> data){
 
         Comic comic = (Comic)saveCanvasDataAndImageData(data).get(0);
         comicService.save(comic);
-
-        return null;
     }
 
     @RequestMapping(value = {"/viewComic/{comicId}"}, method = RequestMethod.GET)
@@ -137,6 +137,7 @@ public class ComicController {
         mv.addObject("comic",comic);
         mv.addObject("upvoted",comic.containsUpvote(currUser.get_id()));
         mv.addObject("downvoted",comic.containsDownvote(currUser.get_id()));
+        mv.addObject("active","browse");
 
         return mv;
 
@@ -144,7 +145,7 @@ public class ComicController {
 
 
     @RequestMapping(value = {"/publish"}, method = RequestMethod.POST)
-    public ModelAndView comicPublish(@RequestBody MultiValueMap<String, Object> data){
+    public void comicPublish(@RequestBody MultiValueMap<String, Object> data){
         ModelAndView mv = getMAVWithUser();
 
         List<Object> res = saveCanvasDataAndImageData(data);
@@ -155,8 +156,6 @@ public class ComicController {
         Post newPost = new Post(((User)mv.getModel().get("currentUser")).get_id());
         newPost.setComicId((ObjectId)res.get(1));
         postService.save(newPost);
-
-        return null;
     }
 
     @RequestMapping(value = {"/load/{comicId}"}, method = RequestMethod.GET)
@@ -169,7 +168,7 @@ public class ComicController {
 
         mv.addObject("isLoad", "true");
         mv.addObject("raw_data", raw_data);
-
+        mv.addObject("active","create_comic");
         return mv;
     }
 

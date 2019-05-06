@@ -84,6 +84,7 @@ public class UserController {
         //TODO: here add the comic to the user
         ModelAndView modelAndView = getMAVWithUser();
         modelAndView.setViewName("draw");
+        modelAndView.addObject("active","create_comic");
         return modelAndView;
     }
 
@@ -101,7 +102,7 @@ public class UserController {
         modelAndView.addObject("userName", currUser.getFullname());
         modelAndView.addObject("userBio", currUser.getBio());
         modelAndView.addObject("numRemixes", userService.getNumRemixes(currUser));
-
+        modelAndView.addObject("active","my_profile");
         modelAndView.setViewName("myProfile");
 
         return modelAndView;
@@ -120,6 +121,7 @@ public class UserController {
         modelAndView.addObject("comics", ans);
 
         modelAndView.addObject("category", genre.toString());
+        modelAndView.addObject("active","browse");
 
         modelAndView.setViewName("singlesGenre");
 
@@ -133,6 +135,8 @@ public class UserController {
         users.remove(modelAndView.getModel().get("currentUser"));
         modelAndView.addObject("users",users);
         modelAndView.addObject("titleText","Users");
+        modelAndView.addObject("active","users");
+
         modelAndView.setViewName("users");
         return modelAndView;
     }
@@ -154,6 +158,7 @@ public class UserController {
         modelAndView.addObject("numRemixes", userService.getNumRemixes(profileUser));
         modelAndView.addObject("isSubscribed",currUser.getSubscriptions().contains(profileUser.get_id()));
         modelAndView.addObject("profileUser",profileUser);
+        modelAndView.addObject("active","users");
 
         modelAndView.setViewName("userProfile");
 
@@ -179,6 +184,8 @@ public class UserController {
         User profileUser = userService.findUserById(userId);
         modelAndView.addObject("curations", comicCollectionService.getComicsByIds(profileUser.getCurations()));
         modelAndView.addObject("profileUser",profileUser);
+        modelAndView.addObject("active","curations");
+
         modelAndView.setViewName("curations");
 
         return modelAndView;
@@ -248,6 +255,7 @@ public class UserController {
         }
         modelAndView.addObject("curation",cc);
         modelAndView.addObject("comics",c);
+        modelAndView.addObject("active","browse");
         modelAndView.setViewName("viewCuration");
         return modelAndView;
     }
@@ -255,6 +263,7 @@ public class UserController {
     @RequestMapping(value = {"/topComics"}, method = RequestMethod.GET)
     public ModelAndView getTopComics() {
         ModelAndView modelAndView = getMAVWithUser();
+        modelAndView.addObject("active","browse");
 
         modelAndView.setViewName("topComics");
 
@@ -268,6 +277,8 @@ public class UserController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userDetailsService.findUserByEmail(auth.getName());
         modelAndView.addObject("currentBio",user.getBio());
+        modelAndView.addObject("active","my_profile");
+
         return modelAndView;
     }
 
@@ -279,6 +290,7 @@ public class UserController {
         List<Comic> comics = userService.getMostRecentSubscriptionComics(currUser);
         modelAndView.addObject("titleText",currUser.getFullname() + "'s Subscriptions");
         modelAndView.addObject("comics",comics);
+        modelAndView.addObject("active","subscriptions");
         modelAndView.setViewName("subscriptions");
 
         return modelAndView;
@@ -294,6 +306,7 @@ public class UserController {
         List<User> users = userService.getUserListByIds(userIds);
         modelAndView.addObject("users",users);
         modelAndView.addObject("titleText",profileUser.getFullname() + "'s Subscriptions");
+        modelAndView.addObject("active","users");
         modelAndView.setViewName("users");
         return modelAndView;
     }
@@ -307,7 +320,16 @@ public class UserController {
         List<User> users = userService.getUserListByIds(userIds);
         modelAndView.addObject("users",users);
         modelAndView.addObject("titleText",profileUser.getFullname() + "'s Subscribers");
+        modelAndView.addObject("active","users");
         modelAndView.setViewName("users");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/createComic", method = RequestMethod.GET)
+    public ModelAndView getCreateComic() {
+        ModelAndView modelAndView = getMAVWithUser();
+        modelAndView.setViewName("createComic");
+        modelAndView.addObject("active","create_comic");
         return modelAndView;
     }
 

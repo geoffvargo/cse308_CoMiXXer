@@ -42,6 +42,7 @@ public class HomeController {
     public ModelAndView browse() {
         ModelAndView modelAndView = getMAVWithUser();
         modelAndView.setViewName("browse");
+        modelAndView.addObject("active","browse");
         return modelAndView;
     }
 
@@ -72,20 +73,6 @@ public class HomeController {
     public ModelAndView getViewComic() {
         ModelAndView modelAndView = getMAVWithUser();
         modelAndView.setViewName("viewComic");
-        return modelAndView;
-    }
-
-    @RequestMapping(value = "/createComic", method = RequestMethod.GET)
-    public ModelAndView getCreateComic() {
-        ModelAndView modelAndView = getMAVWithUser();
-        modelAndView.setViewName("createComic");
-        return modelAndView;
-    }
-
-    @RequestMapping(value = "/createCuration", method = RequestMethod.GET)
-    public ModelAndView getCreateCuration() {
-        ModelAndView modelAndView = getMAVWithUser();
-        modelAndView.setViewName("createCuration");
         return modelAndView;
     }
 
