@@ -25,7 +25,7 @@
               <div class="row">
                 <div class="col-12">
                   <a th:href="@{/user/userProfile/__${comic.getUserId()}__}" class="float-left mb-3">
-                    <img src="https://bootdey.com/img/Content/user_1.jpg" alt="", class="rounded-circle"/>
+                    <img th:src="${comic.getComicParentProfPic()}" alt="", class="rounded-circle profile-pic"/>
                   </a>
                 </div>
                 <div class="col-12 text-center">

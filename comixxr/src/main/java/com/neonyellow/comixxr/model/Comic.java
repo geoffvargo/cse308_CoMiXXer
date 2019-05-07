@@ -32,6 +32,7 @@ public class Comic implements Comparable<Comic>{
     private boolean isPublished;
     private Privacy privacy = Privacy.PRIVATE;
     private boolean isInSeries;
+    private String comicParentProfPic;
 
     public Comic(ObjectId userId){
         this._id = new ObjectId();

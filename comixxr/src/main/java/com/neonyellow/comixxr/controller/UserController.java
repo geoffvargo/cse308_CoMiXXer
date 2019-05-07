@@ -15,9 +15,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.BufferedInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 @RestController
@@ -288,6 +292,9 @@ public class UserController {
 
         User currUser = (User) modelAndView.getModel().get("currentUser");
         List<Comic> comics = userService.getMostRecentSubscriptionComics(currUser);
+        for(Comic c : comics){
+            c.setComicParentProfPic(userService.findUserById(c.getUserId()).getPic());
+        }
         modelAndView.addObject("titleText",currUser.getFullname() + "'s Subscriptions");
         modelAndView.addObject("comics",comics);
         modelAndView.addObject("active","subscriptions");
@@ -331,6 +338,20 @@ public class UserController {
         modelAndView.setViewName("createComic");
         modelAndView.addObject("active","create_comic");
         return modelAndView;
+    }
+
+    @RequestMapping(value = "/uploadProfilePicture", method = RequestMethod.POST)
+    public boolean uploadProfPic(@RequestParam("profilePicture") MultipartFile profilePicture){
+        try {
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            User user = userDetailsService.findUserByEmail(auth.getName());
+            user.setPic("data:image/" + (profilePicture.getOriginalFilename().endsWith(".png")?"png":"jpg")+";base64," +Base64.getEncoder().encodeToString(profilePicture.getBytes()));
+            userService.save(user);
+        }
+        catch(Exception e){
+            return false;
+        }
+        return true;
     }
 
 //    /*GET USER BROWSE PAGE*/

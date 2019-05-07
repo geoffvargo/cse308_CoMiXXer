@@ -88,7 +88,7 @@
                 <div class="bg-info rounded h-100 p-3 mx-auto mt-5">
                   <h3 class="text-center mb-4" th:text="${userName}"></h3>
                   <div class="text-center mb-1">
-                    <img src="https://bootdey.com/img/Content/user_1.jpg" alt="", class="rounded-circle">
+                    <img th:src="${currentUser.getPic()}" alt="", class="rounded-circle profile-pic">
                   </div>
                     <div class="my-2">
                       <span>Subscribers: </span>

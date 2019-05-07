@@ -16,11 +16,12 @@
     <div layout:fragment="content"　id="content-wrapper">
       <div class="container-fluid">
         <h1 class="text-center mb-4">User Settings</h1>
-        <form>
+        <form method="post" th:action="@{/user/uploadProfilePicture}" enctype="multipart/form-data">
           <div class="form-group row">
             <div class="col-3"></div>
             <div class="col-6 text-center">
               <label for="profilePicture">Change Profile Picture:</label>
+              <img th:src="${currentUser.getPic()}" class="rounded-circle profile-pic"/>
               <div class="custom-file">
                 <input type="file" id="profilePicture" name="profilePicture" accept=".jpg,.png">
                 <label class="custom-file-label" for="profilePicture">Choose File</label>

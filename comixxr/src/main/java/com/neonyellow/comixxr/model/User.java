@@ -12,11 +12,10 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.*;
 
 @Data
 @Document(collection = "user")
@@ -29,6 +28,7 @@ public class User {
     private String password;
     private String fullname;
     private boolean enabled;
+    private String pic;
     @DBRef
     private Set<Role> roles;
     private List<ObjectId> subscribers;
@@ -43,6 +43,12 @@ public class User {
         this.subscriptions = new ArrayList<>();
         this.curations = new ArrayList<>();
         this.comics = new ArrayList<>();
+        try {
+            this.pic = "data:image/png;base64," + Base64.getEncoder().encodeToString(Files.readAllBytes(Paths.get("/img/logos/profileimg.png")));
+        }
+        catch(Exception e){
+            this.pic = "";
+        }
     }
 
     public void addToComics(Comic comic) {

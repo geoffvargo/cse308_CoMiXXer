@@ -65,7 +65,7 @@
               <h3 class="text-center mb-4" th:text="${userName}"></h3>
               <input type="hidden" id="userid" th:value="${profileUser.get_id()}"/>
               <div class="text-center mb-1">
-                <img src="https://bootdey.com/img/Content/user_1.jpg" alt="", class="rounded-circle">
+                <img th:src="${profileUser.getPic()}" alt="", class="rounded-circle profile-pic">
                 <button th:if="${!isSubscribed}" id="subscribe_btn" class="btn btn-secondary mt-2">Subscribe</button>
                 <button th:if="${isSubscribed}"  id="subscribe_btn" class="btn btn-dark mt-2">Subscribed</button>
               </div>
