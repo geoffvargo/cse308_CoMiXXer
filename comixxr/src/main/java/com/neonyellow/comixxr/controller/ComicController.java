@@ -38,7 +38,7 @@ public class ComicController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userRepository.findByEmail(auth.getName());
 
-        Comic draft = new Comic(user.get_id());
+        Comic draft = new Comic(user.get_id(),null);
         draft.setTitle(formData.getFirst("comicName"));
         draft.setPrivacy(getPrivacy(formData.getFirst("privacy")));
         draft.setGenre(getGenre(formData.getFirst("genre")));
@@ -151,6 +151,9 @@ public class ComicController {
         List<Object> res = saveCanvasDataAndImageData(data);
         Comic comic = (Comic)res.get(0);
         comic.setPublished(true);
+        if(comic.getThumbNail() == null){
+            comic.setThumbNail(comic.getImage_data().get(0));
+        }
         comicService.save(comic);
 
         Post newPost = new Post(((User)mv.getModel().get("currentUser")).get_id());
