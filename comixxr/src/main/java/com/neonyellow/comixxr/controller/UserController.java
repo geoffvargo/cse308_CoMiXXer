@@ -185,8 +185,8 @@ public class UserController {
     public ModelAndView getCurations(@PathVariable ObjectId userId){
 
         ModelAndView modelAndView = getMAVWithUser();
-        User profileUser = userService.findUserById(userId);
-        modelAndView.addObject("curations", comicCollectionService.getComicsByIds(profileUser.getCurations()));
+        User profileUser = (User) modelAndView.getModel().get("currentUser");
+        modelAndView.addObject("curationList", comicCollectionService.getComicCollectionByUserId(userId));
         modelAndView.addObject("profileUser",profileUser);
         modelAndView.addObject("active","curations");
 
@@ -260,7 +260,7 @@ public class UserController {
         modelAndView.addObject("curation",cc);
         modelAndView.addObject("comics",c);
         modelAndView.addObject("active","browse");
-        modelAndView.setViewName("viewCuration");
+        modelAndView.setViewName("curation");
         return modelAndView;
     }
 

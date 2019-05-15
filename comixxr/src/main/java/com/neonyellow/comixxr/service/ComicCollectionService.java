@@ -42,4 +42,8 @@ public class ComicCollectionService implements IComicCollectionService {
     public ComicCollection getComicCollectionById(ObjectId id){
         return ccRepository.findBy_id(id);
     }
+
+    public ComicCollection getComicCollectionByUserId(ObjectId userId) {
+        return ccRepository.findByUserId(userId);
+    }
 }
