@@ -18,8 +18,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.io.BufferedInputStream;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
@@ -96,6 +94,8 @@ public class UserController {
     @RequestMapping(value = {"/myProfile"}, method = RequestMethod.GET)
     public ModelAndView getMyProfile(){
         ModelAndView modelAndView = getMAVWithUser();
+
+//        comicService.findTopFiftyComicsFromLastWeek();
 
         User currUser = (User) modelAndView.getModel().get("currentUser");
 
@@ -352,6 +352,18 @@ public class UserController {
             return false;
         }
         return true;
+    }
+
+    @RequestMapping(value = "/topFiftyComics", method = RequestMethod.GET)
+    public ModelAndView getTopFiftyComics() {
+        ModelAndView modelAndView = getMAVWithUser();
+
+        List<Comic> comics = comicService.findTopFiftyComicsFromLastWeek();
+
+        modelAndView.addObject("comics", comics);
+
+        modelAndView.setViewName("topFiftyComics");
+        return modelAndView;
     }
 
 //    /*GET USER BROWSE PAGE*/

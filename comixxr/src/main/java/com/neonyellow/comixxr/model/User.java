@@ -44,7 +44,7 @@ public class User {
         this.curations = new ArrayList<>();
         this.comics = new ArrayList<>();
         try {
-            this.pic = "data:image/png;base64," + Base64.getEncoder().encodeToString(Files.readAllBytes(Paths.get("./src/main/resources/static/img/logos/profileimg.png")));
+//            this.pic = "data:image/png;base64," + Base64.getEncoder().encodeToString(Files.readAllBytes(Paths.get("./src/main/resources/static/img/logos/profileimg.png")));
         }
         catch(Exception e){
             e.printStackTrace();

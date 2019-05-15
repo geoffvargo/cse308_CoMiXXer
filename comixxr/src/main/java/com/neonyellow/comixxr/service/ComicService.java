@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,6 +47,29 @@ public class ComicService implements IComicService {
 
     public void delete(ObjectId id) {comicRepository.deleteBy_id(id);}
 
+    public List<Comic> findTopFiftyComicsFromLastWeek() {
+        List<Comic> temp;
+
+        LocalDateTime present = LocalDateTime.now();
+        LocalDateTime lastWeek = present.minusDays(7);
+
+        temp = comicRepository.findAllByAgeAfter(lastWeek);
+
+        temp.sort((o1, o2) -> Integer.compare(o2.getTotalVotes(), o1.getTotalVotes()));
+
+        List<Comic> ans;
+
+        if (temp.size() > 50) {
+            ans = temp.subList(0, 49);
+        } else {
+            ans = temp;
+        }
+
+        ans.forEach(c -> System.out.println(c.getTotalVotes()));
+
+        return ans;
+    }
+
     public List<Comic> findAllSortedByGenreDESC() {
         return comicRepository.findAll(new Sort(Sort.Direction.DESC, "genre"));
     }
@@ -56,6 +80,10 @@ public class ComicService implements IComicService {
 
     public List<Comic> findAllByGenre(Genre genre) {
         return comicRepository.findAllByGenre(genre);
+    }
+
+    public List<Comic> findAll() {
+        return comicRepository.findAll();
     }
 
 //    public List<Comic> findTopRated() {

@@ -22,4 +22,6 @@ public interface IComicService {
 
     List<Comic> findAllByGenre(Genre genre);
 
+    List<Comic> findAll();
+
 }
