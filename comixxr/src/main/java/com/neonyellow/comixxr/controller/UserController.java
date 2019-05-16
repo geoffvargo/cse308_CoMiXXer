@@ -186,8 +186,12 @@ public class UserController {
 
         ModelAndView modelAndView = getMAVWithUser();
         User profileUser = (User) modelAndView.getModel().get("currentUser");
-        modelAndView.addObject("curationList", comicCollectionService.getComicCollectionByUserId(userId));
-        modelAndView.addObject("profileUser",profileUser);
+
+        List<ComicCollection> curlist = new ArrayList<>();
+        profileUser.getCurations().forEach(c -> curlist.add(comicCollectionService.findBy_id(c)));
+
+        modelAndView.addObject("curationList", curlist);
+        modelAndView.addObject("profileUser", profileUser);
         modelAndView.addObject("active","curations");
 
         modelAndView.setViewName("curations");
