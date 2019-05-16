@@ -72,10 +72,23 @@
                 </button>
               </li>
               <li class="nav-item ml-1">
-                <button class="btn btn-info">
-                    Remix
-                    <i class="fas fa-random"></i>
-                </button>
+                <a role="button" href="#" class="btn btn-info" data-toggle="dropdown">
+                  Remix
+                  <i class="fas fa-random"></i>
+                </a>
+                <div class="dropdown-menu">
+                  <div class="dropdown-item">
+                    <form th:action="@{/user/comic/remix}" method="post">
+                      <input type="hidden" name="parentComic" th:value="${comic.get_id()}"/>
+                      <input type="hidden" name="genre" th:value="${comic.getGenre()}"/>
+                      <input type="hidden" name="privacy" th:value="${comic.getPrivacy()}"/>
+                      <div class="col-4">
+                      <input type="text" minlength="2" class="form-control" id="comicName" name="comicName"/>
+                      </div>
+                      <input type="submit" value="Submit"/>
+                    </form>
+                  </div>
+                </div>
               </li>
 
             </ul>
@@ -88,7 +101,7 @@
             <div class="collapse bg-primary rounded" id="commentsSection">
               <div class="card-body">
                 <textarea class="form-control mb-2" name="comment" id="postCommentBox" placeholder="Write something..." rows="3"></textarea>
-                <button type="button" class="btn btn-info float-right">Post</button>
+                <button type="button" class="btn btn-info float-right" id="postCommentBtn">Post</button>
                 <div class="clearfix"></div>
                 <ul class="media-list" id="commentsList">
                   <li class="media my-4" id="comment1">

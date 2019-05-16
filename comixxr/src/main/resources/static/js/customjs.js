@@ -66,6 +66,12 @@ $(document).ready(function(){
   $("#toggleViewBtn").click(function(){
     toggleViewfn();
   });
+
+  $("#postCommentBtn").click(function(){
+    $.post("/user/comic/postComment",{"commentBody" : $("#postCommentBox").val()},function(){
+      alert("Comment Posted!");
+    })
+  })
   // $(function () {
   // $('[data-toggle="tooltip"]').tooltip()
   // })
