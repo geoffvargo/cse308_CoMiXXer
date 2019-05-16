@@ -175,6 +175,38 @@ public class ComicController {
         return mv;
     }
 
+    @RequestMapping(value = {"/remix"}, method = RequestMethod.POST)
+    public ModelAndView remixComic(@RequestBody MultiValueMap<String, String> data){
+        ModelAndView mv = getMAVWithUser();
+        User currUser = (User)mv.getModel().get("currentUser");
+        Comic remix = new Comic(currUser.get_id(), null);
+        Comic parentComic = comicService.findBy_id(new ObjectId(data.getFirst("comicId")));
+
+        remix.setRemix(true);
+        remix.setTitle(data.getFirst("comicName"));
+        remix.setPrivacy(getPrivacy(data.getFirst("privacy")));
+        remix.setGenre(getGenre(data.getFirst("genre")));
+        remix.setAuthor(currUser.getFullname());
+        remix.setParent(parentComic.get_id());
+        remix.setRaw_data(parentComic.getRaw_data());
+        remix.setImage_data(parentComic.getImage_data());
+
+        comicService.save(remix);
+
+        currUser.addToComics(remix);
+        userRepository.save(currUser);
+
+        String remix_raw_data = remix.getRaw_data();
+
+        mv.setViewName("draw");
+        mv.addObject("comicId", remix.get_id().toString());
+        mv.addObject("currentUser", currUser);
+        mv.addObject("isLoad", "true");
+        mv.addObject("raw_data", remix_raw_data);
+        mv.addObject("active","create_comic");
+        return mv;
+    }
+
     private Genre getGenre(String genre){
         if(genre == null)
             return Genre.NA;

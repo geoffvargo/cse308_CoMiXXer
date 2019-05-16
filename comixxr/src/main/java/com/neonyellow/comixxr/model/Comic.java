@@ -39,7 +39,7 @@ public class Comic implements Comparable<Comic>{
         this._id = new ObjectId();
         this.userId = userId;
         this.age = LocalDateTime.now();
-        isInSeries = false;
+        this.isInSeries = false;
         this.upVote = new ArrayList();
         this.downVote = new ArrayList();
         this.image_data = new ArrayList<>();
