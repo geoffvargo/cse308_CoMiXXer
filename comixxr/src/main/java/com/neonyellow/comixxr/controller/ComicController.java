@@ -180,7 +180,7 @@ public class ComicController {
         ModelAndView mv = getMAVWithUser();
         User currUser = (User)mv.getModel().get("currentUser");
         Comic remix = new Comic(currUser.get_id(), null);
-        Comic parentComic = comicService.findBy_id(new ObjectId(data.getFirst("comicId")));
+        Comic parentComic = comicService.findBy_id(new ObjectId(data.getFirst("parentComic")));
 
         remix.setRemix(true);
         remix.setTitle(data.getFirst("comicName"));
@@ -210,36 +210,36 @@ public class ComicController {
     private Genre getGenre(String genre){
         if(genre == null)
             return Genre.NA;
-        switch(genre){
-            case "Horror":
+        switch(genre.toUpperCase()){
+            case "HORROR":
                 return Genre.HORROR;
-            case "Teen":
+            case "TEEN":
                 return Genre.TEEN;
-            case "Fantasy":
+            case "FANTASY":
                 return Genre.FANTASY;
-            case "Crime":
+            case "CRIME":
                 return Genre.CRIME;
-            case "Romance":
+            case "ROMANCE":
                 return Genre.ROMANCE;
-            case "Manga":
+            case "MANGA":
                 return Genre.MANGA;
-            case "Alternative":
+            case "ALTERNATIVE":
                 return Genre.ALTERNATIVE;
-            case "Gag":
+            case "GAG":
                 return Genre.GAG;
-            case "Sci-Fi":
+            case "SCIFI":
                 return Genre.SCIFI;
-            case "Super Hero":
+            case "SUPERHERO":
                 return Genre.SUPERHERO;
-            case "Child":
+            case "CHILD":
                 return Genre.CHILD;
-            case "War":
+            case "WAR":
                 return Genre.WAR;
-            case "Daily":
+            case "DAILY":
                 return Genre.DAILY;
-            case "Western":
+            case "WESTERN":
                 return Genre.WESTERN;
-            case "Abstract":
+            case "ABSTRACT":
                 return Genre.ABSTRACT;
             default:
                 return Genre.NA;
@@ -249,10 +249,10 @@ public class ComicController {
     private Privacy getPrivacy(String privacy){
         if(privacy == null)
             return Privacy.PRIVATE;
-        switch(privacy){
-            case "Private":
+        switch(privacy.toUpperCase()){
+            case "PRIVATE":
                 return Privacy.PRIVATE;
-            case "Public":
+            case "PUBLIC":
                 return Privacy.PUBLIC;
             default:
                 return Privacy.UNLISTED;
