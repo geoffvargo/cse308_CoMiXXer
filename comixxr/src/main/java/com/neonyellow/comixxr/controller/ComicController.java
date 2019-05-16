@@ -11,11 +11,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.*;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import javax.jws.WebParam;
 import javax.xml.bind.DatatypeConverter;
@@ -34,22 +36,31 @@ public class ComicController {
     UserRepository userRepository;
 
     @RequestMapping(value = {"createDraft"}, method = RequestMethod.POST)
-    public ModelAndView createDraft(@RequestBody MultiValueMap<String,String> formData){
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userRepository.findByEmail(auth.getName());
+    public ModelAndView createDraft(@RequestParam("comicName") String comicName, @RequestParam("privacy") String privacy, @RequestParam("genre") String genre, @RequestParam("thumbnail") MultipartFile thumbnail){
+        ModelAndView mv = getMAVWithUser();
+        User user = (User)mv.getModel().get("currentUser");
 
         Comic draft = new Comic(user.get_id(),null);
-        draft.setTitle(formData.getFirst("comicName"));
-        draft.setPrivacy(getPrivacy(formData.getFirst("privacy")));
-        draft.setGenre(getGenre(formData.getFirst("genre")));
+
+        draft.setTitle(comicName);
+        draft.setPrivacy(getPrivacy(privacy));
+        draft.setGenre(getGenre(genre));
         draft.setAuthor(user.getFullname());
 
+        if(thumbnail != null){
+            try{
+                draft.setThumbNail("data:image/" + (thumbnail.getOriginalFilename().endsWith(".png")?"png":"jpg")+";base64," + Base64.getEncoder().encodeToString(thumbnail.getBytes()));
+            }
+            catch(Exception e){
+                draft.setThumbNail(null);
+            }
+        }
+        
         comicService.save(draft);
 
         user.addToComics(draft);
         userRepository.save(user);
 
-        ModelAndView mv = new ModelAndView();
         mv.addObject("comicId", draft.get_id().toString());
         mv.addObject("currentUser", user);
         mv.addObject("isLoad", "false");
@@ -58,7 +69,35 @@ public class ComicController {
         mv.setViewName("draw");
 
         return mv;
+
     }
+
+//    @RequestMapping(value = {"createDraft"}, method = RequestMethod.POST)
+//    public ModelAndView createDraft(@RequestBody MultiValueMap<String,String> formData){
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        User user = userRepository.findByEmail(auth.getName());
+//
+//        Comic draft = new Comic(user.get_id(),null);
+//        draft.setTitle(formData.getFirst("comicName"));
+//        draft.setPrivacy(getPrivacy(formData.getFirst("privacy")));
+//        draft.setGenre(getGenre(formData.getFirst("genre")));
+//        draft.setAuthor(user.getFullname());
+//
+//        comicService.save(draft);
+//
+//        user.addToComics(draft);
+//        userRepository.save(user);
+//
+//        ModelAndView mv = new ModelAndView();
+//        mv.addObject("comicId", draft.get_id().toString());
+//        mv.addObject("currentUser", user);
+//        mv.addObject("isLoad", "false");
+//        mv.addObject("active","create_comic");
+//
+//        mv.setViewName("draw");
+//
+//        return mv;
+//    }
 
     @RequestMapping(value = {"upvote/{comicId}"}, method = RequestMethod.GET)
     public boolean upVote(@PathVariable("comicId") ObjectId comicId){
@@ -128,6 +167,11 @@ public class ComicController {
 
         int len = pages.size();
 
+        if(comic.getParent() != null){
+            Comic parent = comicService.findBy_id(comic.getParent());
+            mv.addObject("parentObject", parent);
+        }
+
         mv.addObject("numPages", len);
         mv.addObject("pages",pages);
         mv.setViewName("viewComic");
@@ -190,6 +234,7 @@ public class ComicController {
         remix.setParent(parentComic.get_id());
         remix.setRaw_data(parentComic.getRaw_data());
         remix.setImage_data(parentComic.getImage_data());
+        remix.setThumbNail(parentComic.getThumbNail());
 
         comicService.save(remix);
 
