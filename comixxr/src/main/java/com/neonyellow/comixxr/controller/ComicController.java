@@ -183,6 +183,10 @@ public class ComicController {
         mv.addObject("downvoted",comic.containsDownvote(currUser.get_id()));
         mv.addObject("active","browse");
 
+        List<Comic> blah = comicService.getAllChildren(comic.get_id());
+
+        blah.forEach(c -> System.out.println(c.get_id()));
+
         return mv;
 
     }
@@ -238,8 +242,11 @@ public class ComicController {
         remix.setRaw_data(parentComic.getRaw_data());
         remix.setImage_data(parentComic.getImage_data());
         remix.setThumbnail(parentComic.getThumbnail());
-
         comicService.save(remix);
+
+        parentComic.getRemixes().add(remix.get_id());
+        comicService.save(parentComic);
+
 
         currUser.addToComics(remix);
         userRepository.save(currUser);

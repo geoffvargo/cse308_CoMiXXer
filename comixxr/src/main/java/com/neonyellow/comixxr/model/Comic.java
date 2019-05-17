@@ -44,6 +44,7 @@ public class Comic implements Comparable<Comic>{
         this.upVote = new ArrayList();
         this.downVote = new ArrayList();
         this.image_data = new ArrayList<>();
+        this.remixes = new ArrayList<>();
     }
 
     public int getTotalVotes(){

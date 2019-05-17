@@ -17,6 +17,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -66,7 +67,7 @@ public class ComicService implements IComicService {
             ans = temp;
         }
 
-        ans.forEach(c -> System.out.println(c.getTotalVotes()));
+        ans.forEach(c -> System.out.println(c.getTotalVotes() + ", " + c.getAge()));
 
         return ans;
     }
@@ -141,6 +142,66 @@ public class ComicService implements IComicService {
                 return Genre.NA;
         }
     }
+
+    public List<Comic> getAllChildren(ObjectId comicId) {
+        List<Comic> ans = new ArrayList<>();
+
+        Comic current = comicRepository.findBy_id(comicId);
+
+        List<Comic> currLevel = new ArrayList<>();
+        current.getRemixes().forEach(r -> currLevel.add(comicRepository.findBy_id(r)));
+
+        try {
+            getAllChildrenHELPER(current, currLevel, ans);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return ans;
+    }
+
+    private void getAllChildrenHELPER(Comic comic, List<Comic> clist, List<Comic> anslist) {
+        if (clist.size() == 0) {
+            return;
+        } else {
+            Comic temp = clist.remove(0);
+            ObjectId parent = temp.getParent();
+            ObjectId id = comic.get_id();
+            if (parent.equals(id) && !anslist.contains(temp)) {
+                anslist.add(temp);
+            }
+            if (temp.getRemixes().size() > 0) {
+                List<Comic> tempList = new ArrayList<>();
+                temp.getRemixes().forEach(r -> tempList.add(comicRepository.findBy_id(r)));
+                getAllChildrenHELPER(temp, tempList, anslist);
+            }
+            getAllChildrenHELPER(comic, clist, anslist);
+        }
+    }
+
+//    private void findAllParents(Comic comic, List<Comic> ansList, List<Comic> remaining) {
+//        while (remaining.size() > 1) {
+//            Comic temp = remaining.remove(0);
+//            if (temp.getParent().equals(comic.get_id())) {
+//                ansList.add(temp);
+//
+//                List<Comic> tempList = new ArrayList<>();
+//                Collections.copy(tempList, comicRepository.findAll());
+//                tempList.removeAll(ansList);
+//
+//                try {
+//                    findAllParents(temp, ansList, tempList);
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//            try {
+//                findAllParents(comic, ansList, remaining);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
 
 //    public List<Comic> findTopRated() {
 //        ArrayList<Comic> temp;

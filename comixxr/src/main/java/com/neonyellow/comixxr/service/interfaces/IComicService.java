@@ -24,4 +24,6 @@ public interface IComicService {
 
     List<Comic> findAll();
 
+    List<Comic> getAllChildren(ObjectId comicId);
+
 }
