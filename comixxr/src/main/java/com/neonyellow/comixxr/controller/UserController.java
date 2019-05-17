@@ -132,6 +132,25 @@ public class UserController {
         return modelAndView;
     }
 
+    @RequestMapping(value={"/viewSpecial/{specialType}"}, method= RequestMethod.GET)
+    public ModelAndView viewSpecial(@PathVariable("specialType") String sp){
+        ModelAndView modelAndView = getMAVWithUser();
+        modelAndView.setViewName("singlesGenre");
+        switch(sp.toLowerCase()){
+            case "popular":
+                List<Comic> comics = comicService.findTopFiftyComicsFromLastWeek();
+                modelAndView.addObject("comics",comics);
+                break;
+            case "new_release":
+                break;
+            default:
+                break;
+        }
+        modelAndView.addObject("category",sp);
+        modelAndView.addObject("active","browse");
+        return modelAndView;
+    }
+
     @RequestMapping(value={"/users"},method = RequestMethod.GET)
     public ModelAndView getUsers(){
         ModelAndView modelAndView = getMAVWithUser();
