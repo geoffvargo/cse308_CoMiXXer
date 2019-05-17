@@ -39,19 +39,19 @@ public class ComicController {
         ModelAndView mv = getMAVWithUser();
         User user = (User)mv.getModel().get("currentUser");
 
-        Comic draft = new Comic(user.get_id(),null);
+        Comic draft = new Comic(user.get_id());
 
         draft.setTitle(comicName);
-        draft.setPrivacy(getPrivacy(privacy));
-        draft.setGenre(getGenre(genre));
+        draft.setPrivacy(comicService.getPrivacy(privacy));
+        draft.setGenre(comicService.getGenre(genre));
         draft.setAuthor(user.getFullname());
 
         if(!thumbnail.isEmpty()){
             try{
-                draft.setThumbnail("data:image/" + (thumbnail.getOriginalFilename().endsWith(".png")?"png":"jpg")+";base64," + Base64.getEncoder().encodeToString(thumbnail.getBytes()));
+                draft.setCustomThumbnail("data:image/" + (thumbnail.getOriginalFilename().endsWith(".png")?"png":"jpg")+";base64," + Base64.getEncoder().encodeToString(thumbnail.getBytes()));
             }
             catch(Exception e){
-                draft.setThumbnail(null);
+                draft.setCustomThumbnail(null);
             }
         }
 
@@ -152,6 +152,7 @@ public class ComicController {
     public void comicSave(@RequestBody MultiValueMap<String,Object> data){
 
         Comic comic = (Comic)saveCanvasDataAndImageData(data).get(0);
+        comic.setThumbnail(comic.getImage_data().get(0));
         comicService.save(comic);
     }
 
@@ -194,8 +195,11 @@ public class ComicController {
         List<Object> res = saveCanvasDataAndImageData(data);
         Comic comic = (Comic)res.get(0);
         comic.setPublished(true);
-        if(comic.getThumbnail() == null){
+        if(comic.getCustomThumbnail() == null){
             comic.setThumbnail(comic.getImage_data().get(0));
+        }
+        else{
+            comic.setThumbnail(comic.getCustomThumbnail());
         }
         comicService.save(comic);
 
@@ -222,13 +226,13 @@ public class ComicController {
     public ModelAndView remixComic(@RequestBody MultiValueMap<String, String> data){
         ModelAndView mv = getMAVWithUser();
         User currUser = (User)mv.getModel().get("currentUser");
-        Comic remix = new Comic(currUser.get_id(), null);
+        Comic remix = new Comic(currUser.get_id());
         Comic parentComic = comicService.findBy_id(new ObjectId(data.getFirst("parentComic")));
 
         remix.setRemix(true);
         remix.setTitle(data.getFirst("comicName"));
-        remix.setPrivacy(getPrivacy(data.getFirst("privacy")));
-        remix.setGenre(getGenre(data.getFirst("genre")));
+        remix.setPrivacy(comicService.getPrivacy(data.getFirst("privacy")));
+        remix.setGenre(comicService.getGenre(data.getFirst("genre")));
         remix.setAuthor(currUser.getFullname());
         remix.setParent(parentComic.get_id());
         remix.setRaw_data(parentComic.getRaw_data());
@@ -249,58 +253,6 @@ public class ComicController {
         mv.addObject("raw_data", remix_raw_data);
         mv.addObject("active","create_comic");
         return mv;
-    }
-
-    private Genre getGenre(String genre){
-        if(genre == null)
-            return Genre.NA;
-        switch(genre.toUpperCase()){
-            case "HORROR":
-                return Genre.HORROR;
-            case "TEEN":
-                return Genre.TEEN;
-            case "FANTASY":
-                return Genre.FANTASY;
-            case "CRIME":
-                return Genre.CRIME;
-            case "ROMANCE":
-                return Genre.ROMANCE;
-            case "MANGA":
-                return Genre.MANGA;
-            case "ALTERNATIVE":
-                return Genre.ALTERNATIVE;
-            case "GAG":
-                return Genre.GAG;
-            case "SCIFI":
-                return Genre.SCIFI;
-            case "SUPERHERO":
-                return Genre.SUPERHERO;
-            case "CHILD":
-                return Genre.CHILD;
-            case "WAR":
-                return Genre.WAR;
-            case "DAILY":
-                return Genre.DAILY;
-            case "WESTERN":
-                return Genre.WESTERN;
-            case "ABSTRACT":
-                return Genre.ABSTRACT;
-            default:
-                return Genre.NA;
-        }
-    }
-
-    private Privacy getPrivacy(String privacy){
-        if(privacy == null)
-            return Privacy.PRIVATE;
-        switch(privacy.toUpperCase()){
-            case "PRIVATE":
-                return Privacy.PRIVATE;
-            case "PUBLIC":
-                return Privacy.PUBLIC;
-            default:
-                return Privacy.UNLISTED;
-        }
     }
 
     private ModelAndView getMAVWithUser(){

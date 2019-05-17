@@ -1,5 +1,6 @@
 package com.neonyellow.comixxr.repository;
 
+import com.neonyellow.comixxr.model.ComicCollection;
 import com.neonyellow.comixxr.model.User;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;

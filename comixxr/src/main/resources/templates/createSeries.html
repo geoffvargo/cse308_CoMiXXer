@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{default}" lang="en"><head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div layout:fragment="content" id="content-wrapper">
+    <div class="container-fluid">
+        <h1 class="text-center mb-4">Create a Series</h1>
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-6"><div th:if="${seriesCreateError != null}" class="alert alert-danger">
+                There was an error creating this series.
+            </div></div>
+            <div class="col-3"></div>
+        </div>
+        <form th:action="@{/user/createSeries}" method="post" enctype="multipart/form-data">
+            <div class="form-group row">
+                <div class="col-4"></div>
+                <div class="custom-file col-4">
+                    <input type="file" id="thumbnail" name="thumbnail" accept=".jpg,.png">
+                    <label class="custom-file-label" for="thumbnail">Choose a Thumbnail</label>
+                </div>
+                <div class="col-4"></div>
+            </div>
+            <div class="form-group row">
+                <label for="seriesName" class="col-4 col-form-label text-right">Series Name</label>
+                <div class="col-4">
+                    <input type="text" minlength="2" class="form-control" id="seriesName" name="seriesName"/>
+                </div>
+                <div class="col-5"></div>
+            </div>
+            <div class="form-group row">
+                <label for="seriesBio" class="col-4 col-form-label text-right">Series Synopsis</label>
+                <div class="col-4">
+                    <input type="text" minlength="2" class="form-control" id="seriesBio" name="seriesBio"/>
+                </div>
+                <div class="col-5"></div>
+            </div>
+            <div class="form-group row">
+                <label for="privacyBox" class="col-4 col-form-label text-right">Privacy</label>
+                <div class="col-4">
+                    <select class="form-control" id="privacyBox" name="privacy">
+                        <option selected>Private</option>
+                        <option>Unlisted</option>
+                        <option>Public</option>
+                    </select>
+                </div>
+                <div class="col-5"></div>
+            </div>
+            <div class="form-group row">
+                <label for="genreBox" class="col-4 col-form-label text-right">Genre</label>
+                <div class="col-4">
+                    <select class="form-control" id="genreBox" name="genre">
+                        <option selected>N/A</option>
+                        <option>Abstract</option>
+                        <option>Alternative</option>
+                        <option>Crime</option>
+                        <option>Fantasy</option>
+                        <option>Gag</option>
+                        <option>Horror</option>
+                        <option>Romance</option>
+                        <option>Sci-Fi</option>
+                        <option>Super Hero</option>
+                        <option>Teen</option>
+                        <option>Child</option>
+                        <option>War</option>
+                        <option>Manga</option>
+                        <option>Daily</option>
+                        <option>Western</option>
+                    </select>
+                </div>
+                <div class="col-5"></div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4"></div>
+                <div class="col-4 text-center">
+                    <input type="submit" class="btn btn-secondary"/>
+                </div>
+                <div class="col-4"></div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

@@ -31,10 +31,12 @@ public class Comic implements Comparable<Comic>{
     private boolean isPublished;
     private Privacy privacy = Privacy.PRIVATE;
     private boolean isInSeries;
+    private ObjectId parentSeriesId;
     private String comicParentProfPic;
     private String thumbnail;
+    private String customThumbnail;
 
-    public Comic(ObjectId userId, String thumbnail){
+    public Comic(ObjectId userId){
         this._id = new ObjectId();
         this.userId = userId;
         this.age = LocalDateTime.now();
@@ -42,9 +44,6 @@ public class Comic implements Comparable<Comic>{
         this.upVote = new ArrayList();
         this.downVote = new ArrayList();
         this.image_data = new ArrayList<>();
-        if(thumbnail != null){
-            this.thumbnail = thumbnail;
-        }
     }
 
     public int getTotalVotes(){

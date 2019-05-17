@@ -1,5 +1,6 @@
 package com.neonyellow.comixxr.service;
 
+import com.neonyellow.comixxr.model.Comic;
 import com.neonyellow.comixxr.model.ComicCollection;
 import com.neonyellow.comixxr.repository.CcRepository;
 import com.neonyellow.comixxr.service.interfaces.IComicCollectionService;
@@ -39,11 +40,17 @@ public class ComicCollectionService implements IComicCollectionService {
         return comicList;
     }
 
+    public List<ComicCollection> getSeries(ObjectId id){
+        List<ComicCollection> cc = ccRepository.findByUserId(id);
+        cc.removeIf(n -> !n.isSeries());
+        return cc;
+    }
+
     public ComicCollection getComicCollectionById(ObjectId id){
         return ccRepository.findBy_id(id);
     }
 
-    public ComicCollection getComicCollectionByUserId(ObjectId userId) {
+    public List<ComicCollection> getComicCollectionByUserId(ObjectId userId) {
         return ccRepository.findByUserId(userId);
     }
 }

@@ -17,11 +17,12 @@ public class ComicCollection implements Comparable<ComicCollection>{
     private String title = "";
     private Privacy privacy = Privacy.PRIVATE;
     private String synopsis = "";
-    private boolean isSeries = false;
+    private boolean series = false;
     private List<ObjectId> comics;
     private List<String> hexComics;
     private String hexId;
-
+    private String thumbnail;
+    private Genre genre;
     public ComicCollection(ObjectId userId){
         this._id = new ObjectId();
         this.hexId = _id.toHexString();

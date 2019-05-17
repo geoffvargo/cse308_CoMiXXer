@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
@@ -101,6 +103,7 @@ public class UserController {
 
         modelAndView.addObject("myCreations", userService.getPublishedComics(currUser, true));
         modelAndView.addObject("myDrafts", userService.getDrafts(currUser));
+        modelAndView.addObject("mySeries",comicCollectionService.getSeries(currUser.get_id()));
         modelAndView.addObject("subscribers", currUser.getNumOfSubscibers());
         modelAndView.addObject("subscribedTo", currUser.getNumOfSubsriptions());
         modelAndView.addObject("userName", currUser.getFullname());
@@ -210,6 +213,72 @@ public class UserController {
         return true;
     }
 
+    @RequestMapping(value = {"/newSeries"},method = RequestMethod.GET)
+    public ModelAndView newSeries(){
+        ModelAndView modelAndView = getMAVWithUser();
+        modelAndView.setViewName("createSeries");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = {"/createSeries"},method = RequestMethod.POST)
+    public ModelAndView createSeries(
+            @RequestParam MultipartFile thumbnail,
+            @RequestParam String seriesName,
+            @RequestParam String seriesBio,
+            @RequestParam String privacy,
+            @RequestParam String genre
+    ){
+        ModelAndView modelAndView = getMAVWithUser();
+        User currUser = (User)modelAndView.getModel().get("currentUser");
+        ComicCollection curation = new ComicCollection(currUser.get_id());
+        if(!thumbnail.isEmpty()){
+            try{
+                curation.setThumbnail("data:image/" + (thumbnail.getOriginalFilename().endsWith(".png")?"png":"jpg")+";base64," + Base64.getEncoder().encodeToString(thumbnail.getBytes()));
+            }
+            catch(Exception e){
+                curation.setThumbnail(null);
+            }
+        }
+        else{
+            try {
+                curation.setThumbnail("data:image/png;base64," + Base64.getEncoder().encodeToString(Files.readAllBytes(Paths.get("./src/main/resources/static/img/portfolio/game.png"))));
+            }
+            catch(Exception e){
+                curation.setThumbnail("");
+            }
+        }
+        curation.setTitle(seriesName);
+        curation.setSynopsis(seriesBio);
+        curation.setSeries(true);
+        curation.setPrivacy(comicService.getPrivacy(privacy));
+        curation.setGenre(comicService.getGenre(genre));
+        boolean ans = false;
+        if (currUser.addCuration(curation)) {
+            userService.save(currUser);
+            comicCollectionService.save(curation);
+            ans = true;
+        }
+        if(ans){
+            modelAndView.setViewName("redirect:/series/"+curation.getHexId());
+            modelAndView.addObject("series",curation);
+        }
+        else{
+            modelAndView.setViewName("createSeries");
+            modelAndView.addObject("seriesCreateError",true);
+        }
+        return modelAndView;
+    }
+
+    @RequestMapping(value = {"/series/{seriesId}"},method = RequestMethod.GET)
+    public ModelAndView getSeries(@PathVariable ObjectId seriesId){
+        ModelAndView modelAndView = getMAVWithUser();
+        ComicCollection cc = comicCollectionService.getComicCollectionById(seriesId);
+        modelAndView.addObject("series",cc);
+        modelAndView.addObject("comics",comicCollectionService.getComicsByIds(cc.getComics()));
+        modelAndView.addObject("author",userService.findUserById(cc.getUserId()));
+        modelAndView.setViewName("series");
+        return modelAndView;
+    }
     /*GET CURRENT USER CURATIONS FROM DATABASE*/
     @RequestMapping(value = {"/curations/{userId}"}, method = RequestMethod.GET)
     public ModelAndView getCurations(@PathVariable ObjectId userId){
@@ -375,17 +444,25 @@ public class UserController {
     }
 
     @RequestMapping(value = "/uploadProfilePicture", method = RequestMethod.POST)
-    public boolean uploadProfPic(@RequestParam("profilePicture") MultipartFile profilePicture){
+    public ModelAndView uploadProfPic(@RequestParam("profilePicture") MultipartFile profilePicture){
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userDetailsService.findUserByEmail(auth.getName());
+        modelAndView.setViewName("userSettings");
+        modelAndView.addObject("currentBio",user.getBio());
+        modelAndView.addObject("active","my_profile");
         try {
-            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-            User user = userDetailsService.findUserByEmail(auth.getName());
             user.setPic("data:image/" + (profilePicture.getOriginalFilename().endsWith(".png")?"png":"jpg")+";base64," +Base64.getEncoder().encodeToString(profilePicture.getBytes()));
             userService.save(user);
         }
         catch(Exception e){
-            return false;
+            modelAndView.addObject("profPicError",true);
+            modelAndView.addObject("currentUser", user);
+            return modelAndView;
         }
-        return true;
+        modelAndView.addObject("profPicSuccess",true);
+        modelAndView.addObject("currentUser", user);
+        return modelAndView;
     }
 
     @RequestMapping(value = "/topFiftyComics", method = RequestMethod.GET)

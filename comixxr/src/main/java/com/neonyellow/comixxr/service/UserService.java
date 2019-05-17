@@ -2,6 +2,7 @@ package com.neonyellow.comixxr.service;
 
 
 import com.neonyellow.comixxr.model.Comic;
+import com.neonyellow.comixxr.model.ComicCollection;
 import com.neonyellow.comixxr.model.Privacy;
 import com.neonyellow.comixxr.model.User;
 import com.neonyellow.comixxr.repository.ComicRepository;

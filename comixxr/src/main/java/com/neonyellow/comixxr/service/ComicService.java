@@ -2,6 +2,7 @@ package com.neonyellow.comixxr.service;
 
 import com.neonyellow.comixxr.model.Comic;
 import com.neonyellow.comixxr.model.Genre;
+import com.neonyellow.comixxr.model.Privacy;
 import com.neonyellow.comixxr.repository.ComicRepository;
 import com.neonyellow.comixxr.service.interfaces.IComicService;
 
@@ -88,6 +89,57 @@ public class ComicService implements IComicService {
 
     public List<Comic> findAll() {
         return comicRepository.findAll();
+    }
+    public Privacy getPrivacy(String privacy){
+        if(privacy == null)
+            return Privacy.PRIVATE;
+        switch(privacy.toUpperCase()){
+            case "PRIVATE":
+                return Privacy.PRIVATE;
+            case "PUBLIC":
+                return Privacy.PUBLIC;
+            default:
+                return Privacy.UNLISTED;
+        }
+    }
+
+    public Genre getGenre(String genre){
+        if(genre == null)
+            return Genre.NA;
+        switch(genre.toUpperCase()){
+            case "HORROR":
+                return Genre.HORROR;
+            case "TEEN":
+                return Genre.TEEN;
+            case "FANTASY":
+                return Genre.FANTASY;
+            case "CRIME":
+                return Genre.CRIME;
+            case "ROMANCE":
+                return Genre.ROMANCE;
+            case "MANGA":
+                return Genre.MANGA;
+            case "ALTERNATIVE":
+                return Genre.ALTERNATIVE;
+            case "GAG":
+                return Genre.GAG;
+            case "SCIFI":
+                return Genre.SCIFI;
+            case "SUPERHERO":
+                return Genre.SUPERHERO;
+            case "CHILD":
+                return Genre.CHILD;
+            case "WAR":
+                return Genre.WAR;
+            case "DAILY":
+                return Genre.DAILY;
+            case "WESTERN":
+                return Genre.WESTERN;
+            case "ABSTRACT":
+                return Genre.ABSTRACT;
+            default:
+                return Genre.NA;
+        }
     }
 
 //    public List<Comic> findTopRated() {
