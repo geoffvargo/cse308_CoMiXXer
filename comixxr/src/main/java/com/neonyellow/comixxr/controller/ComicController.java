@@ -360,10 +360,14 @@ public class ComicController {
 
         List<Object> z = data.get("imageData[]");
 
+        List<String> image_data = new ArrayList<>();
+
         for (Object ob: z) {
             String pg = (String)ob;
-            comic.getImage_data().add(pg);
+            image_data.add(pg);
         }
+
+        comic.setImage_data(image_data);
 
         List<Object> result = new ArrayList<>();
         result.add(comic);
