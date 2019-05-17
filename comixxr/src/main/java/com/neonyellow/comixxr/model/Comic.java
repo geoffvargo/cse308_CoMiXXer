@@ -1,7 +1,6 @@
 package com.neonyellow.comixxr.model;
 
 import lombok.Data;
-import org.apache.tomcat.jni.Local;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -33,9 +32,9 @@ public class Comic implements Comparable<Comic>{
     private Privacy privacy = Privacy.PRIVATE;
     private boolean isInSeries;
     private String comicParentProfPic;
-    private String thumbNail;
+    private String thumbnail;
 
-    public Comic(ObjectId userId, String thumbNail){
+    public Comic(ObjectId userId, String thumbnail){
         this._id = new ObjectId();
         this.userId = userId;
         this.age = LocalDateTime.now();
@@ -43,8 +42,8 @@ public class Comic implements Comparable<Comic>{
         this.upVote = new ArrayList();
         this.downVote = new ArrayList();
         this.image_data = new ArrayList<>();
-        if(thumbNail != null){
-            this.thumbNail = thumbNail;
+        if(thumbnail != null){
+            this.thumbnail = thumbnail;
         }
     }
 

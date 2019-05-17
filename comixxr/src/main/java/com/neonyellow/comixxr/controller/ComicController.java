@@ -48,10 +48,10 @@ public class ComicController {
 
         if(thumbnail != null){
             try{
-                draft.setThumbNail("data:image/" + (thumbnail.getOriginalFilename().endsWith(".png")?"png":"jpg")+";base64," + Base64.getEncoder().encodeToString(thumbnail.getBytes()));
+                draft.setThumbnail("data:image/" + (thumbnail.getOriginalFilename().endsWith(".png")?"png":"jpg")+";base64," + Base64.getEncoder().encodeToString(thumbnail.getBytes()));
             }
             catch(Exception e){
-                draft.setThumbNail(null);
+                draft.setThumbnail(null);
             }
         }
 
@@ -194,8 +194,8 @@ public class ComicController {
         List<Object> res = saveCanvasDataAndImageData(data);
         Comic comic = (Comic)res.get(0);
         comic.setPublished(true);
-        if(comic.getThumbNail() == null){
-            comic.setThumbNail(comic.getImage_data().get(0));
+        if(comic.getThumbnail() == null){
+            comic.setThumbnail(comic.getImage_data().get(0));
         }
         comicService.save(comic);
 
@@ -233,7 +233,7 @@ public class ComicController {
         remix.setParent(parentComic.get_id());
         remix.setRaw_data(parentComic.getRaw_data());
         remix.setImage_data(parentComic.getImage_data());
-        remix.setThumbNail(parentComic.getThumbNail());
+        remix.setThumbnail(parentComic.getThumbnail());
 
         comicService.save(remix);
 
