@@ -13,6 +13,7 @@
 
 <body id="page-top">
     <div layout:fragment="content" id="content-wrapper no-scroll">
+
       <div class="container-fluid">
         <div class="container">
           <div class="row">
@@ -24,9 +25,13 @@
                     <a class="card-underline no-a" th:href="@{/user/comic/viewComic/__${creation.get_id()}__}">
                       <img class="card-img-top img-fluid" alt="Card!" th:src="${creation.getThumbnail()}">
                       <div class="card-body h-25 p-2">
-                        <h6 class="card-text text-center" th:text="${creation.getTitle()}">
-                          <a class="no-a" href="currentComicRemixes.html">
-                            <span th:if="${creation.isRemix()}" class="badge badge-secondary" data-toggle="tooltip" data-placement="right" title="Series"><i class="fas fa-random"></i></span>
+                        <h6 class="card-text text-center">
+                          <span th:text="${creation.getTitle()}"/>
+                          <a th:if="${creation.isRemix()}" class="no-a" th:href="@{/user/viewRemixes/__${creation.getParent().toHexString()}__}">
+                            <span class="badge badge-secondary" data-toggle="tooltip" data-placement="right" title="Remix"><i class="fas fa-random"></i></span>
+                          </a>
+                          <a th:if="${creation.isInSeries()}" class="no-a" th:href="@{/user/viewSeries/__${creation.getParent().toHexString()}__}">
+                            <span class="badge badge-secondary" data-toggle="tooltip" data-placement="right" title="Series"><i class="fas fa-random"></i></span>
                           </a>
                         </h6>
                       </div>
@@ -48,9 +53,8 @@
                           <i class="fas fa-bars"></i>
                         </button>
                         <div class="dropdown-menu">
-                          <a class="dropdown-item" th:href="@{comic/editComic/${creation.get_id()}}">Edit</a>
-                          <a class="dropdown-item" th:href="@{comic/removeComic/${creation.get_id()}}">Remove</a>
-                          <a class="dropdown-item" href="#">Add To Curation</a>
+                          <a class="dropdown-item" th:href="@{comic/editComic/__${creation.get_id().toHexString()}__}">Edit</a>
+                          <a class="dropdown-item" th:href="@{comic/removeComic/__${creation.get_id().toHexString()}__}">Remove</a>
                         </div>
                       </div>
                     </div>

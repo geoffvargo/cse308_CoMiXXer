@@ -16,7 +16,7 @@ public interface ComicRepository extends MongoRepository<Comic, ObjectId > {
     List<Comic> findAllByUserId(ObjectId userId);
     void deleteBy_id(ObjectId id);
     List<Comic> findAllByGenre(Genre genre);
-
+    List<Comic> findAllByParent(ObjectId id);
     List<Comic> findAllByAgeAfter(LocalDateTime lastWeek);
 
 }

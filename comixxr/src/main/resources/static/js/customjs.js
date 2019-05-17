@@ -1,4 +1,7 @@
 $(document).ready(function(){
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  })
   $("#navbarUsername").text($("#current-user").text());
 
   if($("#viewPane").length){
@@ -23,7 +26,7 @@ $(document).ready(function(){
           s += '<button type="button" id="btnid_'+d["hexId"] +'" class="btn btn-secondary" onclick="toggleCuration(\'' + d["hexId"] + '\')">' + d["title"] + '</button>'
         }
         else{
-          s += '<button type="button" id="btnid_'+d["hexId"] +'"   class="btn btn-info" onclick="toggleCuration(\'' + d["hexId"] + '\')">' + d["title"] + '</button>'
+          s += '<button type="button" id="btnid_'+d["hexId"] +'" class="btn btn-info" onclick="toggleCuration(\'' + d["hexId"] + '\')">' + d["title"] + '</button>'
 
         }
       }
@@ -72,9 +75,6 @@ $(document).ready(function(){
       alert("Comment Posted!");
     })
   })
-  // $(function () {
-  // $('[data-toggle="tooltip"]').tooltip()
-  // })
   function toggleViewfn(){
     if($("#toggleViewBtn").attr("data-mode") === "right"){
       $("#toggleViewBtn").attr("data-mode","down");
@@ -163,11 +163,20 @@ $(document).ready(function(){
 
   var toggleCuration = function(id){
     $.get("/user/toggleCuration/"+$("#comicId").val()+"/"+id,function(data){
-      if(data) {
-        $("#btnid_"+id).addClass("bg-success");
+      if(data && $("#btnid_"+id).hasClass("btn-secondary")) {
+        $("#btnid_"+id).removeClass("btn-secondary");
+        $("#btnid_"+id).addClass("btn-info");
         setTimeout(function(){
           $("#curationBox").attr('hidden',true);
-          $("#btnid_"+id).removeClass("bg-success");
+          $("#btnid_"+id).removeClass("btn-info");
+        },500);
+      }
+      else if(data && !$("#btnid_"+id).hasClass("btn-secondary")) {
+        $("#btnid_"+id).removeClass("btn-info");
+        $("#btnid_"+id).addClass("btn-secondary");
+        setTimeout(function(){
+          $("#curationBox").attr('hidden',true);
+          $("#btnid_"+id).removeClass("btn-secondary");
         },500);
       }
       else{

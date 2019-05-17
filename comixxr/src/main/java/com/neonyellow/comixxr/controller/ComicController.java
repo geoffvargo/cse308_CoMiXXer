@@ -46,7 +46,7 @@ public class ComicController {
         draft.setGenre(getGenre(genre));
         draft.setAuthor(user.getFullname());
 
-        if(thumbnail != null){
+        if(!thumbnail.isEmpty()){
             try{
                 draft.setThumbnail("data:image/" + (thumbnail.getOriginalFilename().endsWith(".png")?"png":"jpg")+";base64," + Base64.getEncoder().encodeToString(thumbnail.getBytes()));
             }

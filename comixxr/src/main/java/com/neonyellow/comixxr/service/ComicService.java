@@ -78,6 +78,10 @@ public class ComicService implements IComicService {
         return comicRepository.findAll(new Sort(Sort.Direction.ASC, "genre"));
     }
 
+    public List<Comic> findAllRemixes(ObjectId id){
+        return comicRepository.findAllByParent(id);
+    }
+
     public List<Comic> findAllByGenre(Genre genre) {
         return comicRepository.findAllByGenre(genre);
     }

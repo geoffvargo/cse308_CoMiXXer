@@ -112,6 +112,17 @@ public class UserController {
         return modelAndView;
     }
 
+    @RequestMapping(value = {"/viewRemixes/{parentId}"}, method = RequestMethod.GET)
+    public ModelAndView viewRemixes(@PathVariable ObjectId parentId){
+        ModelAndView modelAndView = getMAVWithUser();
+        modelAndView.setViewName("viewRemixes");
+        Comic parentComic = comicService.findBy_id(parentId);
+        List<Comic> comics = comicService.findAllRemixes(parentId);
+        modelAndView.addObject("comics",comics);
+        modelAndView.addObject("parentComic",parentComic);
+        return modelAndView;
+    }
+
     @RequestMapping(value = {"/browse/{genre}"}, method = RequestMethod.GET)
     public ModelAndView comicsByGenre(@PathVariable("genre") Genre genre) {
         ModelAndView modelAndView = getMAVWithUser();
