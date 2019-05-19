@@ -51,7 +51,7 @@
             <div class="col-3">
               <div class="container h-100 bg-info rounded text-center">
                 <img th:if="${series.getThumbnail() != ''}" class="rounded-circle profile-pic my-1" th:src="${series.getThumbnail()}"/>
-                <div class="text-center py-2" th:text="${series.getSynopsis()}">
+                <div class="text-center py-2 bio-wrap" th:text="${series.getSynopsis()}">
                 </div>
               </div>
             </div>
@@ -60,15 +60,6 @@
         <!-- /.container-->
       </div>
       <!-- /.container-fluid -->
-
-      <!-- Sticky Footer -->
-      <footer class="sticky-footer bg-primary ">
-        <div class="container my-auto">
-          <div class="copyright text-center my-auto">
-            <span>Copyright © Your Website 2019</span>
-          </div>
-        </div>
-      </footer>
 
     </div>
     <!-- /.content-wrapper -->

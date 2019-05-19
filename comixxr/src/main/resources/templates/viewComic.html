@@ -31,6 +31,9 @@
           <div class="col-4"></div>
           <div class="col-4 mb-3">
             <h1 class="text-center d-inline" th:text="${comic.getTitle()}"></h1>
+            <a th:if="${comic.isRemix()}" class="no-a" th:href="@{/user/comic/viewComic/__${comic.getParent().toHexString()}__}">
+              <span class="badge badge-secondary align-text-top" data-toggle="tooltip" data-placement="right" title="View Original Comic"><i class="fas fa-random"></i></span>
+            </a>
             <button class="btn btn-info d-inline mx-4 mb-3" id="toggleViewBtn" data-mode="right"><i class="fas fa-fw fa-angle-double-right" id="toggleViewIcon"></i></button>
             <h4 class="text-center d-inline" th:text="${comic.getAuthor()}"></h4>
           </div>
@@ -76,24 +79,40 @@
                   Remix
                   <i class="fas fa-random"></i>
                 </a>
-                <div class="dropdown-menu">
-                  <div class="dropdown-item">
+                <div class="dropdown-menu bg-info my-2">
+                  <div class="dropdown-item bg-info">
                     <form th:action="@{/user/comic/remix}" method="post">
                       <input type="hidden" name="parentComic" th:value="${comic.get_id()}"/>
                       <input type="hidden" name="genre" th:value="${comic.getGenre()}"/>
                       <input type="hidden" name="privacy" th:value="${comic.getPrivacy()}"/>
-                      <div class="col-4">
                       <input type="text" minlength="2" class="form-control" id="comicName" name="comicName"/>
+                      <div class="col-6 mx-auto">
+                        <input class="form-control mt-1" type="submit" value="Submit"/>
                       </div>
-                      <input type="submit" value="Submit"/>
                     </form>
                   </div>
                 </div>
               </li>
-              <li class="nav-item ml-1">
-                <a class="btn btn-info" th:href="@{/user/comic/viewAllRemixes/__${comic.get_id()}__}">
-                  Remixes
+              <li th:if="${children != null}" class="nav-item ml-1">
+                <a role="button" href="#" class="btn btn-info" data-toggle="dropdown">
+                  View Remixes
                 </a>
+                <div class="dropdown-menu my-2">
+                  <div th:each="remix,iStat : ${children}" class="dropdown-item">
+                    <div th:if="${iStat.count < 4}" class="card bg-info d-inline-block mb-2 mx-1" style="width:8rem">
+                      <a class="card-underline" th:href="@{/user/comic/viewComic/__${remix.get_id().toHexString()}__}">
+                        <img class="card-img-top" th:src="${remix.getThumbnail()}" alt="Card!">
+                        <div class="card-body">
+                          <h6 class="card-text text-center" th:text="${remix.getTitle()}">
+                          </h6>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                  <div class="dropdown-item">
+                    <a class="btn btn-info" th:href="@{/user/viewRemixes/__${comic.get_id().toHexString()}__}">View All Remixes</a>
+                  </div>
+                </div>
               </li>
             </ul>
           </div>

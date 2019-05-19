@@ -259,7 +259,7 @@ public class UserController {
             ans = true;
         }
         if(ans){
-            modelAndView.setViewName("redirect:/series/"+curation.getHexId());
+            modelAndView.setViewName("redirect:/user/series/"+curation.getHexId());
             modelAndView.addObject("series",curation);
         }
         else{

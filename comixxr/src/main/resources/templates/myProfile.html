@@ -43,7 +43,7 @@
                       <div class="row">
                         <div class="col-sm-4 text-right pr-0"><small th:text="${creation.getTotalVotes()}"></small></div>
                         <div class="col-sm-4 text-center px-0"><small th:text="${creation.getTotalComments()}"></small></div>
-                        <div class="col-sm-4 text-left pl-0"><small th:text="${creation.getTotalComments()}"></small></div>
+                        <div class="col-sm-4 text-left pl-0"><small th:text="${creation.getTotalRemixes()}"></small></div>
                       </div>
                     </a>
                     <div class="row">
@@ -96,13 +96,15 @@
               <h5 class="text-left mb-4">Series</h5>
 
               <div class="row scrollable-x no-fw scrollbar scrollbar-primary">
-                <div class="card bg-info d-inline-block mb-4 mx-1" style="width:12rem">
-                  <a class="card-underline no-a" th:href="@{/user/newSeries}">
-                    <div class="card-body">
-                      <h6>New Series</h6>
+                  <div class="col-3">
+                    <div class="card bg-info d-inline-block mb-4 mx-1" style="width:12rem">
+                      <a class="card-underline no-a" th:href="@{/user/newSeries}">
+                        <div class="card-body">
+                          <h6>New Series</h6>
+                        </div>
+                      </a>
                     </div>
-                  </a>
-                </div>
+                  </div>
                 <div th:each="series,istat : ${mySeries}" class="col-3">
                   <div class="card bg-info d-inline-block mb-4 mx-1" style="width:12rem">
                     <a class="card-underline no-a" th:href="@{/user/series/__${series.get_id()}__}">

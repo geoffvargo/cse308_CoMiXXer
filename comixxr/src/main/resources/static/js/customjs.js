@@ -8,6 +8,21 @@ $(document).ready(function(){
     toggleViewfn();
   }
 
+  $("#postCommentBtn").click(function(){
+    var data = $("#postCommentBox").val();
+    var comicId = $("#comicId").val();
+    if(data.length() != 0){
+      $.post("/user/comic/addComment",{'commentData':data,'comicId':comicId},function(bool){
+        if(bool){
+          alert("Comment added!");
+        }
+        else{
+          alert("Failed to add comment!");
+        }
+      })
+    }
+  })
+
   $("#createCuration_btn").click(function(){
     $.post("/user/createNewCuration",{'curationName' : $("#curationName").val()},function(data){
       if(data){

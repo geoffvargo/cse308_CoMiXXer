@@ -156,6 +156,15 @@ public class ComicController {
         comicService.save(comic);
     }
 
+    @RequestMapping(value = {"/editComic/{comicId}"}, method = RequestMethod.GET)
+    public ModelAndView editComicPage(@PathVariable ObjectId comicId){
+        ModelAndView modelAndView = getMAVWithUser();
+        Comic c = comicService.findBy_id(comicId);
+        modelAndView.addObject("comic",c);
+        modelAndView.setViewName("editComic");
+        return modelAndView;
+    }
+
     @RequestMapping(value = {"/viewComic/{comicId}"}, method = RequestMethod.GET)
     public ModelAndView viewComic(@PathVariable("comicId") String comicId){
         ModelAndView mv = getMAVWithUser();
@@ -170,6 +179,12 @@ public class ComicController {
         if(comic.getParent() != null){
             Comic parent = comicService.findBy_id(comic.getParent());
             mv.addObject("parentObject", parent);
+        }
+
+        List<Comic> children = comicService.findAllRemixes(id);
+
+        if(children.size() > 0){
+            mv.addObject("children",children);
         }
 
         mv.addObject("numPages", len);

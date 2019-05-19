@@ -15,7 +15,7 @@
             </div></div>
             <div class="col-3"></div>
         </div>
-        <form th:action="@{/user/createSeries}" method="post" enctype="multipart/form-data">
+        <form id="seriesForm" th:action="@{/user/createSeries}" method="post" enctype="multipart/form-data">
             <div class="form-group row">
                 <div class="col-4"></div>
                 <div class="custom-file col-4">
@@ -34,7 +34,7 @@
             <div class="form-group row">
                 <label for="seriesBio" class="col-4 col-form-label text-right">Series Synopsis</label>
                 <div class="col-4">
-                    <input type="text" minlength="2" class="form-control" id="seriesBio" name="seriesBio"/>
+                    <textarea form="seriesForm" class="form-control" id="seriesBio" name="seriesBio"></textarea>
                 </div>
                 <div class="col-5"></div>
             </div>
