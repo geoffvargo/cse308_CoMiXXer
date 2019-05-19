@@ -20,13 +20,17 @@
           <h5 class="text-left my-4">My Creations</h5>
           <div class="row scrollable-x no-fw scrollbar scrollbar-primary">
             <div th:each="creation : ${myCreations}" class="col-3">
-              <div class="card bg-info d-inline-block mb-4 mx-1" style="max-width:14rem">
+              <div class="card bg-info d-inline-block mb-4 mx-1" style="width:12rem">
                 <a class="card-underline no-a" th:href="@{/user/comic/viewComic/__${creation.get_id()}__}">
-                  <img class="card-img-top img-fluid" alt="Card!" src="/img/portfolio/game.png">
+                  <img class="card-img-top img-fluid" alt="Card!" th:src="${creation.getThumbnail()}">
                   <div class="card-body h-25 p-2">
-                    <h6 class="card-text text-center" th:text="${creation.getTitle()}">
-                      <a class="no-a" href="currentComicRemixes.html">
-                        <span th:if="${creation.isInSeries()}" class="badge badge-secondary" data-toggle="tooltip" data-placement="right" title="Series"><i class="fas fa-random"></i></span>
+                    <h6 class="card-text text-center">
+                      <span th:text="${creation.getTitle()}"/>
+                      <a th:if="${creation.isRemix()}" class="no-a" th:href="@{/user/viewRemixes/__${creation.getParent().toHexString()}__}">
+                        <span class="badge badge-secondary" data-toggle="tooltip" data-placement="right" title="Remix"><i class="fas fa-random"></i></span>
+                      </a>
+                      <a th:if="${creation.isInSeries()}" class="no-a" th:href="@{/user/viewSeries/__${creation.getParent().toHexString()}__}">
+                        <span class="badge badge-secondary" data-toggle="tooltip" data-placement="right" title="Series"><i class="fas fa-random"></i></span>
                       </a>
                     </h6>
                   </div>
@@ -38,19 +42,22 @@
                   <div class="row">
                     <div class="col-sm-4 text-right pr-0"><small th:text="${creation.getTotalVotes()}"></small></div>
                     <div class="col-sm-4 text-center px-0"><small th:text="${creation.getTotalComments()}"></small></div>
-                    <div class="col-sm-4 text-left pl-0"><small th:text="${creation.getTotalComments()}"></small></div>
+                    <div class="col-sm-4 text-left pl-0"><small th:text="${creation.getTotalRemixes()}"></small></div>
                   </div>
                 </a>
                 <div class="row">
-                  <div class="col-3 mt-1 pr-0 text-center"><i class="fas fa-globe"></i></div>
+                  <div class="col-3 mt-1 pr-0 text-center">
+                    <i th:if="${creation.getPrivacy() == T(com.neonyellow.comixxr.model.Privacy).PUBLIC}" class="fas fa-globe"></i>
+                    <i th:if="${creation.getPrivacy() == T(com.neonyellow.comixxr.model.Privacy).UNLISTED}" class="fas fa-mask"></i>
+                    <i th:if="${creation.getPrivacy() == T(com.neonyellow.comixxr.model.Privacy).PRIVATE}" class="fas fa-eye-slash"></i>
+                  </div>
                   <div class="col btn-group dropright">
                     <button class="btn btn-info text-right" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       <i class="fas fa-bars"></i>
                     </button>
                     <div class="dropdown-menu">
-                      <a class="dropdown-item" th:href="@{/comic/editComic/${creation.get_id()}}">Edit</a>
-                      <a class="dropdown-item" th:href="@{/comic/removeComic/${creation.get_id()}}">Remove</a>
-                      <a class="dropdown-item" href="#">Add To Curation</a>
+                      <a class="dropdown-item" th:href="@{comic/editComic/__${creation.get_id().toHexString()}__}">Edit</a>
+                      <a class="dropdown-item" th:href="@{comic/removeComic/__${creation.get_id().toHexString()}__}">Remove</a>
                     </div>
                   </div>
                 </div>

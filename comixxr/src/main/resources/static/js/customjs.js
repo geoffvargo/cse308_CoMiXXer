@@ -12,7 +12,7 @@ $(document).ready(function(){
     var data = $("#postCommentBox").val();
     var comicId = $("#comicId").val();
     if(data.length() != 0){
-      $.post("/user/comic/addComment",{'commentData':data,'comicId':comicId},function(bool){
+      $.post("/comment/addComment",{'commentData':data,'comicId':comicId},function(bool){
         if(bool){
           alert("Comment added!");
         }

@@ -86,13 +86,10 @@
         </li>
         <li class="nav-item" th:classappend="${active} == 'users'? 'active' : ''">
             <a class="nav-link" th:href="@{/user/users}">
-                <i class="fa fa-fw fa-rss"></i>
-                <span>Users</span></a>
+                <i class="fas fa-fw fa-users"></i>
+                <span>Explore Users</span></a>
         </li>
         <li class="divider"></li>
-        <li class="na-item">
-            <span class="nav-link text-white">User corner</span>
-        </li>
         <li class="nav-item" th:classappend="${active} == 'my_profile'? 'active' : ''">
             <a class="nav-link" th:href="@{/user/myProfile}">
                 <i class="fa fa-fw fa-folder-open"></i>
@@ -101,7 +98,7 @@
         <li class="nav-item" th:classappend="${active} == 'curations'? 'active' : ''">
             <a class="nav-link" th:href="@{/user/curations/__${currentUser.get_id()}__}">
                 <i class="fa fa-fw fa-compass"></i>
-                <span>Curations</span></a>
+                <span>My Curations</span></a>
         </li>
         <li class="divider"></li>
         <li class="nav-item" th:classappend="${active} == 'create_comic'? 'active' : ''">

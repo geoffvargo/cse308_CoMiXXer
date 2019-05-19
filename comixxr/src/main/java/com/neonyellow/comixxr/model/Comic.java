@@ -100,7 +100,7 @@ public class Comic implements Comparable<Comic>{
         long secondsAgo = nowTime - dateTime;
         long minutes = secondsAgo/60;
         long hours = minutes/60;
-        long days = hours/60;
+        long days = hours/24;
         if(days > 0){
             s+=days + " days ago";
         }
