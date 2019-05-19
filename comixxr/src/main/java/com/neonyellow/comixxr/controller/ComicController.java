@@ -191,6 +191,21 @@ public class ComicController {
 
     }
 
+    @RequestMapping(value = {"/viewAllRemixes/{comicId}"}, method = RequestMethod.GET)
+    public ModelAndView viewRemixes(@PathVariable("comicId") ObjectId comicId) {
+        ModelAndView modelAndView = getMAVWithUser();
+
+        List<Comic> remixList = comicService.getAllChildren(comicId);
+        Comic by_id = comicService.findBy_id(comicId);
+
+        modelAndView.addObject("remixList", remixList);
+        modelAndView.addObject("comicTitle", by_id.getTitle());
+        modelAndView.addObject("comicThumbnail", by_id.getThumbnail());
+
+        modelAndView.setViewName("viewAllRemixes");
+
+        return modelAndView;
+    }
 
     @RequestMapping(value = {"/publish"}, method = RequestMethod.POST)
     public void comicPublish(@RequestBody MultiValueMap<String, Object> data){
