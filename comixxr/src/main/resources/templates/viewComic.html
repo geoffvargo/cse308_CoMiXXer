@@ -28,8 +28,8 @@
 
       <div class="container" id="comicContainer">
         <div class="row" id="comicHeader">
-          <div class="col-4"></div>
-          <div class="col-4 mb-3">
+          <div class="col-1"></div>
+          <div class="col-10 text-center mb-3">
             <h1 class="text-center d-inline" th:text="${comic.getTitle()}"></h1>
             <a th:if="${comic.isRemix()}" class="no-a" th:href="@{/user/comic/viewComic/__${comic.getParent().toHexString()}__}">
               <span class="badge badge-secondary align-text-top" data-toggle="tooltip" data-placement="right" title="View Original Comic"><i class="fas fa-random"></i></span>
@@ -37,7 +37,7 @@
             <button class="btn btn-info d-inline mx-4 mb-3" id="toggleViewBtn" data-mode="right"><i class="fas fa-fw fa-angle-double-right" id="toggleViewIcon"></i></button>
             <h4 class="text-center d-inline" th:text="${comic.getAuthor()}"></h4>
           </div>
-          <div class="col-4"></div>
+          <div class="col-1"></div>
         </div>
         <div class="row" id="comicContent">
           <div class="col-lg-12 text-center scrollable-y scrollbar scrollbar-primary mb-2" id="viewPane">

@@ -15,21 +15,41 @@
     <div layout:fragment="content" id="content-wrapper">
       <div class="container-fluid">
         <h1 class="text-center mb-4">Edit Comic</h1>
-        <form th:action="@{/user/comic/makeChanges}" method="post">
+        <form th:action="@{/user/comic/makeChanges}" method="post" enctype="multipart/form-data">
+          <input type="hidden" name="comicId" th:value="${comic.get_id().toHexString()}"/>
+          <div class="row">
+            <div class="col-3"></div>
+            <div class="col-6">
+              <div th:if="${nameError != null}" class="text-center alert alert-danger">Comic Name must be 2 or more letters!</div>
+            </div>
+            <div class="col-3"></div>
+          </div>
+          <div class="form-group row">
+            <div class="col-3"></div>
+            <div class="col-6 text-center">
+              <label for="thumbnail">Change Thumbnail:</label>
+              <img th:src="${comic.getThumbnail()}" class="rounded-circle profile-pic"/>
+              <div class="custom-file">
+                <input type="file" id="thumbnail" name="thumbnail" accept=".jpg,.png">
+                <label class="custom-file-label" for="thumbnail">Choose File</label>
+              </div>
+            </div>
+            <div class="col-3"></div>
+          </div>
           <div class="form-group row">
             <label for="comicName" class="col-4 col-form-label text-right">Comic Name</label>
             <div class="col-4">
-              <input type="text" class="form-control" id="comicName"/>
+              <input type="text" class="form-control" id="comicName" name="comicName" th:value="${comic.getTitle()}"/>
             </div>
             <div class="col-5"></div>
           </div>
           <div class="form-group row">
             <label for="privacyBox" class="col-4 col-form-label text-right">Privacy</label>
             <div class="col-4">
-              <select class="form-control" id="privacyBox">
-                <option selected>Public</option>
-                <option>Unlisted</option>
-                <option>Private</option>
+              <select class="form-control" id="privacyBox" name="privacyBox">
+                <option th:attrappend="selected=${comic.getPrivacy() == T(com.neonyellow.comixxr.model.Privacy).PUBLIC}?'selected'">Public</option>
+                <option th:attrappend="selected=${comic.getPrivacy() == T(com.neonyellow.comixxr.model.Privacy).UNLISTED}?'selected'">Unlisted</option>
+                <option th:attrappend="selected=${comic.getPrivacy() == T(com.neonyellow.comixxr.model.Privacy).PRIVATE}?'selected'">Private</option>
               </select>
             </div>
             <div class="col-5"></div>
@@ -37,9 +57,9 @@
           <div class="form-group row">
             <div class="col-4"></div>
             <div class="col-4 text-center">
-              <a href="mycreations.html" class="btn btn-secondary">Submit</a>
+              <button class="btn btn-info mt-2" type="submit">Submit</button>
             </div>
-            <div class="col-5"></div>
+            <div class="col-4"></div>
           </div>
         </form>
       </div>

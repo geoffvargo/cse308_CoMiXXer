@@ -165,6 +165,35 @@ public class ComicController {
         return modelAndView;
     }
 
+    @RequestMapping(value = {"/makeChanges"}, method = RequestMethod.POST)
+    public ModelAndView makeChanges(@RequestParam("thumbnail") MultipartFile thumbnail,
+                                    @RequestParam("comicName") String comicName,
+                                    @RequestParam("privacyBox") String privacy,
+                                    @RequestParam("comicId") ObjectId comicId){
+        ModelAndView modelAndView = getMAVWithUser();
+        Comic currentComic = comicService.findBy_id(comicId);
+        if(!thumbnail.isEmpty()){
+            try {
+                currentComic.setCustomThumbnail("data:image/" + (thumbnail.getOriginalFilename().endsWith(".png") ? "png" : "jpg") + ";base64," + Base64.getEncoder().encodeToString(thumbnail.getBytes()));
+                currentComic.setThumbnail("data:image/" + (thumbnail.getOriginalFilename().endsWith(".png")?"png":"jpg")+";base64," + Base64.getEncoder().encodeToString(thumbnail.getBytes()));
+            }
+            catch(Exception e){
+                currentComic.setCustomThumbnail("");
+                currentComic.setThumbnail("");
+            }
+        }
+        if(comicName.length() < 2){
+            modelAndView.setViewName("editComic");
+            modelAndView.addObject("nameError",true);
+            return modelAndView;
+        }
+        currentComic.setTitle(comicName);
+        currentComic.setPrivacy(comicService.getPrivacy(privacy));
+        comicService.save(currentComic);
+        modelAndView.setViewName("redirect:/user/myProfile");
+        return modelAndView;
+    }
+
     @RequestMapping(value = {"/viewComic/{comicId}"}, method = RequestMethod.GET)
     public ModelAndView viewComic(@PathVariable("comicId") String comicId){
         ModelAndView mv = getMAVWithUser();
