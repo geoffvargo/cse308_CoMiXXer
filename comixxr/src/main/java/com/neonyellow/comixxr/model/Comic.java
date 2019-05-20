@@ -35,6 +35,7 @@ public class Comic implements Comparable<Comic>{
     private String comicParentProfPic;
     private String thumbnail;
     private String customThumbnail;
+    private List<ObjectId> comments;
 
     public Comic(ObjectId userId){
         this._id = new ObjectId();
@@ -45,6 +46,7 @@ public class Comic implements Comparable<Comic>{
         this.downVote = new ArrayList();
         this.image_data = new ArrayList<>();
         this.remixes = new ArrayList<>();
+        this.comments = new ArrayList<>();
     }
 
     public int getTotalVotes(){
@@ -52,7 +54,7 @@ public class Comic implements Comparable<Comic>{
     }
 
     public int getTotalComments(){
-        return 100;
+        return comments.size();
     }
 
     public int getTotalRemixes(){
@@ -116,6 +118,9 @@ public class Comic implements Comparable<Comic>{
         return s;
     }
 
+    public void addComment(Comment c){
+        comments.add(c.get_id());
+    }
     public int compareTo(Comic c){
         return c.age.compareTo(age);
     }
