@@ -205,12 +205,12 @@ public class ComicService implements IComicService {
         List<Comic> remixActivity = new ArrayList<>();
 
         for (ObjectId id : user.getSubscriptions()) {
-            remixActivity.addAll(comicRepository.findAllByUserIdAndRemixAndAgeBeforeAndPrivacyOrderByAgeDesc(id, true, present, Privacy.PUBLIC));
+            List<Comic> comics = comicRepository.findAllByUserIdAndAgeBeforeAndPrivacyOrderByAgeDesc(id, present, Privacy.PUBLIC);
+            comics.removeIf(x->!x.isRemix());
+            remixActivity.addAll(comics);
         }
 
         Collections.sort(remixActivity);
-        Collections.reverse(remixActivity);
-
         return remixActivity;
     }
 //    private void findAllParents(Comic comic, List<Comic> ansList, List<Comic> remaining) {

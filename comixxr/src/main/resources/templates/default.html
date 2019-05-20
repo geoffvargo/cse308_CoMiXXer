@@ -74,7 +74,7 @@
             </a>
         </li>
         <li class="nav-item" th:classappend="${active} == 'activity'? 'active' : ''">
-            <a class="nav-link" href="activity.html">
+            <a class="nav-link" th:href="@{/user/comic/activity}">
                 <i class="fa fa-fw fa-cubes"></i>
                 <span>Activity</span>
             </a>

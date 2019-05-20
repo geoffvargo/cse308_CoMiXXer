@@ -375,6 +375,7 @@ public class ComicController {
     @RequestMapping(value = {"/activity"}, method = RequestMethod.GET)
     public ModelAndView getActivity(){
         ModelAndView mv = getMAVWithUser();
+        mv.setViewName("activity");
         User user = (User)mv.getModel().get("currentUser");
 
         mv.addObject("remixes", comicService.getRemixesForActivityFeed(user));
