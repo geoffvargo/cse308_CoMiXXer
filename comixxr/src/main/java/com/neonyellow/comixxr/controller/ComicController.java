@@ -37,6 +37,8 @@ public class ComicController {
     private ComicCollectionService ccService;
     @Autowired
     UserService userService;
+    @Autowired
+    CommentService commentService;
 
     @RequestMapping(value = {"createDraft"}, method = RequestMethod.POST)
     public ModelAndView createDraft(@RequestParam("comicName") String comicName, @RequestParam("privacy") String privacy, @RequestParam("genre") String genre, @RequestParam("thumbnail") MultipartFile thumbnail){
@@ -380,6 +382,7 @@ public class ComicController {
         User user = (User)mv.getModel().get("currentUser");
 
         mv.addObject("remixes", comicService.getRemixesForActivityFeed(user));
+        mv.addObject("comments", commentService.getCommentsForActivityFeed(user));
 
         return mv;
     }

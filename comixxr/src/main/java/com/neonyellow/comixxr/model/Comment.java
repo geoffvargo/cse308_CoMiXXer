@@ -9,17 +9,23 @@ import java.time.LocalDateTime;
 
 @Data
 @Document(collection = "comment")
-public class Comment {
+public class Comment implements Comparable<Comment>{
     @Id
     private ObjectId _id;
     private ObjectId userId;
+    private ObjectId comicId;
     private String text = "";
     private LocalDateTime age;
 
-    public Comment(ObjectId userId, String text){
+    public Comment(ObjectId userId, String text, ObjectId comicId){
         this._id = new ObjectId();
         this.userId = userId;
         this.text = text;
+        this.comicId = comicId;
         age = LocalDateTime.now();
+    }
+
+    public int compareTo(Comment c){
+        return c.age.compareTo(age);
     }
 }
