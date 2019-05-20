@@ -1,6 +1,8 @@
 package com.neonyellow.comixxr.controller;
 
+import com.neonyellow.comixxr.model.Comic;
 import com.neonyellow.comixxr.model.User;
+import com.neonyellow.comixxr.service.ComicService;
 import com.neonyellow.comixxr.service.ComixUserDetailsService;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -18,6 +20,9 @@ import javax.validation.Valid;
 public class HomeController {
     @Autowired
     private ComixUserDetailsService userService;
+
+    @Autowired
+    private ComicService comicService;
 
     @RequestMapping(value = {"/","/index"}, method = RequestMethod.GET)
     public ModelAndView getIndex(){
@@ -43,6 +48,7 @@ public class HomeController {
         ModelAndView modelAndView = getMAVWithUser();
         modelAndView.setViewName("browse");
         modelAndView.addObject("active","browse");
+        modelAndView.addObject("newComics",comicService.findMostRecentFifty());
         return modelAndView;
     }
 

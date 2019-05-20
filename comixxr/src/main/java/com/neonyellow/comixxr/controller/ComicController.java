@@ -194,12 +194,24 @@ public class ComicController {
         return modelAndView;
     }
 
+    @RequestMapping(value = {"/private"}, method = RequestMethod.GET)
+    public ModelAndView getPrivate(){
+        ModelAndView modelAndView = getMAVWithUser();
+        modelAndView.setViewName("private");
+        return modelAndView;
+    }
+
     @RequestMapping(value = {"/viewComic/{comicId}"}, method = RequestMethod.GET)
     public ModelAndView viewComic(@PathVariable("comicId") String comicId){
         ModelAndView mv = getMAVWithUser();
         ObjectId id = new ObjectId(comicId);
-
+        User currUser = (User)mv.getModel().get("currentUser");
         Comic comic = comicService.findBy_id(id);
+        if(comic.getPrivacy() == Privacy.PRIVATE && !comic.getUserId().equals(currUser.get_id())){
+            mv.setViewName("viewComic");
+            mv.addObject("private",true);
+            return mv;
+        }
 
         List<String> pages = comic.getImage_data();
 
@@ -220,7 +232,6 @@ public class ComicController {
         mv.addObject("pages",pages);
         mv.setViewName("viewComic");
 
-        User currUser = (User)mv.getModel().get("currentUser");
         mv.setViewName("viewComic");
         mv.addObject("comic",comic);
         mv.addObject("upvoted",comic.containsUpvote(currUser.get_id()));

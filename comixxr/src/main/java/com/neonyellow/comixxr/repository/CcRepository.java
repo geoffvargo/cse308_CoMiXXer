@@ -11,4 +11,6 @@ public interface CcRepository extends MongoRepository<ComicCollection, ObjectId>
     void deleteBy_id(ObjectId id);
 
     List<ComicCollection> findByUserId(ObjectId userId);
+
+    ComicCollection findFirstByComicsContaining(ObjectId id);
 }

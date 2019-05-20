@@ -17,7 +17,7 @@
     <div class="container">
       <div class="row">
         <div class="col-9 w-bio">
-          <h5 class="text-left my-4">My Creations</h5>
+          <h5 class="text-left my-4">Creations</h5>
           <div class="row scrollable-x no-fw scrollbar scrollbar-primary">
             <div th:each="creation : ${myCreations}" class="col-3">
               <div class="card bg-info d-inline-block mb-4 mx-1" style="width:12rem">
@@ -45,26 +45,26 @@
                     <div class="col-sm-4 text-left pl-0"><small th:text="${creation.getTotalRemixes()}"></small></div>
                   </div>
                 </a>
-                <div class="row">
-                  <div class="col-3 mt-1 pr-0 text-center">
-                    <i th:if="${creation.getPrivacy() == T(com.neonyellow.comixxr.model.Privacy).PUBLIC}" class="fas fa-globe"></i>
-                    <i th:if="${creation.getPrivacy() == T(com.neonyellow.comixxr.model.Privacy).UNLISTED}" class="fas fa-mask"></i>
-                    <i th:if="${creation.getPrivacy() == T(com.neonyellow.comixxr.model.Privacy).PRIVATE}" class="fas fa-eye-slash"></i>
-                  </div>
-                  <div class="col btn-group dropright">
-                    <button class="btn btn-info text-right" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <i class="fas fa-bars"></i>
-                    </button>
-                    <div class="dropdown-menu">
-                      <a class="dropdown-item" th:href="@{comic/editComic/__${creation.get_id().toHexString()}__}">Edit</a>
-                      <a class="dropdown-item" th:href="@{comic/removeComic/__${creation.get_id().toHexString()}__}">Remove</a>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
           <div class="divider mt-4"></div>
+
+          <h5 class="text-left mb-4">Series</h5>
+
+          <div class="row scrollable-x no-fw scrollbar scrollbar-primary">
+            <div th:each="series : ${mySeries}" class="col-3">
+              <div class="card bg-info d-inline-block mb-4 mx-1" style="width:12rem">
+                <a class="card-underline no-a" th:href="@{/user/series/__${series.get_id()}__}">
+                  <img class="card-img-top" th:src="${series.getThumbnail()}" alt="Card!">
+                  <div class="card-body h-25 p-2">
+                    <h6 class="card-text text-center" th:text="${series.getTitle()}">
+                    </h6>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="col-3">
           <div class="container scrollbar-y scrollbar scrollbar-primary h-bio">

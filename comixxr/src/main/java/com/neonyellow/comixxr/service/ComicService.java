@@ -43,6 +43,10 @@ public class ComicService implements IComicService {
         return convFile;
     }
 
+    public List<Comic> findMostRecentFifty(){
+        return comicRepository.findAllByAgeBeforeAndPrivacyOrderByAgeDesc(LocalDateTime.now(),Privacy.PUBLIC);
+    }
+
     public void save(Comic comic) {
         comicRepository.save(comic);
     }
@@ -55,7 +59,7 @@ public class ComicService implements IComicService {
         LocalDateTime present = LocalDateTime.now();
         LocalDateTime lastWeek = present.minusDays(7);
 
-        temp = comicRepository.findAllByAgeAfter(lastWeek);
+        temp = comicRepository.findAllByAgeAfterAndPrivacy(lastWeek,Privacy.PUBLIC  );
 
         temp.sort((o1, o2) -> Integer.compare(o2.getTotalVotes(), o1.getTotalVotes()));
 
@@ -179,6 +183,13 @@ public class ComicService implements IComicService {
         }
     }
 
+    public List<Comic> getComicsByIds(List<ObjectId> ids){
+        List<Comic> comicList = new ArrayList();
+        for(ObjectId id : ids){
+            comicList.add(comicRepository.findBy_id(id));
+        }
+        return comicList;
+    }
 //    private void findAllParents(Comic comic, List<Comic> ansList, List<Comic> remaining) {
 //        while (remaining.size() > 1) {
 //            Comic temp = remaining.remove(0);

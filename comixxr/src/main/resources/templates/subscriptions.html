@@ -33,14 +33,14 @@
                   <span class="text-muted" th:text="${comic.getTotalVotes()}"></span>
                 </div>
               </div>
-              <div class="media=body">
+              <div class="media-body">
                 <a class="no-a" th:href="@{/user/comic/viewComic/__${comic.get_id()}__}">
                   <div class="text-muted float-right">
                     <div class="text-muted text-sm" th:text="${comic.timeToString()}"></div>
                   </div>
                   <div class="text-secondary font-weight-bold" th:text="${comic.getAuthor()}"></div>
                   <div class=" font-weight-bold mb-1 ml-3" th:text="${comic.getTitle()}"></div>
-                  <img class="img-fluid ml-2" th:src="@{/img/portfolio/comic.png}"/>
+                  <img class="img-fluid ml-2" th:src="${comic.getThumbnail()}"/>
                 </a>
               </div>
             </div>

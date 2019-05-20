@@ -153,7 +153,7 @@
                               Horror
                             </h4>
                           </div>
-                        </a>  
+                        </a>
                       </div>
                     </div>
 
@@ -270,55 +270,35 @@
             </div>
             <div class="tab-pane fade" id="pills-newrelease" role="tabpanel" aria-labelledby="pills-newrelease-tab">
 
-              <div class="row">
-                <div class="container">
-                  <div class="row">
-                    <div class="col-lg">
-                      <div class="card bg-info d-inline-block mb-4 mx-1" style="max-width:14rem">
-                        <a class="card-underline" th:href="@{/seriesGenre}">
-                          <img class="card-img-top" src="img/portfolio/cabin.png" alt="Card!">
-                          <div class="card-body h-25 p-3">
-                            <h4 class="card-text text-center">
-                            Horror
-                          </h4>
-                          </div>
-                        </a>
+              <div class="row scrollable-y scrollbar scrollbar-primary mh-smaller">
+                <div th:each="comic : ${newComics}" class="col-3">
+                  <div class="card bg-info d-inline-block mb-4 mx-1" style="width:14rem">
+                    <a class="card-underline no-a" th:href="@{/user/comic/viewComic/__${comic.get_id()}__}">
+                      <img class="card-img-top" th:src="${comic.getThumbnail()}" alt="Card!">
+                      <div class="card-body h-25 p-2">
+                        <h6 class="card-text text-center">
+                          <span th:text="${comic.getTitle()}"></span>
+                          <a th:if="${creation.isRemix()}" class="no-a" th:href="@{/user/viewRemixes/__${creation.getParent().toHexString()}__}">
+                            <span class="badge badge-secondary" data-toggle="tooltip" data-placement="right" title="Remix"><i class="fas fa-random"></i></span>
+                          </a>
+                          <a th:if="${creation.isInSeries()}" class="no-a" th:href="@{/user/viewSeries/__${creation.getParent().toHexString()}__}">
+                            <span class="badge badge-secondary" data-toggle="tooltip" data-placement="right" title="Series"><i class="fas fa-random"></i></span>
+                          </a>
+                        </h6>
                       </div>
-
-                      <div class="card bg-info d-inline-block mb-4 mx-1" style="max-width:14rem">
-                        <a class="card-underline" th:href="@{/seriesGenre}">
-                          <img class="card-img-top" src="img/portfolio/cabin.png" alt="Card!">
-                          <div class="card-body h-25 p-3">
-                            <h4 class="card-text text-center">
-                            Comedy
-                          </h4>
-                          </div>
-                        </a>
+                      <div class="row">
+                        <div class="col-sm-4 text-right"><i class="fas fa-chevron-up"></i></div>
+                        <div class="col-sm-4 text-center"><i class="fas fa-comment-dots"></i></div>
+                        <div class="col-sm-4 text-left"><i class="fas fa-random"></i></div>
                       </div>
-
-                      <div class="card bg-info d-inline-block mb-4 mx-1" style="max-width:14rem">
-                        <a class="card-underline" th:href="@{/seriesGenre}">
-                          <img class="card-img-top" src="img/portfolio/cabin.png" alt="Card!">
-                          <div class="card-body h-25 p-3">
-                            <h4 class="card-text text-center">
-                            Adventure
-                          </h4>
-                          </div>
-                        </a>
+                      <div class="row">
+                        <div class="col-sm-4 text-right"><small th:text="${comic.getTotalVotes()}"></small></div>
+                        <div class="col-sm-4 text-center"><small th:text="${comic.getTotalComments()}"></small></div>
+                        <div class="col-sm-4 text-left"><small th:text="${comic.getTotalComments()}"></small></div>
                       </div>
-
-                      <div class="card bg-info d-inline-block mb-4 mx-1" style="max-width:14rem">
-                        <a class="card-underline" th:href="@{/seriesGenre}">
-                          <img class="card-img-top" src="img/portfolio/cabin.png" alt="Card!">
-                          <div class="card-body h-25 p-3">
-                            <h4 class="card-text text-center">
-                            Sci-Fi
-                          </h4>
-                          </div>
-                        </a>
-                      </div>
-                    </div>
+                    </a>
                   </div>
+
                 </div>
               </div>
 

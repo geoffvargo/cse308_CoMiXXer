@@ -22,10 +22,17 @@
             <div th:each="comic : ${comics}" class="col-3">
               <div class="card bg-info d-inline-block mb-4 mx-1" style="width:14rem">
                 <a class="card-underline no-a" th:href="@{/user/comic/viewComic/__${comic.get_id()}__}">
-                  <img class="card-img-top" th:src="@{/img/portfolio/__${comic.getThumbnail()}__}" alt="Card!">
+                  <img class="card-img-top" th:src="${comic.getThumbnail()}" alt="Card!">
                   <div class="card-body h-25 p-2">
-                    <h6 class="card-text text-center" th:text="${comic.getTitle()}">
-                  </h6>
+                    <h6 class="card-text text-center">
+                      <span th:text="${comic.getTitle()}"></span>
+                      <a th:if="${creation.isRemix()}" class="no-a" th:href="@{/user/viewRemixes/__${creation.getParent().toHexString()}__}">
+                        <span class="badge badge-secondary" data-toggle="tooltip" data-placement="right" title="Remix"><i class="fas fa-random"></i></span>
+                      </a>
+                      <a th:if="${creation.isInSeries()}" class="no-a" th:href="@{/user/viewSeries/__${creation.getParent().toHexString()}__}">
+                        <span class="badge badge-secondary" data-toggle="tooltip" data-placement="right" title="Series"><i class="fas fa-random"></i></span>
+                      </a>
+                    </h6>
                   </div>
                   <div class="row">
                     <div class="col-sm-4 text-right"><i class="fas fa-chevron-up"></i></div>

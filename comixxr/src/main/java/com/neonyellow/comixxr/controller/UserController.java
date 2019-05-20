@@ -13,6 +13,7 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.parameters.P;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -188,6 +189,7 @@ public class UserController {
         }
         User profileUser = userService.findUserById(user);
         modelAndView.addObject("myCreations", userService.getPublishedComics(profileUser, false));
+        modelAndView.addObject("mySeries", comicCollectionService.getSeries(user));
         modelAndView.addObject("subscribers", profileUser.getNumOfSubscibers());
         modelAndView.addObject("subscribedTo", profileUser.getNumOfSubsriptions());
         modelAndView.addObject("userName", profileUser.getFullname());
@@ -274,7 +276,7 @@ public class UserController {
         ModelAndView modelAndView = getMAVWithUser();
         ComicCollection cc = comicCollectionService.getComicCollectionById(seriesId);
         modelAndView.addObject("series",cc);
-        modelAndView.addObject("comics",comicCollectionService.getComicsByIds(cc.getComics()));
+        modelAndView.addObject("comics",comicService.getComicsByIds(cc.getComics()));
         modelAndView.addObject("author",userService.findUserById(cc.getUserId()));
         modelAndView.setViewName("series");
         return modelAndView;
@@ -288,6 +290,7 @@ public class UserController {
 
         List<ComicCollection> curlist = new ArrayList<>();
         profileUser.getCurations().forEach(c -> curlist.add(comicCollectionService.findBy_id(c)));
+        curlist.removeIf(c->c.isSeries());
 
         modelAndView.addObject("curationList", curlist);
         modelAndView.addObject("profileUser", profileUser);
@@ -306,7 +309,9 @@ public class UserController {
     public List<ComicCollection> getCurationsObject(){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userDetailsService.findUserByEmail(auth.getName());
-        return comicCollectionService.getComicsByIds(user.getCurations());
+        List<ComicCollection> c = comicCollectionService.getComicsByIds(user.getCurations());
+        c.removeIf(x->x.isSeries());
+        return c;
     }
 
     @RequestMapping(value = {"/toggleCuration/{comic}/{curation}"}, method = RequestMethod.GET)
@@ -462,6 +467,37 @@ public class UserController {
         }
         modelAndView.addObject("profPicSuccess",true);
         modelAndView.addObject("currentUser", user);
+        return modelAndView;
+    }
+
+    @RequestMapping(value = {"/toggleSeries/{seriesId}/{comicId}"}, method = RequestMethod.GET)
+    public ModelAndView toggleSeries(@PathVariable ObjectId seriesId, @PathVariable ObjectId comicId){
+        ModelAndView modelAndView = getMAVWithUser();
+        modelAndView.setViewName("redirect:/user/myProfile");
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userDetailsService.findUserByEmail(auth.getName());
+        ComicCollection series = comicCollectionService.getComicCollectionById(seriesId);
+        if(!series.getUserId().equals(user.get_id())){
+            return modelAndView;
+        }
+        Comic c = comicService.findBy_id(comicId);
+        if(c.isInSeries()) {
+            ComicCollection ss = comicCollectionService.findCurrentSeries(comicId);
+            if (ss != null) {
+                ss.removeFromCollection(comicId);
+                comicCollectionService.save(ss);
+                c.setInSeries(false);
+                c.setParentSeriesId(null);
+                if(ss.get_id().equals(seriesId))
+                    comicService.save(c);
+                    return modelAndView;
+            }
+        }
+        series.addToCollection(comicId);
+        comicCollectionService.save(series);
+        c.setInSeries(true);
+        c.setParentSeriesId(seriesId);
+        comicService.save(c);
         return modelAndView;
     }
 

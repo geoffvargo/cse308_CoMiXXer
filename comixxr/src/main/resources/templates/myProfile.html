@@ -1,172 +1,221 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{default}" lang="en"><head>
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{default}" lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
 
-  <title>Comixxer - Browse</title>
-</head>
+        <title>Comixxer - Browse</title>
+    </head>
 
 <body id="page-top">
-    <div layout:fragment="content" id="content-wrapper no-scroll">
+<div layout:fragment="content" id="content-wrapper no-scroll">
 
-      <div class="container-fluid">
+    <div class="container-fluid">
         <div class="container">
-          <div class="row">
-            <div class="col-9 w-bio scrollable-y scrollbar scrollbar-primary mh-page">
-              <h5 class="text-left my-4">My Creations</h5>
-              <div class="row scrollable-x no-fw scrollbar scrollbar-primary">
-                <div th:each="creation : ${myCreations}" class="col-3">
-                  <div class="card bg-info d-inline-block mb-4 mx-1" style="width:12rem">
-                    <a class="card-underline no-a" th:href="@{/user/comic/viewComic/__${creation.get_id()}__}">
-                      <img class="card-img-top img-fluid" alt="Card!" th:src="${creation.getThumbnail()}">
-                      <div class="card-body h-25 p-2">
-                        <h6 class="card-text text-center">
-                          <span th:text="${creation.getTitle()}"/>
-                          <a th:if="${creation.isRemix()}" class="no-a" th:href="@{/user/viewRemixes/__${creation.getParent().toHexString()}__}">
-                            <span class="badge badge-secondary" data-toggle="tooltip" data-placement="right" title="Remix"><i class="fas fa-random"></i></span>
-                          </a>
-                          <a th:if="${creation.isInSeries()}" class="no-a" th:href="@{/user/viewSeries/__${creation.getParent().toHexString()}__}">
-                            <span class="badge badge-secondary" data-toggle="tooltip" data-placement="right" title="Series"><i class="fas fa-random"></i></span>
-                          </a>
-                        </h6>
-                      </div>
-                      <div class="row">
-                        <div class="col-sm-4 text-right"><i class="fas fa-chevron-up"></i></div>
-                        <div class="col-sm-4 text-center"><i class="fas fa-comment-dots"></i></div>
-                        <div class="col-sm-4 text-left"><i class="fas fa-random"></i></div>
-                      </div>
-                      <div class="row">
-                        <div class="col-sm-4 text-right pr-0"><small th:text="${creation.getTotalVotes()}"></small></div>
-                        <div class="col-sm-4 text-center px-0"><small th:text="${creation.getTotalComments()}"></small></div>
-                        <div class="col-sm-4 text-left pl-0"><small th:text="${creation.getTotalRemixes()}"></small></div>
-                      </div>
-                    </a>
-                    <div class="row">
-                      <div class="col-3 mt-1 pr-0 text-center">
-                        <i th:if="${creation.getPrivacy() == T(com.neonyellow.comixxr.model.Privacy).PUBLIC}" class="fas fa-globe"></i>
-                        <i th:if="${creation.getPrivacy() == T(com.neonyellow.comixxr.model.Privacy).UNLISTED}" class="fas fa-mask"></i>
-                        <i th:if="${creation.getPrivacy() == T(com.neonyellow.comixxr.model.Privacy).PRIVATE}" class="fas fa-eye-slash"></i>
-                      </div>
-                      <div class="col btn-group dropright">
-                        <button class="btn btn-info text-right" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <i class="fas fa-bars"></i>
-                        </button>
-                        <div class="dropdown-menu">
-                          <a class="dropdown-item" th:href="@{comic/editComic/__${creation.get_id().toHexString()}__}">Edit</a>
-                          <a class="dropdown-item" th:href="@{comic/removeComic/__${creation.get_id().toHexString()}__}">Remove</a>
+            <div class="row">
+                <div class="col-9 w-bio scrollable-y scrollbar scrollbar-primary mh-page">
+                    <h5 class="text-left my-4">My Creations</h5>
+                    <div class="row scrollable-x no-fw scrollbar scrollbar-primary">
+                        <div th:each="creation : ${myCreations}" class="col-3">
+                            <div class="card bg-info d-inline-block mb-4 mx-1" style="width:12rem">
+                                <a class="no-a card-underline"
+                                   th:href="@{/user/comic/viewComic/__${creation.get_id().toHexString()}__}">
+                                    <img class="card-img-top img-fluid" alt="Card!"
+                                         th:src="${creation.getThumbnail()}"/>
+                                </a>
+                                <div class="card-body h-25 p-2">
+                                    <a class="no-a card-underline"
+                                       th:href="@{/user/comic/viewComic/__${creation.get_id().toHexString()}__}">
+                                        <h6 class="card-text text-center">
+                                            <span th:text="${creation.getTitle()}"/>
+                                            <a th:if="${creation.isRemix()}" class="no-a"
+                                               th:href="@{/user/viewRemixes/__${creation.getParent().toHexString()}__}">
+                                                <span class="badge badge-secondary" data-toggle="tooltip"
+                                                      data-placement="right" title="Remix"><i class="fas fa-random"></i></span>
+                                            </a>
+                                            <a th:if="${creation.isInSeries()}" class="no-a"
+                                               th:href="@{/user/viewSeries/__${creation.getParentSeriesId().toHexString()}__}">
+                                                <span class="badge badge-secondary" data-toggle="tooltip"
+                                                      data-placement="right" title="Series">
+                                                    <i class="fas fa-book"></i>
+                                                </span>
+                                            </a>
+                                        </h6>
+                                        <div class="row">
+                                            <div class="col-sm-4 text-right"><i class="fas fa-chevron-up"></i></div>
+                                            <div class="col-sm-4 text-center"><i class="fas fa-comment-dots"></i></div>
+                                            <div class="col-sm-4 text-left"><i class="fas fa-random"></i></div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-4 text-right pr-0">
+                                                <small th:text="${creation.getTotalVotes()}"></small>
+                                            </div>
+                                            <div class="col-sm-4 text-center px-0">
+                                                <small th:text="${creation.getTotalComments()}"></small>
+                                            </div>
+                                            <div class="col-sm-4 text-left pl-0">
+                                                <small th:text="${creation.getTotalRemixes()}"></small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <div class="row">
+                                        <div class="col-3 mt-2 pr-0 text-center">
+                                            <i th:if="${creation.getPrivacy() == T(com.neonyellow.comixxr.model.Privacy).PUBLIC}"
+                                               class="fas fa-globe"></i>
+                                            <i th:if="${creation.getPrivacy() == T(com.neonyellow.comixxr.model.Privacy).UNLISTED}"
+                                               class="fas fa-mask"></i>
+                                            <i th:if="${creation.getPrivacy() == T(com.neonyellow.comixxr.model.Privacy).PRIVATE}"
+                                               class="fas fa-eye-slash"></i>
+                                        </div>
+                                        <div class="col-6 pl-2 text-right">
+                                            <button class="btn btn-info" type="button"
+                                                    data-toggle="dropdown" aria-haspopup="true"
+                                                    aria-expanded="false">
+                                                    <span><i class="fas fa-plus-square"></i><small
+                                                            class="ml-1">Series</small></span>
+                                            </button>
+                                            <div class="dropdown-menu bg-info">
+                                                <a th:each="series : ${mySeries}" class="dropdown-item"
+                                                   th:href="@{/user/toggleSeries/__${series.get_id()}__/__${creation.get_id()}__}"
+                                                   th:text="${series.getTitle()}"
+                                                   th:classappend="${creation.isInSeries() && creation.getParentSeriesId().equals(series.get_id())}?'text-primary bg-secondary':'bg-info'">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-3 p-0">
+                                            <button class="btn btn-info" type="button"
+                                                    data-toggle="dropdown" aria-haspopup="true"
+                                                    aria-expanded="false">
+                                                <i class="fas fa-bars"></i>
+                                            </button>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <a class="dropdown-item"
+                                                   th:href="@{comic/editComic/__${creation.get_id().toHexString()}__}">Edit</a>
+                                                <a class="dropdown-item"
+                                                   th:href="@{comic/removeComic/__${creation.get_id().toHexString()}__}">Remove</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                      </div>
                     </div>
-                  </div>
-                </div>
-              </div>
-                <div class="divider mt-4"></div>
-              <h5 class="text-left mb-4">Drafts</h5>
-              <div class="row scrollable-x no-fw scrollbar scrollbar-primary">
-                <div th:each="draft : ${myDrafts}" class="col-3">
-                  <div class="card bg-info d-inline-block mb-4 mx-1" style="width:12rem">
-                    <a class="card-underline no-a" th:href="@{/user/comic/load/__${draft.get_id()}__}">
-                      <img class="card-img-top" th:src="${draft.getThumbnail()}" alt="Card!">
-                      <div class="card-body h-25 p-2">
-                        <h6 class="card-text text-center" th:text="${draft.getTitle()}">
-                        </h6>
-                      </div>
-                    </a>
-                    <div class="row">
-                      <div class="col btn-group dropright">
-                        <button class="btn btn-info text-right" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <i class="fas fa-bars"></i>
-                        </button>
-                        <div class="dropdown-menu">
-                          <a class="dropdown-item" th:href="@{comic/removeDraft/${draft.get_id()}}">Remove</a>
+                    <div class="divider mt-4"></div>
+                    <h5 class="text-left mb-4">Drafts</h5>
+                    <div class="row scrollable-x no-fw scrollbar scrollbar-primary">
+                        <div th:each="draft : ${myDrafts}" class="col-3">
+                            <div class="card bg-info d-inline-block mb-4 mx-1" style="width:12rem">
+                                <a class="card-underline no-a" th:href="@{/user/comic/load/__${draft.get_id()}__}">
+                                    <img class="card-img-top" th:src="${draft.getThumbnail()}" alt="Card!">
+                                    <div class="card-body h-25 p-2">
+                                        <h6 class="card-text text-center" th:text="${draft.getTitle()}">
+                                        </h6>
+                                    </div>
+                                </a>
+                                <div class="row">
+                                    <div class="col btn-group dropright">
+                                        <button class="btn btn-info text-right" type="button" data-toggle="dropdown"
+                                                aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-bars"></i>
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" th:href="@{comic/removeDraft/${draft.get_id()}}">Remove</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                      </div>
                     </div>
-                  </div>
-                </div>
-              </div>
 
-              <div class="divider mt-4"></div>
+                    <div class="divider mt-4"></div>
 
-              <h5 class="text-left mb-4">Series</h5>
+                    <h5 class="text-left mb-4">Series</h5>
 
-              <div class="row scrollable-x no-fw scrollbar scrollbar-primary">
-                  <div class="col-3">
-                    <div class="card bg-info d-inline-block mb-4 mx-1" style="width:12rem">
-                      <a class="card-underline no-a" th:href="@{/user/newSeries}">
-                        <div class="card-body">
-                          <h6>New Series</h6>
+                    <div class="row scrollable-x no-fw scrollbar scrollbar-primary">
+                        <div class="col-3">
+                            <div class="card bg-info d-inline-block mb-4 mx-1" style="width:12rem">
+                                <a class="card-underline no-a" th:href="@{/user/newSeries}">
+                                    <div class="card-body">
+                                        <h6>New Series</h6>
+                                    </div>
+                                </a>
+                            </div>
                         </div>
-                      </a>
-                    </div>
-                  </div>
-                <div th:each="series,istat : ${mySeries}" class="col-3">
-                  <div class="card bg-info d-inline-block mb-4 mx-1" style="width:12rem">
-                    <a class="card-underline no-a" th:href="@{/user/series/__${series.get_id()}__}">
-                      <img class="card-img-top" th:src="${series.getThumbnail()}" alt="Card!">
-                      <div class="card-body h-25 p-2">
-                        <h6 class="card-text text-center" th:text="${series.getTitle()}">
-                        </h6>
-                      </div>
-                    </a>
-                    <div class="row">
-                      <div class="col-3 mt-1 pr-0 text-center">
-                        <i th:if="${series.getPrivacy() == T(com.neonyellow.comixxr.model.Privacy).PUBLIC}" class="fas fa-globe"></i>
-                        <i th:if="${series.getPrivacy() == T(com.neonyellow.comixxr.model.Privacy).UNLISTED}" class="fas fa-mask"></i>
-                        <i th:if="${series.getPrivacy() == T(com.neonyellow.comixxr.model.Privacy).PRIVATE}" class="fas fa-eye-slash"></i>
-                      </div>
-                      <div class="col btn-group dropright">
-                        <button class="btn btn-info text-right" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <i class="fas fa-bars"></i>
-                        </button>
-                        <div class="dropdown-menu">
-                          <a class="dropdown-item" th:href="@{comic/removeSeries/${series.get_id()}}">Remove</a>
+                        <div th:each="series,istat : ${mySeries}" class="col-3">
+                            <div class="card bg-info d-inline-block mb-4 mx-1" style="width:12rem">
+                                <a class="card-underline no-a" th:href="@{/user/series/__${series.get_id().toHexString()}__}">
+                                    <img class="card-img-top" th:src="${series.getThumbnail()}" alt="Card!">
+                                    <div class="card-body h-25 p-2">
+                                        <h6 class="card-text text-center" th:text="${series.getTitle()}">
+                                        </h6>
+                                    </div>
+                                </a>
+                                <div class="row">
+                                    <div class="col-3 mt-1 pr-0 text-center">
+                                        <i th:if="${series.getPrivacy() == T(com.neonyellow.comixxr.model.Privacy).PUBLIC}"
+                                           class="fas fa-globe"></i>
+                                        <i th:if="${series.getPrivacy() == T(com.neonyellow.comixxr.model.Privacy).UNLISTED}"
+                                           class="fas fa-mask"></i>
+                                        <i th:if="${series.getPrivacy() == T(com.neonyellow.comixxr.model.Privacy).PRIVATE}"
+                                           class="fas fa-eye-slash"></i>
+                                    </div>
+                                    <div class="col btn-group dropright">
+                                        <button class="btn btn-info text-right" type="button" data-toggle="dropdown">
+                                            <i class="fas fa-bars"></i>
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" th:href="@{comic/removeSeries/${series.get_id()}}">Remove</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                      </div>
                     </div>
-                  </div>
                 </div>
-              </div>
+                <div class="col-3">
+                    <div class="container scrollbar-y scrollbar scrollbar-primary h-bio">
+                        <div class="bg-info rounded h-100 p-3 mx-auto mt-5">
+                            <h3 class="text-center mb-4" th:text="${userName}"></h3>
+                            <div class="text-center mb-1">
+                                <img th:src="${currentUser.getPic()}" alt="" , class="rounded-circle profile-pic">
+                            </div>
+                            <div class="my-2">
+                                <span>Subscribers: </span>
+                                <a class="no-a text-secondary"
+                                   th:href="@{/user/getSubscribers/__${currentUser.get_id()}__}"
+                                   th:text="${subscribers}"></a>
+                            </div>
+                            <div class="my-2">
+                                <span>Subscribed to: </span>
+                                <a class="no-a text-secondary"
+                                   th:href="@{/user/getSubscribedTo/__${currentUser.get_id()}__}"
+                                   th:text="${subscribedTo}"></a>
+                            </div>
+                            <div class="my-2">
+                                <span>Comics: </span>
+                                <a class="no-a text-secondary" th:href="@{/user/myComics}"
+                                   th:text="${myCreations.size()}"></a>
+                            </div>
+                            <div class="my-2">
+                                <span>Remixes: </span>
+                                <a class="no-a text-secondary" th:href="@{/user/myRemixes}" th:text="${numRemixes}"></a>
+                            </div>
+                            <p class="mt-2 bio-wrap" th:text="${userBio}">
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="col-3">
-              <div class="container scrollbar-y scrollbar scrollbar-primary h-bio">
-                <div class="bg-info rounded h-100 p-3 mx-auto mt-5">
-                  <h3 class="text-center mb-4" th:text="${userName}"></h3>
-                  <div class="text-center mb-1">
-                    <img th:src="${currentUser.getPic()}" alt="", class="rounded-circle profile-pic">
-                  </div>
-                    <div class="my-2">
-                      <span>Subscribers: </span>
-                      <a class="no-a text-secondary" th:href="@{/user/getSubscribers/__${currentUser.get_id()}__}" th:text="${subscribers}"></a>
-                    </div>
-                    <div class="my-2">
-                      <span>Subscribed to: </span>
-                      <a class="no-a text-secondary" th:href="@{/user/getSubscribedTo/__${currentUser.get_id()}__}" th:text="${subscribedTo}"></a>
-                    </div>
-                    <div class="my-2">
-                      <span>Comics: </span>
-                      <a class="no-a text-secondary" th:href="@{/user/myComics}" th:text="${myCreations.size()}"></a>
-                    </div>
-                    <div class="my-2">
-                      <span>Remixes: </span>
-                      <a class="no-a text-secondary" th:href="@{/user/myRemixes}" th:text="${numRemixes}"></a>
-                    </div>
-                    <p class="mt-2 bio-wrap" th:text="${userBio}">
-                    </p>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
-      </div>
-        <!-- /.container-fluid -->
     </div>
-      <!-- /.content-wrapper -->
+    <!-- /.container-fluid -->
+</div>
+<!-- /.content-wrapper -->
 </body>
 
 </html>

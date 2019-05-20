@@ -37,6 +37,11 @@ public class ComicCollection implements Comparable<ComicCollection>{
         this.hexComics.add(comic.toHexString());
     }
 
+    public void removeFromCollection(ObjectId comic){
+        this.comics.remove(comic);
+        this.hexComics.remove(comic.toHexString());
+    }
+
     public void toggleComic(ObjectId comic){
         if(comics.contains(comic)){
             comics.remove(comic);
