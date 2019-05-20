@@ -26,4 +26,6 @@ public interface IComicService {
 
     List<Comic> getAllChildren(ObjectId comicId);
 
+    List<Comic> searchComicsWithTitle(String title);
+
 }

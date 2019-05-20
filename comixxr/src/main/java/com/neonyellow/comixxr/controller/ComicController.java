@@ -2,9 +2,7 @@ package com.neonyellow.comixxr.controller;
 
 import com.neonyellow.comixxr.model.*;
 import com.neonyellow.comixxr.repository.UserRepository;
-import com.neonyellow.comixxr.service.ComicService;
-import com.neonyellow.comixxr.service.ComixUserDetailsService;
-import com.neonyellow.comixxr.service.PostService;
+import com.neonyellow.comixxr.service.*;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -33,6 +31,10 @@ public class ComicController {
     private PostService postService;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    private ComicCollectionService ccService;
+    @Autowired
+    UserService userService;
 
     @RequestMapping(value = {"createDraft"}, method = RequestMethod.POST)
     public ModelAndView createDraft(@RequestParam("comicName") String comicName, @RequestParam("privacy") String privacy, @RequestParam("genre") String genre, @RequestParam("thumbnail") MultipartFile thumbnail){
@@ -70,33 +72,6 @@ public class ComicController {
         return mv;
 
     }
-
-//    @RequestMapping(value = {"createDraft"}, method = RequestMethod.POST)
-//    public ModelAndView createDraft(@RequestBody MultiValueMap<String,String> formData){
-//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//        User user = userRepository.findByEmail(auth.getName());
-//
-//        Comic draft = new Comic(user.get_id(),null);
-//        draft.setTitle(formData.getFirst("comicName"));
-//        draft.setPrivacy(getPrivacy(formData.getFirst("privacy")));
-//        draft.setGenre(getGenre(formData.getFirst("genre")));
-//        draft.setAuthor(user.getFullname());
-//
-//        comicService.save(draft);
-//
-//        user.addToComics(draft);
-//        userRepository.save(user);
-//
-//        ModelAndView mv = new ModelAndView();
-//        mv.addObject("comicId", draft.get_id().toString());
-//        mv.addObject("currentUser", user);
-//        mv.addObject("isLoad", "false");
-//        mv.addObject("active","create_comic");
-//
-//        mv.setViewName("draw");
-//
-//        return mv;
-//    }
 
     @RequestMapping(value = {"upvote/{comicId}"}, method = RequestMethod.GET)
     public boolean upVote(@PathVariable("comicId") ObjectId comicId){
@@ -332,6 +307,68 @@ public class ComicController {
         return mv;
     }
 
+    @RequestMapping(value = {"/delete/{comicId}"}, method = RequestMethod.GET)
+    public ModelAndView comicDelete(@PathVariable("comicId") ObjectId comicId){
+        ModelAndView mv = getMAVWithUser();
+        mv.setViewName("redirect:/user/myProfile");
+        comicService.delete(comicId);
+        User user = (User)mv.getModel().get("currentUser");
+        for (ObjectId id: user.getComics()) {
+            if(id.equals(comicId)){
+                user.getComics().remove(id);
+            }
+        }
+
+        return mv;
+    }
+
+    @RequestMapping(value = {"/deleteCuration/{curationId}"}, method = RequestMethod.GET)
+    public ModelAndView curationDelete(@PathVariable("curationId") ObjectId curationId){
+        ModelAndView mv = getMAVWithUser();
+
+        ccService.delete(curationId);
+        mv.setViewName("redirect:/user/curation/"+((User)mv.getModel().get("currentUser")).get_id().toHexString());
+        return mv;
+    }
+
+    @RequestMapping(value = {"/search/{itemName}"}, method = RequestMethod.GET)
+    public ModelAndView search(@PathVariable("itemName") String itemName){
+        ModelAndView mv = getMAVWithUser();
+        mv.setViewName("redirect:/search");
+
+        List<User> users = userService.searchUsersWithName(itemName);
+        List<Comic> comics = comicService.searchComicsWithTitle(itemName);
+
+        mv.addObject("users", users);
+        mv.addObject("comics", comics);
+
+        return mv;
+    }
+
+    @RequestMapping(value = {"/genres"}, method = RequestMethod.GET)
+    public List<String> getGenreList(){
+        List<String> genres = new ArrayList<>();
+        genres.add("HORROR");
+        genres.add("TEEN");
+        genres.add("FANTASY");
+        genres.add("CRIME");
+        genres.add("COMEDY");
+        genres.add("ROMANCE");
+        genres.add("MANGA");
+        genres.add("ALTERNATIVE");
+        genres.add("GAG");
+        genres.add("SCIFI");
+        genres.add("SUPERHERO");
+        genres.add("CHILD");
+        genres.add("WAR");
+        genres.add("DAILY");
+        genres.add("WESTERN");
+        genres.add("ABSTRACT");
+        genres.add("ADVENTURE");
+
+        return genres;
+    }
+
     private ModelAndView getMAVWithUser(){
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -404,4 +441,31 @@ public class ComicController {
 
         return result;
     }
+
+    //    @RequestMapping(value = {"createDraft"}, method = RequestMethod.POST)
+//    public ModelAndView createDraft(@RequestBody MultiValueMap<String,String> formData){
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        User user = userRepository.findByEmail(auth.getName());
+//
+//        Comic draft = new Comic(user.get_id(),null);
+//        draft.setTitle(formData.getFirst("comicName"));
+//        draft.setPrivacy(getPrivacy(formData.getFirst("privacy")));
+//        draft.setGenre(getGenre(formData.getFirst("genre")));
+//        draft.setAuthor(user.getFullname());
+//
+//        comicService.save(draft);
+//
+//        user.addToComics(draft);
+//        userRepository.save(user);
+//
+//        ModelAndView mv = new ModelAndView();
+//        mv.addObject("comicId", draft.get_id().toString());
+//        mv.addObject("currentUser", user);
+//        mv.addObject("isLoad", "false");
+//        mv.addObject("active","create_comic");
+//
+//        mv.setViewName("draw");
+//
+//        return mv;
+//    }
 }

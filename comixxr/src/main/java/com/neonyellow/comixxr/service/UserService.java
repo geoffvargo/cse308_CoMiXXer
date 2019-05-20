@@ -108,6 +108,10 @@ public class UserService implements IUserService {
         return comics;
     }
 
+    public List<User> searchUsersWithName(String name){
+        return userRepository.findAllByFullnameContainingAllIgnoreCase(name);
+    }
+
     public int getNumRemixes(User user){
         int size = 0;
         for(ObjectId id : user.getComics()){

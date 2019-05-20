@@ -195,6 +195,9 @@ public class ComicService implements IComicService {
         }
         return comicList;
     }
+    public List<Comic> searchComicsWithTitle(String title){
+        return comicRepository.findAllByTitleContainingAllIgnoreCase(title);
+    }
 //    private void findAllParents(Comic comic, List<Comic> ansList, List<Comic> remaining) {
 //        while (remaining.size() > 1) {
 //            Comic temp = remaining.remove(0);
