@@ -26,7 +26,6 @@ public class CommentController {
 
     @RequestMapping(value = {"/addComment"}, method = RequestMethod.POST)
     public boolean addComment(@RequestParam("commentData") String comment, @RequestParam("comicId") ObjectId comicId){
-        System.out.println("|||||||||||   I GOT HEREEE   |||||||||||");
         if(comment.length() < 1) return false;
         if(comicId == null) return false;
         // Grab User ID

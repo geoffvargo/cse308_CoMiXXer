@@ -88,6 +88,27 @@ $(document).ready(function(){
       alert("Comment Posted!");
     })
   })
+
+  $("#expandCommentsBtn").click(function(){
+    $.get("/comment/getComment/"+$("#comicId"),function(data){
+      var s = "";
+      for(var i =0; i < data.length(); i++){
+        s+="<li class=\"media my-4\" id=\"comment1\">\n" +
+            "<a href=\"\/userProfile/"+ data["userId"]+"\" class=\"float-left\">\n" +
+            "<img src=\""+data["pic"] +"\" alt=\"\" ,\n" +
+            "class=\"rounded-circle\">\n" +
+            "</a>" +
+            "<div class=\"media-body\">\n" +
+            "<div class=\"text-muted float-right\">\n" +
+            "<div class=\"text-muted text-sm\">"+data[""] +"</div>\n" +
+            "</div>\n" +
+            "<div class=\"text-secondary font-weight-bold\">@Giraffeman3705</div>\n" +
+            "<div class=\"ml-3\">\n"+
+            "</div>\n" +
+            "</div>"
+      }
+    })
+  })
   function toggleViewfn(){
     if($("#toggleViewBtn").attr("data-mode") === "right"){
       $("#toggleViewBtn").attr("data-mode","down");

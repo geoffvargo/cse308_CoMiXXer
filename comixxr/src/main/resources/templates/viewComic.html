@@ -3,213 +3,166 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{default}" lang="en">
 <head>
 
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-  <title>Comixxer - Browse</title>
+    <title>Comixxer - Browse</title>
 </head>
 
 <body id="page-top">
-    <div layout:fragment="content" id="content-wrapper">
-        <div th:if="${private}" class="text-center">
-            <h2>This comic is private.</h2>
-        </div>
-        <div th:if="${private == null}">
-      <input type="hidden" id="numPages" th:value="${numPages}"/>
-      <input type="hidden" id="comicId" th:value="${comic.get_id().toHexString()}"/>
-      <input th:each="page,iStat : ${pages}" type="hidden" th:id="'page'+ ${iStat.index+1}" th:value="${page}"/>
-      <div class="container curationBox bg-info text-center" id="curationBox" hidden>
-        <div class="row align-items-center h-25">
-          <h5 class="mx-auto">Add To Curation:</h5>
-        </div>
-        <div class="row align-items-center scrollbar-primary scrollable-y mh-curation">
-          <div class="col-lg-12" id="curation_dd"></div>
-        </div>
-      </div>
-
-      <div class="container" id="comicContainer">
-        <div class="row" id="comicHeader">
-          <div class="col-1"></div>
-          <div class="col-10 text-center mb-3">
-            <h1 class="text-center d-inline" th:text="${comic.getTitle()}"></h1>
-            <a th:if="${comic.isRemix()}" class="no-a" th:href="@{/user/comic/viewComic/__${comic.getParent().toHexString()}__}">
-              <span class="badge badge-secondary align-text-top" data-toggle="tooltip" data-placement="right" title="View Original Comic"><i class="fas fa-random"></i></span>
-            </a>
-            <button class="btn btn-info d-inline mx-4 mb-3" id="toggleViewBtn" data-mode="right"><i class="fas fa-fw fa-angle-double-right" id="toggleViewIcon"></i></button>
-            <a class="no-a" th:href="@{/user/userProfile/__${comic.getUserId()}__}">
-              <h4 class="text-center d-inline" th:text="${comic.getAuthor()}"></h4>
-            </a>
-          </div>
-          <div class="col-1"></div>
-        </div>
-        <div class="row" id="comicContent">
-          <div class="col-lg-12 text-center scrollable-y scrollbar scrollbar-primary mb-2" id="viewPane">
-          </div>
-        </div>
-        <div class="row" id="comicActions">
-          <div class="col-3">
-            <ul class="nav mb-4">
-              <li class="nav-item mr-1">
-                <div class="text-muted mt-2" id="totalVotes" th:text="${comic.getTotalVotes()}"></div>
-                </li>
-              <li class="nav-item mx-1">
-                <button id="upvote_btn" th:classappend="${upvoted} ? 'btn-secondary': 'btn-info'" class="btn">
-                  <i class="fas fa-chevron-up"></i>
-                </button>
-              </li>
-              <li class="nav-item ml-1">
-                <button id="downvote_btn" th:classappend="${downvoted} ? 'btn-secondary': 'btn-info'" class="btn">
-                  <i class="fas fa-chevron-down"></i>
-                </button>
-              </li>
-            </ul>
-          </div>
-          <div class="col-6">
-            <ul class="nav text-center justify-content-center">
-              <li class="nav-item mr-1">
-                <a class="btn btn-info" data-toggle="collapse" href="#commentsSection" role="button" aria-expanded="false" aria-controls="commentsSection">
-                    Comments
-                </a>
-              </li>
-              <li class="nav-item mx-1 dropright">
-                <button data-toggle="dropdown" id="loadCurations_btn" class="btn btn-info">
-                    Add to Curation
-                    <i class="fa fa-compass"></i>
-                </button>
-                <div class="dropdown-menu dropdown-menu-" id="curations_dd">
-                </div>
-              </li>
-              <li class="nav-item ml-1">
-                <a role="button" href="#" class="btn btn-info" data-toggle="dropdown">
-                  Remix
-                  <i class="fas fa-random"></i>
-                </a>
-                <div class="dropdown-menu bg-info my-2">
-                  <div class="dropdown-item bg-info">
-                    <form th:action="@{/user/comic/remix}" method="post">
-                      <input type="hidden" name="parentComic" th:value="${comic.get_id()}"/>
-                      <input type="hidden" name="genre" th:value="${comic.getGenre()}"/>
-                      <input type="hidden" name="privacy" th:value="${comic.getPrivacy()}"/>
-                      <input type="text" minlength="2" class="form-control" id="comicName" name="comicName"/>
-                      <div class="col-6 mx-auto">
-                        <input class="form-control mt-1" type="submit" value="Submit"/>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </li>
-              <li th:if="${children != null}" class="nav-item ml-1">
-                <a role="button" href="#" class="btn btn-info" data-toggle="dropdown">
-                  View Remixes
-                </a>
-                <div class="dropdown-menu my-2">
-                  <div th:each="remix,iStat : ${children}" class="dropdown-item">
-                    <div th:if="${iStat.count < 4}" class="card bg-info d-inline-block mb-2 mx-1" style="width:8rem">
-                      <a class="card-underline" th:href="@{/user/comic/viewComic/__${remix.get_id().toHexString()}__}">
-                        <img class="card-img-top" th:src="${remix.getThumbnail()}" alt="Card!">
-                        <div class="card-body">
-                          <h6 class="card-text text-center">
-                            <span class="breakword" th:text="${remix.getTitle()}"></span>
-                          </h6>
-                        </div>
-                      </a>
-                    </div>
-                  </div>
-                  <div class="dropdown-item">
-                    <a class="btn btn-info" th:href="@{/user/viewRemixes/__${comic.get_id().toHexString()}__}">View All Remixes</a>
-                  </div>
-                </div>
-              </li>
-            </ul>
-          </div>
-          <div class="col-3"></div>
-        </div>
-        <div class="row" id="comicComments">
-          <div class="col-2"></div>
-          <div class="col-8">
-            <div class="collapse bg-primary rounded" id="commentsSection">
-              <div class="card-body">
-                <textarea class="form-control mb-2" name="comment" id="postCommentBox" placeholder="Write something..." rows="3"></textarea>
-                <button type="button" class="btn btn-info float-right" id="postCommentBtn">Post</button>
-                <div class="clearfix"></div>
-                <ul class="media-list" id="commentsList">
-                  <li class="media my-4" id="comment1">
-                    <a href="#comment1" class="float-left">
-                      <img src="https://bootdey.com/img/Content/user_1.jpg" alt="", class="rounded-circle">
-                      </a>
-                    <div class="media-body">
-                      <div class="text-muted float-right">
-                        <div class="text-muted text-sm">30 min ago</div>
-                      </div>
-                      <div class="text-secondary font-weight-bold">@Giraffeman3705</div>
-                      <div class="ml-3">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Lorem ipsum dolor sit amet,
-                      </div>
-                      <div class="media my-4" id="comment2">
-                        <a href="#comment2" class="float-left">
-                          <img src="https://bootdey.com/img/Content/user_1.jpg" alt="", class="rounded-circle">
-                          </a>
-                        <div class="media-body">
-                          <div class="text-muted float-right">
-                            <div class="text-muted text-sm float-right">30 min ago</div>
-                          </div>
-                          <div class="text-secondary font-weight-bold">@Shwaftacakes</div>
-                          <div class="ml-3">
-                            I actually thought it was very good.
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                  <li class="media my-4" id="comment3">
-                    <a href="#comment3" class="float-left">
-                      <img src="https://bootdey.com/img/Content/user_1.jpg" alt="", class="rounded-circle">
-                      </a>
-                    <div class="media-body">
-                      <div class="text-muted float-right">
-                        <div class="text-muted text-sm">30 min ago</div>
-                      </div>
-                      <div class="text-secondary font-weight-bold">@Giraffeman3705</div>
-                      <div class="ml-3">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Lorem ipsum dolor sit amet,
-                      </div>
-                    </div>
-                  </li>
-                  <li class="media my-4" id="comment4">
-                    <a href="#comment4" class="float-left">
-                      <img src="https://bootdey.com/img/Content/user_1.jpg" alt="", class="rounded-circle">
-                      </a>
-                    <div class="media-body">
-                      <div class="text-muted float-right">
-                        <div class="text-muted text-sm">30 min ago</div>
-                      </div>
-                      <div class="text-secondary font-weight-bold">@Giraffeman3705</div>
-                      <div class="ml-3">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Lorem ipsum dolor sit amet,
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-              </div>
+<div layout:fragment="content" id="content-wrapper">
+    <div th:if="${private}" class="text-center">
+        <h2>This comic is private.</h2>
+    </div>
+    <div th:if="${private == null}">
+        <input type="hidden" id="numPages" th:value="${numPages}"/>
+        <input type="hidden" id="comicId" th:value="${comic.get_id().toHexString()}"/>
+        <input th:each="page,iStat : ${pages}" type="hidden" th:id="'page'+ ${iStat.index+1}" th:value="${page}"/>
+        <div class="container curationBox bg-info text-center" id="curationBox" hidden>
+            <div class="row align-items-center h-25">
+                <h5 class="mx-auto">Add To Curation:</h5>
             </div>
-          </div>
-          <div class="col-2"></div>
+            <div class="row align-items-center scrollbar-primary scrollable-y mh-curation">
+                <div class="col-lg-12" id="curation_dd"></div>
+            </div>
         </div>
-      </div>
-      <!-- /.container-->
+
+        <div class="container" id="comicContainer">
+            <div class="row" id="comicHeader">
+                <div class="col-1"></div>
+                <div class="col-10 text-center mb-3">
+                    <h1 class="text-center d-inline" th:text="${comic.getTitle()}"></h1>
+                    <a th:if="${comic.isRemix()}" class="no-a"
+                       th:href="@{/user/comic/viewComic/__${comic.getParent().toHexString()}__}">
+                        <span class="badge badge-secondary align-text-top" data-toggle="tooltip" data-placement="right"
+                              title="View Original Comic"><i class="fas fa-random"></i></span>
+                    </a>
+                    <button class="btn btn-info d-inline mx-4 mb-3" id="toggleViewBtn" data-mode="right"><i
+                            class="fas fa-fw fa-angle-double-right" id="toggleViewIcon"></i></button>
+                    <a class="no-a" th:href="@{/user/userProfile/__${comic.getUserId()}__}">
+                        <h4 class="text-center d-inline" th:text="${comic.getAuthor()}"></h4>
+                    </a>
+                </div>
+                <div class="col-1"></div>
+            </div>
+            <div class="row" id="comicContent">
+                <div class="col-lg-12 text-center scrollable-y scrollbar scrollbar-primary mb-2" id="viewPane">
+                </div>
+            </div>
+            <div class="row" id="comicActions">
+                <div class="col-3">
+                    <ul class="nav mb-4">
+                        <li class="nav-item mr-1">
+                            <div class="text-muted mt-2" id="totalVotes" th:text="${comic.getTotalVotes()}"></div>
+                        </li>
+                        <li class="nav-item mx-1">
+                            <button id="upvote_btn" th:classappend="${upvoted} ? 'btn-secondary': 'btn-info'"
+                                    class="btn">
+                                <i class="fas fa-chevron-up"></i>
+                            </button>
+                        </li>
+                        <li class="nav-item ml-1">
+                            <button id="downvote_btn" th:classappend="${downvoted} ? 'btn-secondary': 'btn-info'"
+                                    class="btn">
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-6">
+                    <ul class="nav text-center justify-content-center">
+                        <li class="nav-item mr-1">
+                            <a class="btn btn-info" data-toggle="collapse" href="#commentsSection" role="button"
+                               aria-expanded="false" aria-controls="commentsSection" id="expandCommentsBtn">
+                                Comments
+                            </a>
+                        </li>
+                        <li class="nav-item mx-1 dropright">
+                            <button data-toggle="dropdown" id="loadCurations_btn" class="btn btn-info">
+                                Add to Curation
+                                <i class="fa fa-compass"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-" id="curations_dd">
+                            </div>
+                        </li>
+                        <li class="nav-item ml-1">
+                            <a role="button" href="#" class="btn btn-info" data-toggle="dropdown">
+                                Remix
+                                <i class="fas fa-random"></i>
+                            </a>
+                            <div class="dropdown-menu bg-info my-2">
+                                <div class="dropdown-item bg-info">
+                                    <form th:action="@{/user/comic/remix}" method="post">
+                                        <input type="hidden" name="parentComic" th:value="${comic.get_id()}"/>
+                                        <input type="hidden" name="genre" th:value="${comic.getGenre()}"/>
+                                        <input type="hidden" name="privacy" th:value="${comic.getPrivacy()}"/>
+                                        <input type="text" minlength="2" class="form-control" id="comicName"
+                                               name="comicName"/>
+                                        <div class="col-6 mx-auto">
+                                            <input class="form-control mt-1" type="submit" value="Submit"/>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </li>
+                        <li th:if="${children != null}" class="nav-item ml-1">
+                            <a role="button" href="#" class="btn btn-info" data-toggle="dropdown">
+                                View Remixes
+                            </a>
+                            <div class="dropdown-menu my-2">
+                                <div th:each="remix,iStat : ${children}" class="dropdown-item">
+                                    <div th:if="${iStat.count < 4}" class="card bg-info d-inline-block mb-2 mx-1"
+                                         style="width:8rem">
+                                        <a class="card-underline"
+                                           th:href="@{/user/comic/viewComic/__${remix.get_id().toHexString()}__}">
+                                            <img class="card-img-top" th:src="${remix.getThumbnail()}" alt="Card!">
+                                            <div class="card-body">
+                                                <h6 class="card-text text-center">
+                                                    <span class="breakword" th:text="${remix.getTitle()}"></span>
+                                                </h6>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="dropdown-item">
+                                    <a class="btn btn-info"
+                                       th:href="@{/user/viewRemixes/__${comic.get_id().toHexString()}__}">View All
+                                        Remixes</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-3"></div>
+            </div>
+            <div class="row" id="comicComments">
+                <div class="col-2"></div>
+                <div class="col-8">
+                    <div class="collapse bg-primary rounded" id="commentsSection">
+                        <div class="card-body">
+                            <textarea class="form-control mb-2" name="comment" id="postCommentBox"
+                                      placeholder="Write something..." rows="3"></textarea>
+                            <button type="button" class="btn btn-info float-right" id="postCommentBtn">Post</button>
+                            <div class="clearfix"></div>
+                            <ul class="media-list" id="commentsList">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-2"></div>
+            </div>
+        </div>
+        <!-- /.container-->
 
     </div>
-    </div>
-  <!-- /.content-wrapper -->
+</div>
+<!-- /.content-wrapper -->
 
-  </div>
-  <!-- /#wrapper -->
+</div>
+<!-- /#wrapper -->
 </body>
 
 </html>
