@@ -20,4 +20,5 @@ public interface ComicRepository extends MongoRepository<Comic, ObjectId > {
     List<Comic> findAllByParent(ObjectId id);
     List<Comic> findAllByAgeAfterAndPrivacy(LocalDateTime lastWeek,Privacy privacy);
     List<Comic> findAllByAgeBeforeAndPrivacyOrderByAgeDesc(LocalDateTime time, Privacy privacy);
+    List<Comic> findAllByTitleContainingAllIgnoreCase(String title);
 }

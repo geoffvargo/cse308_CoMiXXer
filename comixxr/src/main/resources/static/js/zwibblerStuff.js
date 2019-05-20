@@ -12,7 +12,7 @@ function ZwibblerController(ctx){
         var page;
         for(page = 0; page < ctx.getPageCount(); page++) {
             ctx.setCurrentPage(page);
-            img_array[page] = ctx.save("png");
+            img_array[page] = ctx.save("jpeg");
         }
 
         ctx.setCurrentPage(old_page);
@@ -33,7 +33,7 @@ function ZwibblerController(ctx){
         var page;
         for(page = 0; page < ctx.getPageCount(); page++) {
             ctx.setCurrentPage(page);
-            img_array[page] = ctx.save("png");
+            img_array[page] = ctx.save("jpeg");
         }
 
         ctx.setCurrentPage(old_page);
