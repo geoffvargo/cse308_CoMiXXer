@@ -153,7 +153,7 @@ public class UserController {
 
         List<ComicCollection> allByGenre = comicCollectionService.findAllByGenre(genre);
 
-        modelAndView.addObject("comics", allByGenre);
+        modelAndView.addObject("comicCollections", allByGenre);
 
         modelAndView.addObject("category", genre.toString());
         modelAndView.addObject("active","browse");
