@@ -23,12 +23,18 @@ public class ComicCollection implements Comparable<ComicCollection>{
     private String hexId;
     private String thumbnail;
     private Genre genre;
+    private List<ObjectId> upVote;
+    private List<ObjectId> downVote;
+    private int aggregateVotes;
     public ComicCollection(ObjectId userId){
         this._id = new ObjectId();
         this.hexId = _id.toHexString();
         this.userId = userId;
         this.comics = new ArrayList<>();
         this.hexComics = new ArrayList<>();
+        upVote = new ArrayList<>();
+        downVote = new ArrayList<>();
+        aggregateVotes = 0;
     }
 
     public void addToCollection(ObjectId comic) {
@@ -51,6 +57,38 @@ public class ComicCollection implements Comparable<ComicCollection>{
             comics.add(comic);
             hexComics.add(comic.toHexString());
         }
+    }
+
+    public void addUpvote(ObjectId id){
+        upVote.add(id);aggregateVotes++;
+    }
+
+    public void removeUpvote(ObjectId id){
+        upVote.remove(id);aggregateVotes--;
+    }
+
+    public void addDownvote(ObjectId id){
+        downVote.add(id);aggregateVotes--;
+    }
+
+    public void removeDownvote(ObjectId id){
+        downVote.remove(id);aggregateVotes++;
+    }
+
+    public boolean containsUpvote(ObjectId id){
+        for(ObjectId id2 : upVote){
+            if(id2.equals(id))
+                return true;
+        }
+        return false;
+    }
+
+    public boolean containsDownvote(ObjectId id){
+        for(ObjectId id2 : downVote){
+            if(id2.equals(id))
+                return true;
+        }
+        return false;
     }
 
     @Override

@@ -33,21 +33,19 @@ $(document).ready(function(){
 
   $("#loadCurations_btn").click(function(){
     $.get("/user/getMyCurations",function(data){
-      var s = '<div class="btn-group-vertical w-100" role="btn-group">';
+      var s = '';
       for(var i = 0; i < data.length; i++){
         var d = data[i];
         var comics = d["hexComics"];
         if(comics.indexOf($("#comicId").val()) >=0) {
-          s += '<button type="button" id="btnid_'+d["hexId"] +'" class="btn btn-secondary" onclick="toggleCuration(\'' + d["hexId"] + '\')">' + d["title"] + '</button>'
+          s += '<a id="btnid_'+d["hexId"] +'" class="dropdown-item text-primary bg-secondary" onclick="toggleCuration(\'' + d["hexId"] + '\')">' + d["title"] + '</a>'
         }
         else{
-          s += '<button type="button" id="btnid_'+d["hexId"] +'" class="btn btn-info" onclick="toggleCuration(\'' + d["hexId"] + '\')">' + d["title"] + '</button>'
+          s += '<a id="btnid_'+d["hexId"] +'" class="dropdown-item bg-info" onclick="toggleCuration(\'' + d["hexId"] + '\')">' + d["title"] + '</a>'
 
         }
       }
-      s += '</div>'
-      $("#curation_dd").html(s);
-      $("#curationBox").attr('hidden',false);
+      $("#curations_dd").html(s);
     });
   })
 
