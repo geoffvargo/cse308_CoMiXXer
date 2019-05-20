@@ -16,6 +16,7 @@ import java.io.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Collections;
 import java.util.List;
 import javax.xml.bind.DatatypeConverter;
 
@@ -367,6 +368,16 @@ public class ComicController {
         genres.add("ADVENTURE");
 
         return genres;
+    }
+
+    @RequestMapping(value = {"/activity"}, method = RequestMethod.GET)
+    public ModelAndView getActivity(){
+        ModelAndView mv = getMAVWithUser();
+        User user = (User)mv.getModel().get("currentUser");
+
+        mv.addObject("remixes", comicService.getRemixesForActivityFeed(user));
+
+        return mv;
     }
 
     private ModelAndView getMAVWithUser(){

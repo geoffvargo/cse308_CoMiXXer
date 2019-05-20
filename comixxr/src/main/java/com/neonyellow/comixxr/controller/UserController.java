@@ -147,6 +147,22 @@ public class UserController {
         return modelAndView;
     }
 
+    @RequestMapping(value = {"/browseSeries/{genre}"}, method = RequestMethod.GET)
+    public ModelAndView comicCollectionsByGenre(@PathVariable("genre") Genre genre) {
+        ModelAndView modelAndView = getMAVWithUser();
+
+        List<ComicCollection> allByGenre = comicCollectionService.findAllByGenre(genre);
+
+        modelAndView.addObject("comics", allByGenre);
+
+        modelAndView.addObject("category", genre.toString());
+        modelAndView.addObject("active","browse");
+
+        modelAndView.setViewName("seriesGenre");
+
+        return modelAndView;
+    }
+
     @RequestMapping(value={"/viewSpecial/{specialType}"}, method= RequestMethod.GET)
     public ModelAndView viewSpecial(@PathVariable("specialType") String sp){
         ModelAndView modelAndView = getMAVWithUser();

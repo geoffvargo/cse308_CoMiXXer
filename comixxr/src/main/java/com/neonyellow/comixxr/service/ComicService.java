@@ -3,6 +3,7 @@ package com.neonyellow.comixxr.service;
 import com.neonyellow.comixxr.model.Comic;
 import com.neonyellow.comixxr.model.Genre;
 import com.neonyellow.comixxr.model.Privacy;
+import com.neonyellow.comixxr.model.User;
 import com.neonyellow.comixxr.repository.ComicRepository;
 import com.neonyellow.comixxr.service.interfaces.IComicService;
 
@@ -192,6 +193,20 @@ public class ComicService implements IComicService {
     }
     public List<Comic> searchComicsWithTitle(String title){
         return comicRepository.findAllByTitleContainingAllIgnoreCase(title);
+    }
+
+    public List<Comic> getRemixesForActivityFeed(User user){
+        LocalDateTime present = LocalDateTime.now();
+        List<Comic> remixActivity = new ArrayList<>();
+
+        for (ObjectId id : user.getSubscriptions()) {
+            remixActivity.addAll(comicRepository.findAllByUserIdAndRemixAndAgeBeforeAndPrivacyOrderByAgeDesc(id, true, present, Privacy.PUBLIC));
+        }
+
+        Collections.sort(remixActivity);
+        Collections.reverse(remixActivity);
+
+        return remixActivity;
     }
 //    private void findAllParents(Comic comic, List<Comic> ansList, List<Comic> remaining) {
 //        while (remaining.size() > 1) {

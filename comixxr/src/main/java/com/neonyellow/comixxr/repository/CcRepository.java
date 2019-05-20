@@ -1,6 +1,8 @@
 package com.neonyellow.comixxr.repository;
 
+import com.neonyellow.comixxr.model.Comic;
 import com.neonyellow.comixxr.model.ComicCollection;
+import com.neonyellow.comixxr.model.Genre;
 import com.neonyellow.comixxr.model.Privacy;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -17,4 +19,6 @@ public interface CcRepository extends MongoRepository<ComicCollection, ObjectId>
     ComicCollection findFirstByComicsContaining(ObjectId id);
 
     List<ComicCollection> findAllByPrivacyOrderByAggregateVotesDesc(Privacy privacy);
+
+    List<ComicCollection> findAllByGenreAndPrivacy(Genre genre, Privacy privacy);
 }

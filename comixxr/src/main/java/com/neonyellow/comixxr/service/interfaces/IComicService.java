@@ -3,6 +3,7 @@ package com.neonyellow.comixxr.service.interfaces;
 import com.neonyellow.comixxr.model.Comic;
 import com.neonyellow.comixxr.model.Genre;
 
+import com.neonyellow.comixxr.model.User;
 import org.bson.types.ObjectId;
 
 import java.util.List;
@@ -27,5 +28,7 @@ public interface IComicService {
     List<Comic> getAllChildren(ObjectId comicId);
 
     List<Comic> searchComicsWithTitle(String title);
+
+    List<Comic> getRemixesForActivityFeed(User user);
 
 }
