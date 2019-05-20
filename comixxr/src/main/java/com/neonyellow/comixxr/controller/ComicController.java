@@ -318,9 +318,10 @@ public class ComicController {
         for (ObjectId id: user.getComics()) {
             if(id.equals(comicId)){
                 user.getComics().remove(id);
+                break;
             }
         }
-
+        userService.save(user);
         return mv;
     }
 
