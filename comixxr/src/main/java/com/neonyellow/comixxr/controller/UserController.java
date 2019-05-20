@@ -357,6 +357,16 @@ public class UserController {
         return ans;
     }
 
+    @RequestMapping(value={"/removeComicFromCuration/{comicId}/{curationId}"}, method=RequestMethod.GET)
+    public ModelAndView removeFromCuration(@PathVariable ObjectId comicId, @PathVariable ObjectId curationId){
+        ModelAndView modelAndView = getMAVWithUser();
+        modelAndView.setViewName("redirect:/user/curation/"+curationId);
+        ComicCollection cc = comicCollectionService.getComicCollectionById(curationId);
+        cc.removeFromCollection(comicId);
+        comicCollectionService.save(cc);
+        return modelAndView;
+    }
+
     @RequestMapping(value = {"/curation/{curationId}"}, method=RequestMethod.GET)
     public ModelAndView getCuration(@PathVariable("curationId") ObjectId curationId){
         ComicCollection cc = comicCollectionService.getComicCollectionById(curationId);
