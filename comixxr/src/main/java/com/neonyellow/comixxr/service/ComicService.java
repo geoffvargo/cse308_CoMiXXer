@@ -1,9 +1,7 @@
 package com.neonyellow.comixxr.service;
 
-import com.neonyellow.comixxr.model.Comic;
-import com.neonyellow.comixxr.model.Genre;
-import com.neonyellow.comixxr.model.Privacy;
-import com.neonyellow.comixxr.model.User;
+import com.neonyellow.comixxr.model.*;
+import com.neonyellow.comixxr.repository.CcRepository;
 import com.neonyellow.comixxr.repository.ComicRepository;
 import com.neonyellow.comixxr.service.interfaces.IComicService;
 
@@ -26,6 +24,8 @@ public class ComicService implements IComicService {
 
     @Autowired
     ComicRepository comicRepository;
+    @Autowired
+    CcRepository ccRepository;
 
     public List<Comic> findAllByUserId(ObjectId userId) {
         return comicRepository.findAllByUserId(userId);
@@ -52,7 +52,24 @@ public class ComicService implements IComicService {
         comicRepository.save(comic);
     }
 
-    public void delete(ObjectId id) {comicRepository.deleteBy_id(id);}
+    public void delete(ObjectId id) {
+        //handle deleting the remixes that use it as a parent, and sent to not be remixes
+        List<Comic> children = comicRepository.findAllByParent(id);
+        for (Comic c: children) {
+            c.setParent(null);
+            c.setRemix(false);
+            comicRepository.save(c);
+        }
+
+        //handle deletion from comic collections
+        List<ComicCollection> collections = ccRepository.findAllByComicsContaining(id);
+        for (ComicCollection cc: collections) {
+            cc.getComics().remove(id);
+            ccRepository.save(cc);
+        }
+
+        comicRepository.deleteBy_id(id);
+    }
 
     public List<Comic> findTopFiftyComicsFromLastWeek() {
         List<Comic> temp;

@@ -15,4 +15,6 @@ public interface IComicCollectionService {
     void delete(ObjectId id);
 
     List<ComicCollection> findAllByGenre(Genre genre);
+
+    List<ComicCollection> findAllByComicsContaining(ObjectId id);
 }

@@ -66,4 +66,8 @@ public class ComicCollectionService implements IComicCollectionService {
     public List<ComicCollection> findAllByGenre(Genre genre) {
         return ccRepository.findAllByGenreAndPrivacy(genre, Privacy.PUBLIC);
     }
+
+    public List<ComicCollection> findAllByComicsContaining(ObjectId id){
+        return ccRepository.findAllByComicsContaining(id);
+    }
 }
