@@ -39,7 +39,7 @@
                                                       data-placement="right" title="Remix"><i class="fas fa-random"></i></span>
                                             </a>
                                             <a th:if="${creation.isInSeries()}" class="no-a"
-                                               th:href="@{/user/viewSeries/__${creation.getParentSeriesId().toHexString()}__}">
+                                               th:href="@{/user/series/__${creation.getParentSeriesId().toHexString()}__}">
                                                 <span class="badge badge-secondary" data-toggle="tooltip"
                                                       data-placement="right" title="Series">
                                                     <i class="fas fa-book"></i>

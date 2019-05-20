@@ -133,3 +133,9 @@ background-color: #575656; }
   width:100px;
 }
 
+.breakword {
+  word-break: break-word;
+  white-space:normal;
+  hyphens: auto;
+}
+

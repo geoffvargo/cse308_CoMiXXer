@@ -22,9 +22,9 @@
     </button>
 
     <!-- Navbar Search -->
-    <form class="d-none d-md-inline-block form-inline mr-auto ml-4 my-2 my-md-0">
+    <form th:action="@{/user/comic/search}" class="d-none d-md-inline-block form-inline mr-auto ml-4 my-2 my-md-0">
         <div class="input-group">
-            <input type="text" class="form-control" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+            <input type="text" class="form-control" name="search_param" placeholder="Search for...">
             <div class="input-group-append">
                 <button class="btn btn-primary" type="button">
                     <i class="fa fa-search"></i>

@@ -89,6 +89,11 @@ public class ComicService implements IComicService {
         return comicRepository.findAllByParent(id);
     }
 
+    public List<Comic> findAllRemixesByUser(ObjectId id){
+        List<Comic> c = comicRepository.findAllByUserId(id);
+        c.removeIf(x->!x.isRemix());
+        return c;
+    }
     public List<Comic> findAllByGenre(Genre genre) {
         return comicRepository.findAllByGenre(genre);
     }
@@ -192,7 +197,7 @@ public class ComicService implements IComicService {
         return comicList;
     }
     public List<Comic> searchComicsWithTitle(String title){
-        return comicRepository.findAllByTitleContainingAllIgnoreCase(title);
+        return comicRepository.findAllByTitleContainingAllIgnoreCaseAndPrivacy(title,Privacy.PUBLIC);
     }
 
     public List<Comic> getRemixesForActivityFeed(User user){

@@ -383,6 +383,47 @@ public class UserController {
         return modelAndView;
     }
 
+    @RequestMapping(value={"/myComics"}, method=RequestMethod.GET)
+    public ModelAndView myComics(){
+        ModelAndView modelAndView = getMAVWithUser();
+        modelAndView.setViewName("singlesGenre");
+        User user = (User)modelAndView.getModel().get("currentUser");
+        modelAndView.addObject("comics",comicService.getComicsByIds(user.getComics()));
+        modelAndView.addObject("headerText","My Comics");
+        return modelAndView;
+    }
+
+    @RequestMapping(value={"/viewComics/{userId}"}, method=RequestMethod.GET)
+    public ModelAndView viewComics(@PathVariable ObjectId userId){
+        ModelAndView modelAndView = getMAVWithUser();
+        modelAndView.setViewName("singlesGenre");
+        User user = userService.findUserById(userId);
+        modelAndView.addObject("comics",comicService.getComicsByIds(user.getComics()));
+        modelAndView.addObject("category",user.getFullname()+"'s Comics");
+        return modelAndView;
+    }
+
+    @RequestMapping(value={"/userRemixes/{userId}"}, method=RequestMethod.GET)
+    public ModelAndView userRemixes(@PathVariable ObjectId userId){
+        ModelAndView modelAndView = getMAVWithUser();
+        modelAndView.setViewName("singlesGenre");
+        User user = userService.findUserById(userId);
+        modelAndView.addObject("comics",comicService.findAllRemixesByUser(userId));
+        modelAndView.addObject("category",user.getFullname()+"'s Remixes");
+        return modelAndView;
+    }
+
+    @RequestMapping(value={"/myRemixes"}, method=RequestMethod.GET)
+    public ModelAndView userRemixes(){
+        ModelAndView modelAndView = getMAVWithUser();
+        modelAndView.setViewName("singlesGenre");
+        User user = (User)modelAndView.getModel().get("currentUser");
+        modelAndView.addObject("comics",comicService.findAllRemixesByUser(user.get_id()));
+        modelAndView.addObject("headerText","My Remixes");
+        return modelAndView;
+    }
+
+
     @RequestMapping(value = {"/curation/{curationId}"}, method=RequestMethod.GET)
     public ModelAndView getCuration(@PathVariable("curationId") ObjectId curationId){
         ComicCollection cc = comicCollectionService.getComicCollectionById(curationId);

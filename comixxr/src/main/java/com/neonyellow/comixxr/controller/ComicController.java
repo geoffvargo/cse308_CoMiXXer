@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Collections;
 import java.util.List;
+import javax.websocket.server.PathParam;
 import javax.xml.bind.DatatypeConverter;
 
 @RestController
@@ -332,16 +333,17 @@ public class ComicController {
         return mv;
     }
 
-    @RequestMapping(value = {"/search/{itemName}"}, method = RequestMethod.GET)
-    public ModelAndView search(@PathVariable("itemName") String itemName){
+    @RequestMapping(value = {"/search"}, method = RequestMethod.GET)
+    public ModelAndView search(@RequestParam("search_param") String itemName){
         ModelAndView mv = getMAVWithUser();
-        mv.setViewName("redirect:/search");
+        mv.setViewName("search");
 
         List<User> users = userService.searchUsersWithName(itemName);
         List<Comic> comics = comicService.searchComicsWithTitle(itemName);
 
         mv.addObject("users", users);
         mv.addObject("comics", comics);
+        mv.addObject("category",itemName);
 
         return mv;
     }

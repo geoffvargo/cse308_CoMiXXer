@@ -111,7 +111,8 @@
                       <a class="card-underline" th:href="@{/user/comic/viewComic/__${remix.get_id().toHexString()}__}">
                         <img class="card-img-top" th:src="${remix.getThumbnail()}" alt="Card!">
                         <div class="card-body">
-                          <h6 class="card-text text-center" th:text="${remix.getTitle()}">
+                          <h6 class="card-text text-center">
+                            <span class="breakword" th:text="${remix.getTitle()}"></span>
                           </h6>
                         </div>
                       </a>

@@ -24,9 +24,9 @@
               <div class="row">
 
                 <div th:each="comic : ${comics}" class="col-3">
-                  <div class="card bg-info d-inline-block mb-4 mx-1" style="width:14rem">
+                  <div class="card bg-info d-inline-block mb-4 mx-1" style="width:13rem">
                     <a class="card-underline no-a" th:href="@{/user/comic/viewComic/__${comic.get_id()}__}">
-                      <img class="card-img-top" th:src="@{/img/portfolio/__${comic.getThumbnail()}__}" alt="Card!">
+                      <img class="card-img-top" th:src="@{__${comic.getThumbnail()}__}" alt="Card!">
                       <div class="card-body h-25 p-2">
                         <h6 class="card-text text-center" th:text="${comic.getTitle()}">
                         </h6>

@@ -10,10 +10,12 @@
         <h1 class="text-center mb-4">Create a Comic</h1>
         <form th:action="@{/user/comic/createDraft}" method="post" enctype="multipart/form-data">
             <div class="form-group row">
-                <div class="custom-file">
+                <div class="col-3"></div>
+                <div class="col-5 custom-file">
                     <input type="file" id="thumbnail" name="thumbnail" accept=".jpg,.png">
                     <label class="custom-file-label" for="thumbnail">Choose File</label>
                 </div>
+                <div class="col-3"></div>
             </div>
             <div class="form-group row">
                 <label for="comicName" class="col-4 col-form-label text-right">Comic Name</label>
