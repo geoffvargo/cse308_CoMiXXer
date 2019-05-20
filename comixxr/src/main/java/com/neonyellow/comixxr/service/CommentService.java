@@ -7,6 +7,8 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CommentService implements k {
     @Autowired
@@ -14,9 +16,10 @@ public class CommentService implements k {
 
     public Comment findCommentBy_id(ObjectId id) { return CommentRepository.findBy_id(id); }
 
-    public void save(Comment comment) { CommentRepository.save(comment);
+    public void save(Comment comment) { CommentRepository.save(comment); }
 
-    }
+    public List<Comment> findComments(ObjectId comicId) { return CommentRepository.findAllByComicIdOrderByAgeDesc(comicId); }
+
 
 }
 

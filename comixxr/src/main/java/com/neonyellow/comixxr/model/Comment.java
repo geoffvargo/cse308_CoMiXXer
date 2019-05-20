@@ -13,13 +13,15 @@ public class Comment {
     @Id
     private ObjectId _id;
     private ObjectId userId;
+    private ObjectId comicId;
     private String text = "";
     private LocalDateTime age;
 
-    public Comment(ObjectId userId, String text){
+    public Comment(ObjectId userId, String text, ObjectId comicId){
         this._id = new ObjectId();
         this.userId = userId;
         this.text = text;
+        this.comicId = comicId;
         age = LocalDateTime.now();
     }
 }
