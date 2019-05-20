@@ -29,8 +29,8 @@
                       <a th:if="${creation.isRemix()}" class="no-a" th:href="@{/user/viewRemixes/__${creation.getParent().toHexString()}__}">
                         <span class="badge badge-secondary" data-toggle="tooltip" data-placement="right" title="Remix"><i class="fas fa-random"></i></span>
                       </a>
-                      <a th:if="${creation.isInSeries()}" class="no-a" th:href="@{/user/viewSeries/__${creation.getParent().toHexString()}__}">
-                        <span class="badge badge-secondary" data-toggle="tooltip" data-placement="right" title="Series"><i class="fas fa-random"></i></span>
+                      <a th:if="${creation.isInSeries()}" class="no-a" th:href="@{/user/series/__${creation.getParentSeriesId().toHexString()}__}">
+                        <span class="badge badge-secondary" data-toggle="tooltip" data-placement="right" title="Series"><i class="fas fa-book"></i></span>
                       </a>
                     </h6>
                   </div>
@@ -86,11 +86,11 @@
               </div>
               <div class="my-2">
                 <span>Comics: </span>
-                <a class="no-a text-secondary" th:href="@{/user/myComics}" th:text="${myCreations.size()}"></a>
+                <a class="no-a text-secondary" th:href="@{/user/viewComics/__${profileUser.get_id()}__}" th:text="${myCreations.size()}"></a>
               </div>
               <div class="my-2">
                 <span>Remixes: </span>
-                <a class="no-a text-secondary" th:href="@{/user/myRemixes}" th:text="${numRemixes}"></a>
+                <a class="no-a text-secondary" th:href="@{/user/userRemixes/__${profileUser.get_id()}__}" th:text="${numRemixes}"></a>
               </div>
               <p class="mt-2 bio-wrap" th:text="${userBio}">
               </p>

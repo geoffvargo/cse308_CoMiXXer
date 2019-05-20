@@ -52,7 +52,7 @@ public class ComicCollectionService implements IComicCollectionService {
     }
 
     public ComicCollection findCurrentSeries(ObjectId id){
-        return ccRepository.findFirstByComicsContaining(id);
+        return ccRepository.findFirstByComicsContainingAndSeries(id,true);
     }
     public ComicCollection getComicCollectionById(ObjectId id){
         return ccRepository.findBy_id(id);

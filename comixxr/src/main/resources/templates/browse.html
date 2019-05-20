@@ -49,7 +49,7 @@
                               <a th:if="${comic.isRemix()}" class="no-a" th:href="@{/user/viewRemixes/__${comic.getParent().toHexString()}__}">
                                 <span class="badge badge-secondary" data-toggle="tooltip" data-placement="right" title="Remix"><i class="fas fa-random"></i></span>
                               </a>
-                              <a th:if="${comic.isInSeries()}" class="no-a" th:href="@{/user/viewSeries/__${comic.getParent().toHexString()}__}">
+                              <a th:if="${comic.isInSeries()}" class="no-a" th:href="@{/user/series/__${comic.getParentSeriesId().toHexString()}__}">
                                 <span class="badge badge-secondary" data-toggle="tooltip" data-placement="right" title="Series"><i class="fas fa-random"></i></span>
                               </a>
                             </h6>
@@ -234,8 +234,8 @@
                           <a th:if="${comic.isRemix()}" class="no-a" th:href="@{/user/viewRemixes/__${comic.getParent().toHexString()}__}">
                             <span class="badge badge-secondary" data-toggle="tooltip" data-placement="right" title="Remix"><i class="fas fa-random"></i></span>
                           </a>
-                          <a th:if="${comic.isInSeries()}" class="no-a" th:href="@{/user/viewSeries/__${comic.getParent().toHexString()}__}">
-                            <span class="badge badge-secondary" data-toggle="tooltip" data-placement="right" title="Series"><i class="fas fa-random"></i></span>
+                          <a th:if="${comic.isInSeries()}" class="no-a" th:href="@{/user/series/__${comic.getParentSeriesId().toHexString()}__}">
+                            <span class="badge badge-secondary" data-toggle="tooltip" data-placement="right" title="Series"><i class="fas fa-book"></i></span>
                           </a>
                         </h6>
                       </div>

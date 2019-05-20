@@ -22,12 +22,6 @@
           <a class="no-a" th:href="@{/user/comic/viewComic/__${parentComic.get_id().toHexString()}__}">
           <span th:text="${parentComic.getTitle()}"/>
           </a>
-          <a th:if="${parentComic.isRemix()}" class="no-a" th:href="@{/user/viewRemixes/__${parentComic.getParent().toHexString()}__}">
-            <span class="badge badge-secondary" data-toggle="tooltip" data-placement="right" title="Remix"><i class="fas fa-random"></i></span>
-          </a>
-          <a th:if="${parentComic.isInSeries()}" class="no-a" th:href="@{/user/viewSeries/__${parentComic.getParent().toHexString()}__}">
-            <span class="badge badge-secondary" data-toggle="tooltip" data-placement="right" title="Series"><i class="fas fa-random"></i></span>
-          </a>
         </h4>
         <div class="container">
           <div class="row scrollable-y scrollbar scrollbar-primary mh-smaller">
