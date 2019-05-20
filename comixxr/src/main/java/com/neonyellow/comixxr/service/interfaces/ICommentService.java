@@ -10,4 +10,5 @@ import java.util.List;
 public interface ICommentService {
     Comment findCommentBy_id(ObjectId id);
     List<Comment> getCommentsForActivityFeed(User user);
+    List<Comment> findComments(ObjectId comicId);
 }
