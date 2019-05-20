@@ -34,11 +34,13 @@ public class CommentController {
         User user = userRepository.findByEmail(auth.getName());
         if(user == null) return false;
         // Create Comment
-        Comment c = new Comment( user.get_id(),comment);
+        Comment c = new Comment( user.get_id(), comment);
         commentService.save(c);
         // Add Comment to ComicID;
         Comic comic = comicService.findBy_id(comicId);
         comic.addComment(c);
+        comicService.save(comic);
+
         return true;
     }
 
