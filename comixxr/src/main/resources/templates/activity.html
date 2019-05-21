@@ -18,7 +18,7 @@
     <div layout:fragment="content" id="content-wrapper">
       <div class="container-fluid">
         <div class="row">
-          <div class="col-lg-4"><h3 class="text-center">Comments</h3>
+          <div class="col-lg-6"><h3 class="text-center">Comments</h3>
             <ul class="media-list scrollable-y scrollbar scrollbar-primary mh-smaller unindent-ul" id="commentsList">
               <li th:each="comment : ${comments}" class="media my-4">
                 <a th:href="@{/user/userProfile/__${comment.getUserId()}__}" class="float-left">
@@ -36,117 +36,7 @@
               </li>
             </ul>
           </div>
-          <div class="col-lg-4 no-padding-l">
-            <h3 class="text-center">Likes</h3>
-            <ul class="media-list scrollable-y scrollbar scrollbar-primary mh-smaller unindent-ul" id="commentsList">
-              <li class="media my-4 mr-1" id="comment1">
-                <a href="userprofile.html" class="float-left">
-                  <img src="https://bootdey.com/img/Content/user_1.jpg" alt="", class="rounded-circle">
-                  </a>
-                <div class="media=body">
-                  <a class="no-a" href="viewcomic.html">
-                  <div class="text-muted float-right">
-                    <div class="text-muted text-sm">30 min ago</div>
-                  </div>
-                  <div class="text-secondary font-weight-bold">@Giraffeman3705</div>
-                  <div class="text-info font-weight-bold mb-1 ml-3">Comic Name Goes Here</div>
-                  <img class="img-fluid ml-2" src="img/portfolio/comic.png"></img>
-                  </a>
-                </div>
-              </li>
-              <li class="media my-4 mr-1" id="comment1">
-                <a href="userprofile.html" class="float-left">
-                  <img src="https://bootdey.com/img/Content/user_1.jpg" alt="", class="rounded-circle">
-                  </a>
-                <div class="media=body">
-                  <a class="no-a" href="viewcomic.html">
-                  <div class="text-muted float-right">
-                    <div class="text-muted text-sm">30 min ago</div>
-                  </div>
-                  <div class="text-secondary font-weight-bold">@Giraffeman3705</div>
-                  <div class="text-info font-weight-bold mb-1 ml-3">Comic Name Goes Here</div>
-                  <img class="img-fluid ml-2" src="img/portfolio/comic.png"></img>
-                  </a>
-                </div>
-              </li>
-              <li class="media my-4 mr-1" id="comment1">
-                <a href="userprofile.html" class="float-left">
-                  <img src="https://bootdey.com/img/Content/user_1.jpg" alt="", class="rounded-circle">
-                  </a>
-                <div class="media=body">
-                  <a class="no-a" href="viewcomic.html">
-                  <div class="text-muted float-right">
-                    <div class="text-muted text-sm">30 min ago</div>
-                  </div>
-                  <div class="text-secondary font-weight-bold">@Giraffeman3705</div>
-                  <div class="text-info font-weight-bold mb-1 ml-3">Comic Name Goes Here</div>
-                  <img class="img-fluid ml-2" src="img/portfolio/comic.png"></img>
-                  </a>
-                </div>
-              </li>
-              <li class="media my-4 mr-1" id="comment1">
-                <a href="userprofile.html" class="float-left">
-                  <img src="https://bootdey.com/img/Content/user_1.jpg" alt="", class="rounded-circle">
-                  </a>
-                <div class="media=body">
-                  <a class="no-a" href="viewcomic.html">
-                  <div class="text-muted float-right">
-                    <div class="text-muted text-sm">30 min ago</div>
-                  </div>
-                  <div class="text-secondary font-weight-bold">@Giraffeman3705</div>
-                  <div class="text-info font-weight-bold mb-1 ml-3">Comic Name Goes Here</div>
-                  <img class="img-fluid ml-2" src="img/portfolio/comic.png"></img>
-                  </a>
-                </div>
-              </li>
-              <li class="media my-4 mr-1" id="comment1">
-                <a href="userprofile.html" class="float-left">
-                  <img src="https://bootdey.com/img/Content/user_1.jpg" alt="", class="rounded-circle">
-                  </a>
-                <div class="media=body">
-                  <a class="no-a" href="viewcomic.html">
-                  <div class="text-muted float-right">
-                    <div class="text-muted text-sm">30 min ago</div>
-                  </div>
-                  <div class="text-secondary font-weight-bold">@Giraffeman3705</div>
-                  <div class="text-info font-weight-bold mb-1 ml-3">Comic Name Goes Here</div>
-                  <img class="img-fluid ml-2" src="img/portfolio/comic.png"></img>
-                  </a>
-                </div>
-              </li>
-              <li class="media my-4 mr-1" id="comment1">
-                <a href="userprofile.html" class="float-left">
-                  <img src="https://bootdey.com/img/Content/user_1.jpg" alt="", class="rounded-circle">
-                  </a>
-                <div class="media=body">
-                  <a class="no-a" href="viewcomic.html">
-                  <div class="text-muted float-right">
-                    <div class="text-muted text-sm">30 min ago</div>
-                  </div>
-                  <div class="text-secondary font-weight-bold">@Giraffeman3705</div>
-                  <div class="text-info font-weight-bold mb-1 ml-3">Comic Name Goes Here</div>
-                  <img class="img-fluid ml-2" src="img/portfolio/comic.png"></img>
-                  </a>
-                </div>
-              </li>
-              <li class="media my-4 mr-1" id="comment1">
-                <a href="userprofile.html" class="float-left">
-                  <img src="https://bootdey.com/img/Content/user_1.jpg" alt="", class="rounded-circle">
-                  </a>
-                <div class="media=body">
-                  <a class="no-a" href="viewcomic.html">
-                  <div class="text-muted float-right">
-                    <div class="text-muted text-sm">30 min ago</div>
-                  </div>
-                  <div class="text-secondary font-weight-bold">@Giraffeman3705</div>
-                  <div class="text-info font-weight-bold mb-1 ml-3">Comic Name Goes Here</div>
-                  <img class="img-fluid ml-2" src="img/portfolio/comic.png"></img>
-                  </a>
-                </div>
-              </li>
-            </ul>
-          </div>
-          <div class="col-lg-4 no-padding-l">
+          <div class="col-lg-6 no-padding-l">
             <h3 class="text-center">Remixes</h3>
             <ul class="media-list scrollable-y scrollbar scrollbar-primary mh-smaller unindent-ul" id="commentsList">
               <li th:each="remix : ${remixes}" class="media my-4 mr-1">
