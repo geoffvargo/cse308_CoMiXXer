@@ -34,19 +34,14 @@ public class ComicCollectionService implements IComicCollectionService {
 
     @Override
     public void delete(ComicCollection cc, User user) {
-        if(cc.isSeries()){
-            for (ObjectId comicId: cc.getComics()) {
-                Comic c = comicService.findBy_id(comicId);
-                c.setInSeries(false);
-                c.setParentSeriesId(null);
-                comicService.save(c);
-            }
+        for (ObjectId comicId: cc.getComics()) {
+            Comic c = comicService.findBy_id(comicId);
+            c.setInSeries(false);
+            c.setParentSeriesId(null);
+            comicService.save(c);
         }
-        else{
-            user.getCurations().remove(cc.get_id());
-            userService.save(user);
-        }
-
+        user.getCurations().remove(cc.get_id());
+        userService.save(user);
         ccRepository.deleteBy_id(cc.get_id());
     }
 
