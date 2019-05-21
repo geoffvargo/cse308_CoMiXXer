@@ -33,14 +33,14 @@ public class CommentController {
 
 
     @RequestMapping(value = {"/addComment"}, method = RequestMethod.POST)
-    public boolean addComment(@RequestParam("commentData") String comment, @RequestParam("comicId") ObjectId comicId){
+    public CommentResponse addComment(@RequestParam("commentData") String comment, @RequestParam("comicId") ObjectId comicId){
         System.out.println("|||||||||||   I GOT HEREEE   |||||||||||");
-        if(comment.length() < 1) return false;
-        if(comicId == null) return false;
+        if(comment.length() < 1) return null;
+        if(comicId == null) return null;
         // Grab User ID
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userRepository.findByEmail(auth.getName());
-        if(user == null) return false;
+        if(user == null) return null;
         // Create Comment
         Comment c = new Comment( user.get_id(), comment, comicId);
         commentService.save(c);
@@ -49,7 +49,8 @@ public class CommentController {
         comic.addComment(c);
         comicService.save(comic);
 
-        return true;
+        CommentResponse comment_response = new CommentResponse(user.get_id(),user.getFullname(), user.getPic(), c.getText(), c.getAge());
+        return comment_response;
     }
 
     @RequestMapping(value = {"/getComment/{comicId}"}, method = RequestMethod.GET)
