@@ -396,11 +396,19 @@ public class ComicController {
         return mv;
     }
 
-    @RequestMapping(value = {"/deleteCuration/{curationId}"}, method = RequestMethod.GET)
-    public ModelAndView curationDelete(@PathVariable("curationId") ObjectId curationId){
+    @RequestMapping(value = {"/deleteCollection/{collectionId}"}, method = RequestMethod.GET)
+    public ModelAndView collectionDelete(@PathVariable("collectionId") ObjectId collectionId){
         ModelAndView mv = getMAVWithUser();
-
-        ccService.delete(curationId);
+        ComicCollection cc = ccService.findBy_id(collectionId);
+        if(cc.isSeries()){
+            for (ObjectId comicId: cc.getComics()) {
+                Comic c = comicService.findBy_id(comicId);
+                c.setInSeries(false);
+                c.setParentSeriesId(null);
+                comicService.save(c);
+            }
+        }
+        ccService.delete(collectionId);
         mv.setViewName("redirect:/user/curation/"+((User)mv.getModel().get("currentUser")).get_id().toHexString());
         return mv;
     }
