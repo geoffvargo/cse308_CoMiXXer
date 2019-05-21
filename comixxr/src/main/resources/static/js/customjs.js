@@ -12,13 +12,24 @@ $(document).ready(function(){
     var data = $("#postCommentBox").val();
     var comicId = $("#comicId").val();
     if(data.length != 0){
-      $.post("/comment/addComment",{'commentData':data,'comicId':comicId},function(bool){
-        if(bool){
-          alert("Comment added!");
-        }
-        else{
-          alert("Failed to add comment!");
-        }
+      $.post("/comment/addComment",{'commentData':data,'comicId':comicId},function(data){
+        var s = "";
+        s+="<li class=\"media my-4\" id=\"comment1\">\n" +
+            "<a href=\"\/userProfile/"+ data["userId"]+"\" class=\"float-left\">\n" +
+            "<img src=\""+data["pic"] +"\" alt=\"\" ,\n" +
+            "class=\"profile-pic rounded-circle\">\n" +
+            "</a>" +
+            "<div class=\"media-body\">\n" +
+            "<div class=\"text-muted float-right\">\n" +
+            "<div class=\"text-muted text-sm\">"+data["age"] +"</div>\n" +
+            "</div>\n" +
+            "<div class=\"text-secondary font-weight-bold\">"+data["userName"] +"</div>\n" +
+            "<div class=\"ml-3\">"+ data["text"]+
+            "</div>\n" +
+            "</div>"+
+            "</li>";
+        $("#commentsList").prepend(s);
+        $("#postCommentBox").val("");
       })
     }
   })
@@ -27,6 +38,7 @@ $(document).ready(function(){
     $.post("/user/createNewCuration",{'curationName' : $("#curationName").val()},function(data){
       if(data){
         alert("Curation created successfully!");
+        $("#curationName").val("");
       }
     })
   })
@@ -83,12 +95,6 @@ $(document).ready(function(){
     toggleViewfn();
   });
 
-  $("#postCommentBtn").click(function(){
-    $.post("/user/comic/postComment",{"commentBody" : $("#postCommentBox").val()},function(data){
-      alert("Added comment!");
-    })
-  })
-
   $("#expandCommentsBtn").click(function(){
     $.get("/comment/getComment/"+$("#comicId").val(),function(myData){
       var s = "";
@@ -97,7 +103,7 @@ $(document).ready(function(){
         s+="<li class=\"media my-4\" id=\"comment1\">\n" +
             "<a href=\"\/userProfile/"+ data["userId"]+"\" class=\"float-left\">\n" +
             "<img src=\""+data["pic"] +"\" alt=\"\" ,\n" +
-            "class=\"rounded-circle\">\n" +
+            "class=\"profile-pic rounded-circle\">\n" +
             "</a>" +
             "<div class=\"media-body\">\n" +
             "<div class=\"text-muted float-right\">\n" +

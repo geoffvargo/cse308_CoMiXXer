@@ -26,7 +26,14 @@
                     <a class="card-underline no-a" th:href="@{/user/comic/viewComic/__${comic.get_id()}__}">
                         <img class="card-img-top" th:src="${comic.getThumbnail()}" alt="Card!">
                         <div class="card-body h-25 p-2">
-                            <h6 class="card-text text-center" th:text="${comic.getTitle()}">
+                            <h6 class="card-text text-center">
+                                <span th:text="${comic.getTitle()}"></span>
+                                <a th:if="${comic.isRemix()}" class="no-a" th:href="@{/user/viewRemixes/__${comic.getParent().toHexString()}__}">
+                                    <span class="badge badge-secondary" data-toggle="tooltip" data-placement="right" title="Remix"><i class="fas fa-random"></i></span>
+                                </a>
+                                <a th:if="${comic.isInSeries()}" class="no-a" th:href="@{/user/series/__${comic.getParentSeriesId().toHexString()}__}">
+                                    <span class="badge badge-secondary" data-toggle="tooltip" data-placement="right" title="Series"><i class="fas fa-book"></i></span>
+                                </a>
                             </h6>
                         </div>
                     </a>

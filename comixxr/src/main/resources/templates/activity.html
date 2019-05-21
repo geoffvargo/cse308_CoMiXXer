@@ -20,112 +20,18 @@
         <div class="row">
           <div class="col-lg-4"><h3 class="text-center">Comments</h3>
             <ul class="media-list scrollable-y scrollbar scrollbar-primary mh-smaller unindent-ul" id="commentsList">
-              <li class="media my-4 mr-1" id="comment1">
-                <a href="userprofile.html" class="float-left">
-                  <img src="https://bootdey.com/img/Content/user_1.jpg" alt="", class="rounded-circle">
-                  </a>
-                <div class="media=body">
-                  <a class="no-a" href="viewcomic.html#comment1">
+              <li th:each="comment : ${comments}" class="media my-4">
+                <a th:href="@{/user/userProfile/__${comment.getUserId()}__}" class="float-left">
+                  <img th:src="${comment.getPic()}" alt="" ,
+                       class="profile-pic rounded-circle">
+                </a>
+                <div class="media-body">
                   <div class="text-muted float-right">
-                    <div class="text-muted text-sm">30 min ago</div>
+                    <div class="text-muted text-sm" th:text="${comment.getAge()}"></div>
                   </div>
-                  <div class="text-secondary font-weight-bold">@Giraffeman3705</div>
-                  <div class="text-info font-weight-bold ml-3">Comic Name Goes Here</div>
-                  <small class="ml-3">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Lorem ipsum dolor sit amet,
-                  </small>
-                  </a>
-                </div>
-              </li>
-              <li class="media my-4 mr-1" id="comment1">
-                <a href="userprofile.html" class="float-left">
-                  <img src="https://bootdey.com/img/Content/user_1.jpg" alt="", class="rounded-circle">
-                  </a>
-                <div class="media=body">
-                  <a class="no-a" href="viewcomic.html#comment1">
-                  <div class="text-muted float-right">
-                    <div class="text-muted text-sm">30 min ago</div>
+                  <div class="text-secondary font-weight-bold" th:text="${comment.getUserName()}"></div>
+                  <div class="ml-3" th:text="${comment.getText()}">
                   </div>
-                  <div class="text-secondary font-weight-bold">@JigglyPuff</div>
-                  <div class="text-info font-weight-bold ml-3">Comic Name Goes Here</div>
-                  <small class="ml-3">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Lorem ipsum dolor sit amet,
-                  </small>
-                  </a>
-                </div>
-              </li>
-              <li class="media my-4 mr-1" id="comment1">
-                <a href="userprofile.html" class="float-left">
-                  <img src="https://bootdey.com/img/Content/user_1.jpg" alt="", class="rounded-circle">
-                  </a>
-                <div class="media=body">
-                  <a class="no-a" href="viewcomic.html#comment1">
-                  <div class="text-muted float-right">
-                    <div class="text-muted text-sm">30 min ago</div>
-                  </div>
-                  <div class="text-secondary font-weight-bold">@Squirtle</div>
-                  <div class="text-info font-weight-bold ml-3">Comic Name Goes Here</div>
-                  <small class="ml-3">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Lorem ipsum dolor sit amet,
-                  </small>
-                  </a>
-                </div>
-              </li>
-              <li class="media my-4 mr-1" id="comment1">
-                <a href="userprofile.html" class="float-left">
-                  <img src="https://bootdey.com/img/Content/user_1.jpg" alt="", class="rounded-circle">
-                  </a>
-                <div class="media=body">
-                  <a class="no-a" href="viewcomic.html#comment1">
-                  <div class="text-muted float-right">
-                    <div class="text-muted text-sm">30 min ago</div>
-                  </div>
-                  <div class="text-secondary font-weight-bold">@Charzard</div>
-                  <div class="text-info font-weight-bold ml-3">Comic Name Goes Here</div>
-                  <small class="ml-3">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Lorem ipsum dolor sit amet,
-                  </small>
-                  </a>
-                </div>
-              </li>
-              <li class="media my-4 mr-1" id="comment1">
-                <a href="userprofile.html" class="float-left">
-                  <img src="https://bootdey.com/img/Content/user_1.jpg" alt="", class="rounded-circle">
-                  </a>
-                <div class="media=body">
-                  <a class="no-a" href="viewcomic.html#comment1">
-                  <div class="text-muted float-right">
-                    <div class="text-muted text-sm">30 min ago</div>
-                  </div>
-                  <div class="text-secondary font-weight-bold">@Shwafta</div>
-                  <div class="text-info font-weight-bold ml-3">Comic Name Goes Here</div>
-                  <small class="ml-3">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Lorem ipsum dolor sit amet,
-                  </small>
-                  </a>
-                </div>
-              </li>
-              <li class="media my-4 mr-1" id="comment1">
-                <a href="userprofile.html" class="float-left">
-                  <img src="https://bootdey.com/img/Content/user_1.jpg" alt="", class="rounded-circle">
-                  </a>
-                <div class="media=body">
-                  <a class="no-a" href="viewcomic.html#comment1">
-                  <div class="text-muted float-right">
-                    <div class="text-muted text-sm">30 min ago</div>
-                  </div>
-                  <div class="text-secondary font-weight-bold">@PFodor</div>
-                  <div class="text-info font-weight-bold ml-3">Comic Name Goes Here</div>
-                  <small class="ml-3">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Lorem ipsum dolor sit amet,
-                  </small>
-                  </a>
                 </div>
               </li>
             </ul>

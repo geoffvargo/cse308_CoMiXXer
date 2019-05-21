@@ -37,18 +37,6 @@
 
     <!-- Navbar -->
     <ul class="navbar-nav ml-auto">
-        <li class="nav-item dropdown no-arrow mx-1">
-            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="badge badge-danger badge-counter">3</span>
-                <i class="fa fa-bell fa-fw"></i>
-            </a>
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="alertsDropdown">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Something else here</a>
-            </div>
-        </li>
         <li class="nav-item dropdown no-arrow">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fa fa-user-circle fa-fw"></i>
@@ -105,6 +93,11 @@
             <a class="nav-link" th:href="@{/user/createComic}">
                 <i class="fa fa-fw fa-paint-brush"></i>
                 <span>Create a Comic</span></a>
+        </li>
+        <li class="nav-item" th:classappend="${active} == 'create_series'? 'active' : ''">
+            <a class="nav-link" th:href="@{/user/newSeries}">
+                <i class="fas fa-fw fa-book"></i>
+                <span>Create a Series</span></a>
         </li>
         <li class="nav-item" th:classappend="${active} == 'create_curation'? 'active' : ''">
             <a role="button" class="nav-link" href="#" id="curationDropDown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

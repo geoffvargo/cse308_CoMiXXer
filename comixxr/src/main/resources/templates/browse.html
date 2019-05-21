@@ -50,7 +50,7 @@
                                 <span class="badge badge-secondary" data-toggle="tooltip" data-placement="right" title="Remix"><i class="fas fa-random"></i></span>
                               </a>
                               <a th:if="${comic.isInSeries()}" class="no-a" th:href="@{/user/series/__${comic.getParentSeriesId().toHexString()}__}">
-                                <span class="badge badge-secondary" data-toggle="tooltip" data-placement="right" title="Series"><i class="fas fa-random"></i></span>
+                                <span class="badge badge-secondary" data-toggle="tooltip" data-placement="right" title="Series"><i class="fas fa-book"></i></span>
                               </a>
                             </h6>
                           </div>
@@ -62,7 +62,7 @@
                           <div class="row">
                             <div class="col-sm-4 text-right"><small th:text="${comic.getTotalVotes()}"></small></div>
                             <div class="col-sm-4 text-center"><small th:text="${comic.getTotalComments()}"></small></div>
-                            <div class="col-sm-4 text-left"><small th:text="${comic.getTotalComments()}"></small></div>
+                            <div class="col-sm-4 text-left"><small th:text="${comic.getTotalRemixes()}"></small></div>
                           </div>
                         </a>
                       </div>
@@ -247,7 +247,7 @@
                       <div class="row">
                         <div class="col-sm-4 text-right"><small th:text="${comic.getTotalVotes()}"></small></div>
                         <div class="col-sm-4 text-center"><small th:text="${comic.getTotalComments()}"></small></div>
-                        <div class="col-sm-4 text-left"><small th:text="${comic.getTotalComments()}"></small></div>
+                        <div class="col-sm-4 text-left"><small th:text="${comic.getTotalRemixes()}"></small></div>
                       </div>
                     </a>
                   </div>
