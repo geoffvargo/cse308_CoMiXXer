@@ -134,7 +134,9 @@ public class ComicService implements IComicService {
     }
 
     public List<Comic> findAllRemixes(ObjectId id){
-        return comicRepository.findAllByParent(id);
+        List<Comic> comics = comicRepository.findAllByParent(id);
+        comics.removeIf(x->!x.isPublished());
+        return comics;
     }
 
     public List<Comic> findAllRemixesByUser(ObjectId id){
@@ -143,7 +145,9 @@ public class ComicService implements IComicService {
         return c;
     }
     public List<Comic> findAllByGenre(Genre genre) {
-        return comicRepository.findAllByGenre(genre);
+        List<Comic> comics = comicRepository.findAllByGenre(genre);
+        comics.removeIf(x->!x.isPublished());
+        return comics;
     }
 
     public List<Comic> findAll() {
