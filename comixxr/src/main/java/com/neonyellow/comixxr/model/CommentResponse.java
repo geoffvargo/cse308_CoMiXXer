@@ -1,5 +1,6 @@
 package com.neonyellow.comixxr.model;
 
+import lombok.Data;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.index.IndexDirection;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -9,16 +10,16 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
 import java.util.Set;
-
-public class CommentResponse {
-    private ObjectId userId;
+@Data
+public class CommentResponse implements java.io.Serializable{
+    private String userId;
     private String userName;
     private String pic;
     private String text = "";
     private String age;
 
     public CommentResponse(ObjectId userId, String userName, String pic, String text, LocalDateTime time){
-        this.userId = userId;
+        this.userId = userId.toHexString();
         this.userName = userName;
         this.pic = pic;
         this.text = text;

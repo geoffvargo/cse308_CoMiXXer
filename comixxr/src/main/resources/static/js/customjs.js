@@ -84,15 +84,16 @@ $(document).ready(function(){
   });
 
   $("#postCommentBtn").click(function(){
-    $.post("/user/comic/postComment",{"commentBody" : $("#postCommentBox").val()},function(){
-      alert("Comment Posted!");
+    $.post("/user/comic/postComment",{"commentBody" : $("#postCommentBox").val()},function(data){
+      alert("Added comment!");
     })
   })
 
   $("#expandCommentsBtn").click(function(){
-    $.get("/comment/getComment/"+$("#comicId"),function(data){
+    $.get("/comment/getComment/"+$("#comicId").val(),function(myData){
       var s = "";
-      for(var i =0; i < data.length(); i++){
+      for(var i =0; i < myData.length; i++){
+        var data = myData[i];
         s+="<li class=\"media my-4\" id=\"comment1\">\n" +
             "<a href=\"\/userProfile/"+ data["userId"]+"\" class=\"float-left\">\n" +
             "<img src=\""+data["pic"] +"\" alt=\"\" ,\n" +
@@ -100,13 +101,15 @@ $(document).ready(function(){
             "</a>" +
             "<div class=\"media-body\">\n" +
             "<div class=\"text-muted float-right\">\n" +
-            "<div class=\"text-muted text-sm\">"+data[""] +"</div>\n" +
+            "<div class=\"text-muted text-sm\">"+data["age"] +"</div>\n" +
             "</div>\n" +
-            "<div class=\"text-secondary font-weight-bold\">@Giraffeman3705</div>\n" +
-            "<div class=\"ml-3\">\n"+
+            "<div class=\"text-secondary font-weight-bold\">"+data["userName"] +"</div>\n" +
+            "<div class=\"ml-3\">"+ data["text"]+
             "</div>\n" +
-            "</div>"
+            "</div>"+
+            "</li>";
       }
+      $("#commentsList").html(s);
     })
   })
   function toggleViewfn(){
