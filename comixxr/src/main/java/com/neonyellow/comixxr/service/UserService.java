@@ -82,7 +82,8 @@ public class UserService implements IUserService {
                     if (c != null && c.isPublished()) {
                         if (c.getPrivacy() != Privacy.PRIVATE) {
                             ans.add(c);
-                        } else {
+                        }
+                        else {
                             if (isPrivate) {
                                 ans.add(c);
                             }

@@ -85,7 +85,7 @@ public class ComicService implements IComicService {
         LocalDateTime lastWeek = present.minusDays(7);
 
         temp = comicRepository.findAllByAgeAfterAndPrivacy(lastWeek,Privacy.PUBLIC);
-        temp.removeIf(x->!x.isRemix());
+        temp.removeIf(x->!x.isRemix() || !x.isPublished());
         temp.sort((o1, o2) -> Integer.compare(o2.getTotalVotes(), o1.getTotalVotes()));
 
         List<Comic> ans;
@@ -107,7 +107,8 @@ public class ComicService implements IComicService {
         LocalDateTime present = LocalDateTime.now();
         LocalDateTime lastWeek = present.minusDays(7);
 
-        temp = comicRepository.findAllByAgeAfterAndPrivacy(lastWeek,Privacy.PUBLIC  );
+        temp = comicRepository.findAllByAgeAfterAndPrivacy(lastWeek,Privacy.PUBLIC);
+        temp.removeIf(x -> !x.isPublished());
 
         temp.sort((o1, o2) -> Integer.compare(o2.getTotalVotes(), o1.getTotalVotes()));
 
@@ -253,7 +254,7 @@ public class ComicService implements IComicService {
 
         for (ObjectId id : user.getSubscriptions()) {
             List<Comic> comics = comicRepository.findAllByUserIdAndAgeBeforeAndPrivacyOrderByAgeDesc(id, present, Privacy.PUBLIC);
-            comics.removeIf(x->!x.isRemix());
+            comics.removeIf(x->!x.isRemix() || !x.isPublished());
             remixActivity.addAll(comics);
         }
 
