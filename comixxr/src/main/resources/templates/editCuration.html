@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{default}" lang="en">
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+</head>
+
+<body id="page-top">
+    <div layout:fragment="content" id="content-wrapper">
+      <div class="container-fluid">
+        <h1 class="text-center mb-4">Edit Curation/Series</h1>
+        <form th:action="@{/user/comic/makeCollectionChanges}" method="post" enctype="multipart/form-data">
+          <input type="hidden" name="comicId" th:value="${curation.get_id().toHexString()}"/>
+          <div class="row">
+            <div class="col-3"></div>
+            <div class="col-6">
+              <div th:if="${nameError != null}" class="text-center alert alert-danger">Curation Name must be 2 or more letters!</div>
+            </div>
+            <div class="col-3"></div>
+          </div>
+          <div class="form-group row">
+            <label for="comicName" class="col-4 col-form-label text-right">Curation Name</label>
+            <div class="col-4">
+              <input type="text" class="form-control" id="comicName" name="comicName" th:value="${curation.getTitle()}"/>
+            </div>
+            <div class="col-5"></div>
+          </div>
+          <div class="form-group row">
+            <label for="privacyBox" class="col-4 col-form-label text-right">Privacy</label>
+            <div class="col-4">
+              <select class="form-control" id="privacyBox" name="privacyBox">
+                <option th:attrappend="selected=${curation.getPrivacy() == T(com.neonyellow.comixxr.model.Privacy).PUBLIC}?'selected'">Public</option>
+                <option th:attrappend="selected=${curation.getPrivacy() == T(com.neonyellow.comixxr.model.Privacy).UNLISTED}?'selected'">Unlisted</option>
+                <option th:attrappend="selected=${curation.getPrivacy() == T(com.neonyellow.comixxr.model.Privacy).PRIVATE}?'selected'">Private</option>
+              </select>
+            </div>
+            <div class="col-5"></div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4"></div>
+            <div class="col-4 text-center">
+              <button class="btn btn-info mt-2" type="submit">Submit</button>
+            </div>
+            <div class="col-4"></div>
+          </div>
+        </form>
+      </div>
+      <!-- /.container-fluid -->
+    </div>
+    <!-- /.content-wrapper -->
+
+</body>
+
+</html>

@@ -22,10 +22,10 @@
                     <h5 class="text-left my-4">My Creations</h5>
                     <div class="row scrollable-x no-fw scrollbar scrollbar-primary">
                         <div th:each="creation : ${myCreations}" class="col-3">
-                            <div class="card bg-info d-inline-block mb-4 mx-1" style="width:12rem">
+                            <div class="card bg-info d-inline-block mb-4 mx-1">
                                 <a class="no-a card-underline"
                                    th:href="@{/user/comic/viewComic/__${creation.get_id().toHexString()}__}">
-                                    <img class="card-img-top img-fluid" alt="Card!"
+                                    <img class="card-img-top img-fluid thumbnail-image" alt="Card!"
                                          th:src="${creation.getThumbnail()}"/>
                                 </a>
                                 <div class="card-body h-25 p-2">
@@ -109,9 +109,9 @@
                     <h5 class="text-left mb-4">Drafts</h5>
                     <div class="row scrollable-x no-fw scrollbar scrollbar-primary">
                         <div th:each="draft : ${myDrafts}" class="col-3">
-                            <div class="card bg-info d-inline-block mb-4 mx-1" style="width:12rem">
+                            <div class="card bg-info d-inline-block mb-4 mx-1">
                                 <a class="card-underline no-a" th:href="@{/user/comic/load/__${draft.get_id()}__}">
-                                    <img class="card-img-top" th:src="${draft.getThumbnail()}" alt="Card!">
+                                    <img class="card-img-top thumbnail-image" th:src="${draft.getThumbnail()}" alt="Card!">
                                     <div class="card-body h-25 p-2">
                                         <h6 class="card-text text-center" th:text="${draft.getTitle()}">
                                         </h6>
@@ -138,9 +138,9 @@
 
                     <div class="row scrollable-x no-fw scrollbar scrollbar-primary">
                         <div th:each="series,istat : ${mySeries}" class="col-3">
-                            <div class="card bg-info d-inline-block mb-4 mx-1" style="width:12rem">
+                            <div class="card bg-info d-inline-block mb-4 mx-1">
                                 <a class="card-underline no-a" th:href="@{/user/series/__${series.get_id().toHexString()}__}">
-                                    <img class="card-img-top" th:src="${series.getThumbnail()}" alt="Card!">
+                                    <img class="card-img-top thumbnail-image" th:src="${series.getThumbnail()}" alt="Card!">
                                     <div class="card-body h-25 p-2">
                                         <h6 class="card-text text-center" th:text="${series.getTitle()}">
                                         </h6>
@@ -154,13 +154,14 @@
                                            class="fas fa-mask"></i>
                                         <i th:if="${series.getPrivacy() == T(com.neonyellow.comixxr.model.Privacy).PRIVATE}"
                                            class="fas fa-eye-slash"></i>
-                                    </div>
-                                    <div class="col btn-group dropright">
-                                        <button class="btn btn-info text-right" type="button" data-toggle="dropdown">
+                                    </div>                <div class="col-5 mt-1 px-0 text-center"><i class="fas fa-columns"></i><small class="ml-1" th:text="${series.getComics().size()}"></small></div>
+                                    <div class="col-4 btn-group dropright text-left">
+                                        <button class="btn btn-info text-right" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <i class="fas fa-bars"></i>
                                         </button>
-                                        <div class="dropdown-menu">
-                                            <a class="dropdown-item" th:href="@{comic/removeSeries/${series.get_id()}}">Remove</a>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <a class="dropdown-item" th:href="@{/user/comic/editCuration/__${series.get_id()}__}">Edit</a>
+                                            <a class="dropdown-item" href="#">Remove</a>
                                         </div>
                                     </div>
                                 </div>

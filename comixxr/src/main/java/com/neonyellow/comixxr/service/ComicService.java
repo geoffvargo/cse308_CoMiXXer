@@ -48,6 +48,12 @@ public class ComicService implements IComicService {
         return comicRepository.findAllByAgeBeforeAndPrivacyOrderByAgeDesc(LocalDateTime.now(),Privacy.PUBLIC);
     }
 
+    public List<Comic> findMostRecentFiftyRemixesOnly(){
+        List<Comic> comics =  comicRepository.findAllByAgeBeforeAndPrivacyOrderByAgeDesc(LocalDateTime.now(),Privacy.PUBLIC);
+        comics.removeIf(x->!x.isRemix());
+        return comics;
+    }
+
     public void save(Comic comic) {
         comicRepository.save(comic);
     }
@@ -69,6 +75,29 @@ public class ComicService implements IComicService {
         }
 
         comicRepository.deleteBy_id(id);
+    }
+
+    public List<Comic> findTopFiftyRemixFromLastWeek(){
+        List<Comic> temp;
+
+        LocalDateTime present = LocalDateTime.now();
+        LocalDateTime lastWeek = present.minusDays(7);
+
+        temp = comicRepository.findAllByAgeAfterAndPrivacy(lastWeek,Privacy.PUBLIC);
+        temp.removeIf(x->!x.isRemix());
+        temp.sort((o1, o2) -> Integer.compare(o2.getTotalVotes(), o1.getTotalVotes()));
+
+        List<Comic> ans;
+
+        if (temp.size() > 50) {
+            ans = temp.subList(0, 49);
+        } else {
+            ans = temp;
+        }
+
+        ans.forEach(c -> System.out.println(c.getTotalVotes() + ", " + c.getAge()));
+
+        return ans;
     }
 
     public List<Comic> findTopFiftyComicsFromLastWeek() {

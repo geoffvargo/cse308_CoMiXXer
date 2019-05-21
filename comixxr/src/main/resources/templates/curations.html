@@ -30,15 +30,20 @@
                 </div>
               </a>
               <div class="row">
-                <div class="col-3 mt-1 pr-0 text-center"><i class="fas fa-globe"></i></div>
-                <div class="col-2 mt-1 px-0 text-center"><i class="fas fa-columns"></i></div>
-                <div class="col-3 text-left mt-1 pr-0"><small th:text="${curation.getComics().size()}"></small></div>
+                <div class="col-3 mt-1 pr-0 text-center">
+                  <i th:if="${curation.getPrivacy() == T(com.neonyellow.comixxr.model.Privacy).PUBLIC}"
+                     class="fas fa-globe"></i>
+                  <i th:if="${curation.getPrivacy() == T(com.neonyellow.comixxr.model.Privacy).UNLISTED}"
+                     class="fas fa-mask"></i>
+                  <i th:if="${curation.getPrivacy() == T(com.neonyellow.comixxr.model.Privacy).PRIVATE}"
+                     class="fas fa-eye-slash"></i>
+                </div>                <div class="col-5 mt-1 px-0 text-center"><i class="fas fa-columns"></i><small class="ml-1" th:text="${curation.getComics().size()}"></small></div>
                 <div class="col-4 btn-group dropright text-left">
                   <button class="btn btn-info text-right" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fas fa-bars"></i>
                   </button>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="editcuration.html">Edit</a>
+                    <a class="dropdown-item" th:href="@{/user/comic/editCuration/__${curation.get_id()}__}">Edit</a>
                     <a class="dropdown-item" href="#">Remove</a>
                   </div>
                 </div>

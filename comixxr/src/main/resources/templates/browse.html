@@ -40,9 +40,9 @@
                   <h2>Popular Single Comics</h2>
                   <div class="row scrollable-x no-fw scrollbar scrollbar-primary">
                     <div th:each="comic : ${popularSingles}" class="col-3">
-                      <div class="card bg-info d-inline-block mb-4 mx-1" style="width:14rem">
+                      <div class="card bg-info d-inline-block mb-4 mx-1">
                         <a class="card-underline no-a" th:href="@{/user/comic/viewComic/__${comic.get_id()}__}">
-                          <img class="card-img-top" th:src="${comic.getThumbnail()}" alt="Card!">
+                          <img class="card-img-top thumbnail-image" th:src="${comic.getThumbnail()}" alt="Card!">
                           <div class="card-body h-25 p-2">
                             <h6 class="card-text text-center">
                               <span th:text="${comic.getTitle()}"></span>
@@ -66,7 +66,6 @@
                           </div>
                         </a>
                       </div>
-
                     </div>
                   </div>
                 </div>
@@ -77,14 +76,18 @@
                   <h2>Popular Series</h2>
                   <div class="row scrollable-x no-fw scrollbar scrollbar-primary">
                     <div th:each="series,istat : ${popularSeries}" class="col-3">
-                      <div class="card bg-info d-inline-block mb-4 mx-1" style="width:12rem">
+                      <div class="card bg-info d-inline-block mb-4 mx-1" >
                         <a class="card-underline no-a" th:href="@{/user/series/__${series.get_id().toHexString()}__}">
-                          <img class="card-img-top" th:src="${series.getThumbnail()}" alt="Card!">
+                          <img class="card-img-top thumbnail-image" th:src="${series.getThumbnail()}" alt="Card!">
                           <div class="card-body h-25 p-2">
                             <h6 class="card-text text-center" th:text="${series.getTitle()}">
                             </h6>
                           </div>
                         </a>
+                        <div class="row">
+                          <div class="col-6 mt-1 px-0 text-center"><i class="fas fa-columns"></i><small class="ml-1" th:text="${series.getComics().size()}"></small></div>
+                          <div class="col-6 mt-1 px-0 text-center"><i class="fas fa-chevron-up"></i><small class="ml-1" th:text="${series.getComics().size()}"></small></div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -97,52 +100,12 @@
                   <h2>Single</h2>
                   <div class="row scrollable-x no-fw scrollbar scrollbar-primary">
 
-                    <div class="col-3">
-                      <div class="card bg-info d-inline-block mb-4 mx-1" style="max-width:14rem">
-                        <a class="card-underline" th:href="@{/user/browse/HORROR}">
-                          <img class="card-img-top" src="img/portfolio/game.png" alt="Card!">
+                    <div th:each="genre : ${genres}" class="col-3">
+                      <div class="card bg-info d-inline-block mb-4 mx-1">
+                        <a class="card-underline" th:href="@{/user/browse/__${genre}__}">
+                          <img class="card-img-top thumbnail-image" src="img/portfolio/game.png" alt="Card!">
                           <div class="card-body h-25 p-3">
-                            <h4 class="card-text text-center">
-                              Horror
-                            </h4>
-                          </div>
-                        </a>
-                      </div>
-                    </div>
-
-                    <div class="col-3">
-                      <div class="card bg-info d-inline-block mb-4 mx-1" style="max-width:14rem">
-                        <a class="card-underline" th:href="@{/user/browse/ADVENTURE}">
-                          <img class="card-img-top" src="img/portfolio/game.png" alt="Card!">
-                          <div class="card-body h-25 p-3">
-                            <h4 class="card-text text-center">
-                              Adventure
-                            </h4>
-                          </div>
-                        </a>
-                      </div>
-                    </div>
-
-                    <div class="col-3">
-                      <div class="card bg-info d-inline-block mb-4 mx-1" style="max-width:14rem">
-                        <a class="card-underline" th:href="@{/user/browse/COMEDY}">
-                          <img class="card-img-top" src="img/portfolio/game.png" alt="Card!">
-                          <div class="card-body h-25 p-3">
-                            <h4 class="card-text text-center">
-                              Comedy
-                            </h4>
-                          </div>
-                        </a>
-                      </div>
-                    </div>
-
-                    <div class="col-3">
-                      <div class="card bg-info d-inline-block mb-4 mx-1" style="max-width:14rem">
-                        <a class="card-underline" th:href="@{/user/browse/SCIFI}">
-                          <img class="card-img-top" src="img/portfolio/game.png" alt="Card!">
-                          <div class="card-body h-25 p-3">
-                            <h4 class="card-text text-center">
-                              Sci-Fi
+                            <h4 class="card-text text-center" th:text="${genre}">
                             </h4>
                           </div>
                         </a>
@@ -157,66 +120,18 @@
                 <div class="container">
                   <h2>Series</h2>
                   <div class="row scrollable-x no-fw scrollbar scrollbar-primary">
-                    <div class="col-3">
-                      <div class="card bg-info d-inline-block mb-4 mx-1" style="max-width:14rem">
-                        <a class="card-underline" th:href="@{/seriesGenre}">
-                          <img class="card-img-top" src="img/portfolio/game.png" alt="Card!">
+                    <div th:each="genre : ${genres}" class="col-3">
+                      <div class="card bg-info d-inline-block mb-4 mx-1">
+                        <a class="card-underline" th:href="@{/user/browseSeries/__${genre}__}">
+                          <img class="card-img-top thumbnail-image" src="img/portfolio/game.png" alt="Card!">
                           <div class="card-body h-25 p-3">
-                            <h4 class="card-text text-center">
-                              Popular
+                            <h4 class="card-text text-center" th:text="${genre}">
                             </h4>
                           </div>
                         </a>
                       </div>
                     </div>
-                    <div class="col-3">
-                      <div class="card bg-info d-inline-block mb-4 mx-1" style="max-width:14rem">
-                        <a class="card-underline" href="seriesview.html">
-                          <img class="card-img-top" src="img/portfolio/game.png" alt="Card!">
-                          <div class="card-body h-25 p-3">
-                            <h4 class="card-text text-center">
-                              Popular
-                            </h4>
-                          </div>
-                        </a>
-                      </div>
-                    </div>
-                    <div class="col-3">
-                      <div class="card bg-info d-inline-block mb-4 mx-1" style="max-width:14rem">
-                        <a class="card-underline" th:href="@{/seriesGenre}">
-                          <img class="card-img-top" src="img/portfolio/game.png" alt="Card!">
-                          <div class="card-body h-25 p-3">
-                            <h4 class="card-text text-center">
-                              Popular
-                            </h4>
-                          </div>
-                        </a>
-                      </div>
-                    </div>
-                    <div class="col-3">
-                      <div class="card bg-info d-inline-block mb-4 mx-1" style="max-width:14rem">
-                        <a class="card-underline" th:href="@{/seriesGenre}">
-                          <img class="card-img-top" src="img/portfolio/game.png" alt="Card!">
-                          <div class="card-body h-25 p-3">
-                            <h4 class="card-text text-center">
-                              Popular
-                            </h4>
-                          </div>
-                        </a>
-                      </div>
-                    </div>
-                    <div class="col-3">
-                      <div class="card bg-info d-inline-block mb-4 mx-1" style="max-width:14rem">
-                        <a class="card-underline" th:href="@{/seriesGenre}">
-                          <img class="card-img-top" src="img/portfolio/game.png" alt="Card!">
-                          <div class="card-body h-25 p-3">
-                            <h4 class="card-text text-center">
-                              Popular
-                            </h4>
-                          </div>
-                        </a>
-                      </div>
-                    </div>
+
                   </div>
                 </div>
               </div>
@@ -225,9 +140,9 @@
 
               <div class="row scrollable-y scrollbar scrollbar-primary mh-smaller">
                 <div th:each="comic : ${newComics}" class="col-3">
-                  <div class="card bg-info d-inline-block mb-4 mx-1" style="width:14rem">
+                  <div class="card bg-info d-inline-block mb-4 mx-1">
                     <a class="card-underline no-a" th:href="@{/user/comic/viewComic/__${comic.get_id()}__}">
-                      <img class="card-img-top" th:src="${comic.getThumbnail()}" alt="Card!">
+                      <img class="card-img-top thumbnail-image" th:src="${comic.getThumbnail()}" alt="Card!">
                       <div class="card-body h-25 p-2">
                         <h6 class="card-text text-center">
                           <span th:text="${comic.getTitle()}"></span>
@@ -261,49 +176,73 @@
               <div class="row">
                 <div class="container">
                   <div class="row">
-                    <div class="col-lg">
-                      <div class="card bg-info d-inline-block mb-4 mx-1" style="max-width:14rem">
-                        <a class="card-underline" th:href="@{/seriesGenre}">
-                          <img class="card-img-top" src="img/portfolio/submarine.png" alt="Card!">
-                          <div class="card-body h-25 p-3">
-                            <h4 class="card-text text-center">
-                            Horror
-                          </h4>
+                    <div class="container">
+                      <h2>Popular Remixes</h2>
+                      <div class="row scrollable-x no-fw scrollbar scrollbar-primary">
+                        <div th:each="comic : ${popularRemix}" class="col-3">
+                          <div class="card bg-info d-inline-block mb-4 mx-1">
+                            <a class="card-underline no-a" th:href="@{/user/comic/viewComic/__${comic.get_id()}__}">
+                              <img class="card-img-top thumbnail-image" th:src="${comic.getThumbnail()}" alt="Card!">
+                              <div class="card-body h-25 p-2">
+                                <h6 class="card-text text-center">
+                                  <span th:text="${comic.getTitle()}"></span>
+                                  <a th:if="${comic.isRemix()}" class="no-a" th:href="@{/user/viewRemixes/__${comic.getParent().toHexString()}__}">
+                                    <span class="badge badge-secondary" data-toggle="tooltip" data-placement="right" title="Remix"><i class="fas fa-random"></i></span>
+                                  </a>
+                                  <a th:if="${comic.isInSeries()}" class="no-a" th:href="@{/user/series/__${comic.getParentSeriesId().toHexString()}__}">
+                                    <span class="badge badge-secondary" data-toggle="tooltip" data-placement="right" title="Series"><i class="fas fa-book"></i></span>
+                                  </a>
+                                </h6>
+                              </div>
+                              <div class="row">
+                                <div class="col-sm-4 text-right"><i class="fas fa-chevron-up"></i></div>
+                                <div class="col-sm-4 text-center"><i class="fas fa-comment-dots"></i></div>
+                                <div class="col-sm-4 text-left"><i class="fas fa-random"></i></div>
+                              </div>
+                              <div class="row">
+                                <div class="col-sm-4 text-right"><small th:text="${comic.getTotalVotes()}"></small></div>
+                                <div class="col-sm-4 text-center"><small th:text="${comic.getTotalComments()}"></small></div>
+                                <div class="col-sm-4 text-left"><small th:text="${comic.getTotalRemixes()}"></small></div>
+                              </div>
+                            </a>
                           </div>
-                        </a>
+                        </div>
                       </div>
-
-                      <div class="card bg-info d-inline-block mb-4 mx-1" style="max-width:14rem">
-                        <a class="card-underline" th:href="@{/seriesGenre}">
-                          <img class="card-img-top" src="img/portfolio/submarine.png" alt="Card!">
-                          <div class="card-body h-25 p-3">
-                            <h4 class="card-text text-center">
-                            Comedy
-                          </h4>
+                    </div>
+                  </div>
+                  <div class="divider"></div>
+                  <div class="row">
+                    <div class="container">
+                      <h2>New Remixes</h2>
+                      <div class="row scrollable-x no-fw scrollbar scrollbar-primary">
+                        <div th:each="comic : ${newRemix}" class="col-3">
+                          <div class="card bg-info d-inline-block mb-4 mx-1">
+                            <a class="card-underline no-a" th:href="@{/user/comic/viewComic/__${comic.get_id()}__}">
+                              <img class="card-img-top thumbnail-image" th:src="${comic.getThumbnail()}" alt="Card!">
+                              <div class="card-body h-25 p-2">
+                                <h6 class="card-text text-center">
+                                  <span th:text="${comic.getTitle()}"></span>
+                                  <a th:if="${comic.isRemix()}" class="no-a" th:href="@{/user/viewRemixes/__${comic.getParent().toHexString()}__}">
+                                    <span class="badge badge-secondary" data-toggle="tooltip" data-placement="right" title="Remix"><i class="fas fa-random"></i></span>
+                                  </a>
+                                  <a th:if="${comic.isInSeries()}" class="no-a" th:href="@{/user/series/__${comic.getParentSeriesId().toHexString()}__}">
+                                    <span class="badge badge-secondary" data-toggle="tooltip" data-placement="right" title="Series"><i class="fas fa-book"></i></span>
+                                  </a>
+                                </h6>
+                              </div>
+                              <div class="row">
+                                <div class="col-sm-4 text-right"><i class="fas fa-chevron-up"></i></div>
+                                <div class="col-sm-4 text-center"><i class="fas fa-comment-dots"></i></div>
+                                <div class="col-sm-4 text-left"><i class="fas fa-random"></i></div>
+                              </div>
+                              <div class="row">
+                                <div class="col-sm-4 text-right"><small th:text="${comic.getTotalVotes()}"></small></div>
+                                <div class="col-sm-4 text-center"><small th:text="${comic.getTotalComments()}"></small></div>
+                                <div class="col-sm-4 text-left"><small th:text="${comic.getTotalRemixes()}"></small></div>
+                              </div>
+                            </a>
                           </div>
-                        </a>
-                      </div>
-
-                      <div class="card bg-info d-inline-block mb-4 mx-1" style="max-width:14rem">
-                        <a class="card-underline" th:href="@{/seriesGenre}">
-                          <img class="card-img-top" src="img/portfolio/submarine.png" alt="Card!">
-                          <div class="card-body h-25 p-3">
-                            <h4 class="card-text text-center">
-                            Adventure
-                          </h4>
-                          </div>
-                        </a>
-                      </div>
-
-                      <div class="card bg-info d-inline-block mb-4 mx-1" style="max-width:14rem">
-                        <a class="card-underline" th:href="@{/seriesGenre}">
-                          <img class="card-img-top" src="img/portfolio/submarine.png" alt="Card!">
-                          <div class="card-body h-25 p-3">
-                            <h4 class="card-text text-center">
-                            Sci-Fi
-                          </h4>
-                          </div>
-                        </a>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -316,15 +255,6 @@
 
       </div>
       <!-- /.container-fluid -->
-
-      <!-- Sticky Footer -->
-      <footer class="sticky-footer bg-primary ">
-        <div class="container my-auto">
-          <div class="copyright text-center my-auto">
-            <span>Copyright © Your Website 2019</span>
-          </div>
-        </div>
-      </footer>
 
     </div>
     <!-- /.content-wrapper -->

@@ -80,8 +80,29 @@ public class ComicController {
     @RequestMapping(value = {"upvote/{comicId}"}, method = RequestMethod.GET)
     public boolean upVote(@PathVariable("comicId") ObjectId comicId){
         Comic c = comicService.findBy_id(comicId);
+        ComicCollection cc = ccService.findBy_id(comicId);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userDetailsService.findUserByEmail(auth.getName());
+        if(c == null){
+            for(ObjectId id : cc.getDownVote()){
+                if(id.equals(user.get_id())){
+                    cc.removeDownvote(id);
+                    break;
+                }
+            }
+            boolean exists = false;
+            for(ObjectId id : cc.getUpVote()){
+                if(id.equals(user.get_id())){
+                    exists = true;
+                    break;
+                }
+            }
+            if(!exists){
+                cc.addUpvote(user.get_id());
+            }
+            ccService.save(cc);
+            return true;
+        }
         for(ObjectId id : c.getDownVote()){
             if(id.equals(user.get_id())){
                 c.removeDownvote(id);
@@ -105,8 +126,29 @@ public class ComicController {
     @RequestMapping(value = {"downvote/{comicId}"}, method = RequestMethod.GET)
     public boolean downVote(@PathVariable("comicId") ObjectId comicId){
         Comic c = comicService.findBy_id(comicId);
+        ComicCollection cc = ccService.findBy_id(comicId);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userDetailsService.findUserByEmail(auth.getName());
+        if(c == null){
+            for(ObjectId id : cc.getUpVote()){
+                if(id.equals(user.get_id())){
+                    cc.removeUpvote(id);
+                    break;
+                }
+            }
+            boolean exists = false;
+            for(ObjectId id : cc.getDownVote()){
+                if(id.equals(user.get_id())){
+                    exists = true;
+                    break;
+                }
+            }
+            if(!exists){
+                cc.addDownvote(user.get_id());
+            }
+            ccService.save(cc);
+            return true;
+        }
         for(ObjectId id : c.getUpVote()){
             if(id.equals(user.get_id())){
                 c.removeUpvote(id);
@@ -144,6 +186,15 @@ public class ComicController {
         return modelAndView;
     }
 
+    @RequestMapping(value = {"/editCuration/{comicId}"}, method = RequestMethod.GET)
+    public ModelAndView editCuration(@PathVariable ObjectId comicId){
+        ModelAndView modelAndView = getMAVWithUser();
+        ComicCollection c = ccService.findBy_id(comicId);
+        modelAndView.addObject("curation",c);
+        modelAndView.setViewName("editCuration");
+        return modelAndView;
+    }
+
     @RequestMapping(value = {"/makeChanges"}, method = RequestMethod.POST)
     public ModelAndView makeChanges(@RequestParam("thumbnail") MultipartFile thumbnail,
                                     @RequestParam("comicName") String comicName,
@@ -170,6 +221,24 @@ public class ComicController {
         currentComic.setPrivacy(comicService.getPrivacy(privacy));
         comicService.save(currentComic);
         modelAndView.setViewName("redirect:/user/myProfile");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = {"/makeCollectionChanges"}, method = RequestMethod.POST)
+    public ModelAndView makeCollectionChanges(@RequestParam("comicName") String comicName,
+                                    @RequestParam("privacyBox") String privacy,
+                                    @RequestParam("comicId") ObjectId comicId){
+        ModelAndView modelAndView = getMAVWithUser();
+        ComicCollection currentComic = ccService.findBy_id(comicId);
+        if(comicName.length() < 2){
+            modelAndView.setViewName("editCuration");
+            modelAndView.addObject("nameError",true);
+            return modelAndView;
+        }
+        currentComic.setTitle(comicName);
+        currentComic.setPrivacy(comicService.getPrivacy(privacy));
+        ccService.save(currentComic);
+        modelAndView.setViewName("redirect:/user/myCurations");
         return modelAndView;
     }
 
@@ -349,30 +418,6 @@ public class ComicController {
         mv.addObject("category",itemName);
 
         return mv;
-    }
-
-    @RequestMapping(value = {"/genres"}, method = RequestMethod.GET)
-    public List<String> getGenreList(){
-        List<String> genres = new ArrayList<>();
-        genres.add("HORROR");
-        genres.add("TEEN");
-        genres.add("FANTASY");
-        genres.add("CRIME");
-        genres.add("COMEDY");
-        genres.add("ROMANCE");
-        genres.add("MANGA");
-        genres.add("ALTERNATIVE");
-        genres.add("GAG");
-        genres.add("SCIFI");
-        genres.add("SUPERHERO");
-        genres.add("CHILD");
-        genres.add("WAR");
-        genres.add("DAILY");
-        genres.add("WESTERN");
-        genres.add("ABSTRACT");
-        genres.add("ADVENTURE");
-
-        return genres;
     }
 
     @RequestMapping(value = {"/activity"}, method = RequestMethod.GET)

@@ -43,7 +43,7 @@ public class ComicCollectionService implements IComicCollectionService {
     }
 
     public List<ComicCollection> getTopFiftySeriesRecent(){
-        return ccRepository.findAllByPrivacyOrderByAggregateVotesDesc(Privacy.PUBLIC);
+        return ccRepository.findAllByPrivacyAndSeriesOrderByAggregateVotesDesc(Privacy.PUBLIC,true);
     }
 
     public List<ComicCollection> getSeries(ObjectId id){

@@ -13,8 +13,32 @@
 <body id="page-top">
 
     <div layout:fragment="content" id="content-wrapper">
+      <input type="hidden" id="comicId" th:value="${series.get_id()}"/>
       <div class="container-fluid">
-        <h1 class="text-center mb-1" th:text="${series.getTitle()}"></h1>
+        <div class="row text-center">
+          <div class="col-3"></div>
+          <div class="col-6">
+            <div class="nav text-center justify-content-center">
+              <h1 class="nav-item text-center mb-1" th:text="${series.getTitle()}"></h1>
+              <li class="nav-item ml-3 mr-1">
+                <button id="upvote_btn" th:classappend="${upvoted} ? 'btn-secondary': 'btn-info'"
+                        class="btn">
+                  <i class="fas fa-chevron-up"></i>
+                </button>
+              </li>
+              <li class="nav-item ml-1">
+                <button id="downvote_btn" th:classappend="${downvoted} ? 'btn-secondary': 'btn-info'"
+                        class="btn">
+                  <i class="fas fa-chevron-down"></i>
+                </button>
+              </li>
+              <li class="nav-item ml-3">
+                <div class="text-muted mt-2" id="totalVotes" th:text="${series.getAggregateVotes()}"></div>
+              </li>
+            </div>
+          </div>
+          <div class="col-3"></div>
+        </div>
         <a class="no-a" th:href="@{/user/userProfile/__${author.get_id().toHexString()}__}">
           <h4 class="text-center mb-4" th:text="${author.getFullname()}"></h4>
         </a>
@@ -24,9 +48,9 @@
               <div class="row">
 
                 <div th:each="comic : ${comics}" class="col-3">
-                  <div class="card bg-info d-inline-block mb-4 mx-1" style="width:13rem">
+                  <div class="card bg-info d-inline-block mb-4 mx-1">
                     <a class="card-underline no-a" th:href="@{/user/comic/viewComic/__${comic.get_id()}__}">
-                      <img class="card-img-top" th:src="@{__${comic.getThumbnail()}__}" alt="Card!">
+                      <img class="card-img-top thumbnail-image" th:src="@{__${comic.getThumbnail()}__}" alt="Card!">
                       <div class="card-body h-25 p-2">
                         <h6 class="card-text text-center" th:text="${comic.getTitle()}">
                         </h6>

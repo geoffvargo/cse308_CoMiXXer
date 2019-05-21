@@ -18,7 +18,7 @@ public interface CcRepository extends MongoRepository<ComicCollection, ObjectId>
 
     ComicCollection findFirstByComicsContainingAndSeries(ObjectId id, boolean truth);
 
-    List<ComicCollection> findAllByPrivacyOrderByAggregateVotesDesc(Privacy privacy);
+    List<ComicCollection> findAllByPrivacyAndSeriesOrderByAggregateVotesDesc(Privacy privacy, boolean truth);
 
     List<ComicCollection> findAllByGenreAndPrivacy(Genre genre, Privacy privacy);
 

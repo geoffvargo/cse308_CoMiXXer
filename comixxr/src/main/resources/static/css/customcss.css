@@ -139,3 +139,8 @@ background-color: #575656; }
   hyphens: auto;
 }
 
+.thumbnail-image{
+  width:12rem;
+  height:8rem;
+}
+

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.websocket.server.PathParam;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -153,7 +154,9 @@ public class UserController {
 
         List<ComicCollection> allByGenre = comicCollectionService.findAllByGenre(genre);
 
-        modelAndView.addObject("comicCollections", allByGenre);
+        allByGenre.removeIf(c->c.getPrivacy() != Privacy.PUBLIC);
+
+        modelAndView.addObject("mySeries", allByGenre);
 
         modelAndView.addObject("category", genre.toString());
         modelAndView.addObject("active","browse");
@@ -290,16 +293,37 @@ public class UserController {
     @RequestMapping(value = {"/series/{seriesId}"},method = RequestMethod.GET)
     public ModelAndView getSeries(@PathVariable ObjectId seriesId){
         ModelAndView modelAndView = getMAVWithUser();
+        User currUser = (User) modelAndView.getModel().get("currentUser");
         ComicCollection cc = comicCollectionService.getComicCollectionById(seriesId);
         modelAndView.addObject("series",cc);
         modelAndView.addObject("comics",comicService.getComicsByIds(cc.getComics()));
         modelAndView.addObject("author",userService.findUserById(cc.getUserId()));
+        modelAndView.addObject("upvoted",cc.containsUpvote(currUser.get_id()));
+        modelAndView.addObject("downvoted",cc.containsDownvote(currUser.get_id()));
         modelAndView.setViewName("series");
         return modelAndView;
     }
     /*GET CURRENT USER CURATIONS FROM DATABASE*/
     @RequestMapping(value = {"/curations/{userId}"}, method = RequestMethod.GET)
     public ModelAndView getCurations(@PathVariable ObjectId userId){
+
+        ModelAndView modelAndView = getMAVWithUser();
+        User profileUser = (User) userService.findUserById(userId);
+
+        List<ComicCollection> curlist = new ArrayList<>();
+        profileUser.getCurations().forEach(c -> curlist.add(comicCollectionService.findBy_id(c)));
+        curlist.removeIf(c->c.isSeries());
+
+        modelAndView.addObject("curationList", curlist);
+        modelAndView.addObject("profileUser", profileUser);
+        modelAndView.addObject("active","curations");
+
+        modelAndView.setViewName("curations");
+
+        return modelAndView;
+    }
+    @RequestMapping(value = {"/myCurations"}, method = RequestMethod.GET)
+    public ModelAndView getCurations(){
 
         ModelAndView modelAndView = getMAVWithUser();
         User profileUser = (User) modelAndView.getModel().get("currentUser");
@@ -329,6 +353,7 @@ public class UserController {
         c.removeIf(x->x.isSeries());
         return c;
     }
+
 
     @RequestMapping(value = {"/toggleCuration/{comic}/{curation}"}, method = RequestMethod.GET)
     public boolean addToCreation(@PathVariable ObjectId comic, @PathVariable ObjectId curation) {

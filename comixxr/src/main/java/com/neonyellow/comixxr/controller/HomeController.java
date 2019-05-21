@@ -1,6 +1,7 @@
 package com.neonyellow.comixxr.controller;
 
 import com.neonyellow.comixxr.model.Comic;
+import com.neonyellow.comixxr.model.Genre;
 import com.neonyellow.comixxr.model.User;
 import com.neonyellow.comixxr.service.ComicCollectionService;
 import com.neonyellow.comixxr.service.ComicService;
@@ -55,6 +56,9 @@ public class HomeController {
         modelAndView.addObject("newComics",comicService.findMostRecentFifty());
         modelAndView.addObject("popularSingles",comicService.findTopFiftyComicsFromLastWeek());
         modelAndView.addObject("popularSeries",comicCollectionService.getTopFiftySeriesRecent());
+        modelAndView.addObject("popularRemix",comicService.findTopFiftyRemixFromLastWeek());
+        modelAndView.addObject("newRemix",comicService.findMostRecentFiftyRemixesOnly());
+        modelAndView.addObject("genres", Genre.getGenreList());
         return modelAndView;
     }
 

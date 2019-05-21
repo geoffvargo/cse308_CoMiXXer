@@ -56,7 +56,7 @@
             <div th:each="series : ${mySeries}" class="col-3">
               <div class="card bg-info d-inline-block mb-4 mx-1" style="width:12rem">
                 <a class="card-underline no-a" th:href="@{/user/series/__${series.get_id()}__}">
-                  <img class="card-img-top" th:src="${series.getThumbnail()}" alt="Card!">
+                  <img class="card-img-top thumbnail-image" th:src="${series.getThumbnail()}" alt="Card!">
                   <div class="card-body h-25 p-2">
                     <h6 class="card-text text-center" th:text="${series.getTitle()}">
                     </h6>

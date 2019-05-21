@@ -32,9 +32,9 @@
                 <div class="tab-pane fade show active" id="pills-comics" role="tabpanel">
                     <div class="row scrollable-y scrollbar scrollbar-primary mh-smaller">
                         <div th:each="comic : ${comics}" class="col-3">
-                            <div class="card bg-info d-inline-block mb-4 mx-1" style="width:14rem">
+                            <div class="card bg-info d-inline-block mb-4 mx-1">
                                 <a class="card-underline no-a" th:href="@{/user/comic/viewComic/__${comic.get_id()}__}">
-                                    <img class="card-img-top" th:src="${comic.getThumbnail()}" alt="Card!">
+                                    <img class="card-img-top thumbnail-image" th:src="${comic.getThumbnail()}" alt="Card!">
                                     <div class="card-body h-25 p-2">
                                         <h6 class="card-text text-center">
                                             <span th:text="${comic.getTitle()}"></span>
@@ -110,26 +110,6 @@
 <a class="scroll-to-top rounded" href="#page-top">
     <i class="fa fa-angle-up"></i>
 </a>
-
-<!-- Logout Modal-->
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-            <div class="modal-footer">
-                <button class="btn btn-primary" type="button" data-dismiss="modal">Cancel</button>
-                <a class="btn btn-secondary" href="login.html">Logout</a>
-            </div>
-        </div>
-    </div>
-</div>
 
 </body>
 
