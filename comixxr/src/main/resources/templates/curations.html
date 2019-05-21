@@ -44,7 +44,7 @@
                   </button>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" th:href="@{/user/comic/editCuration/__${curation.get_id()}__}">Edit</a>
-                    <a class="dropdown-item" href="#">Remove</a>
+                    <a class="dropdown-item" th:href="@{/user/comic/deleteCollection/__${curation.get_id()}__}">Remove</a>
                   </div>
                 </div>
               </div>

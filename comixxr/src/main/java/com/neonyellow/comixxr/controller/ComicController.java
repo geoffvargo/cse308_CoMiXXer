@@ -407,9 +407,15 @@ public class ComicController {
                 c.setParentSeriesId(null);
                 comicService.save(c);
             }
+            mv.setViewName("redirect:/user/myProfile");
+        }
+        else{
+            mv.setViewName("redirect:/user/curations/"+((User)mv.getModel().get("currentUser")).get_id().toHexString());
+            User user = (User)mv.getModel().get("currentUser");
+            user.getCurations().remove(cc.get_id());
+            userService.save(user);
         }
         ccService.delete(collectionId);
-        mv.setViewName("redirect:/user/curation/"+((User)mv.getModel().get("currentUser")).get_id().toHexString());
         return mv;
     }
 
