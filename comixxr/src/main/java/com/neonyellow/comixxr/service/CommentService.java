@@ -1,7 +1,9 @@
 package com.neonyellow.comixxr.service;
 
 import com.neonyellow.comixxr.model.Comment;
+import com.neonyellow.comixxr.model.CommentResponse;
 import com.neonyellow.comixxr.model.User;
+import com.neonyellow.comixxr.repository.ComicRepository;
 import com.neonyellow.comixxr.repository.CommentRepository;
 import com.neonyellow.comixxr.service.interfaces.ICommentService;
 import org.bson.types.ObjectId;
@@ -17,12 +19,18 @@ import java.util.List;
 public class CommentService implements ICommentService {
     @Autowired
     CommentRepository commentRepository;
+    @Autowired
+    CommentRepository userRepository;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private ComicRepository commicRepository;
 
     public Comment findCommentBy_id(ObjectId id) { return commentRepository.findBy_id(id); }
 
     public void save(Comment comment) { commentRepository.save(comment);}
 
-    public List<Comment> getCommentsForActivityFeed(User user){
+    public List<CommentResponse> getCommentsForActivityFeed(User user){
         LocalDateTime present = LocalDateTime.now();
         List<Comment> commentActivity = new ArrayList<>();
 
@@ -32,9 +40,17 @@ public class CommentService implements ICommentService {
         }
 
         Collections.sort(commentActivity);
-        return commentActivity;
+        List<CommentResponse> commentResponseList = new ArrayList<>(commentActivity.size());
+
+        for(Comment comment : commentActivity){
+            String title = commicRepository.findBy_id(comment.getComicId()).getTitle();
+            commentResponseList.add(new CommentResponse(user.get_id(), user.getFullname(), user.getPic(), comment.getText(), comment.getAge(),title));
+        }
+        return commentResponseList;
     }
     public List<Comment> findComments(ObjectId comicId) { return commentRepository.findAllByComicIdOrderByAgeDesc(comicId); }
+
+
 
 
 }

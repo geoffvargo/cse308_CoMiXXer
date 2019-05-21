@@ -17,6 +17,7 @@ public class CommentResponse implements java.io.Serializable{
     private String pic;
     private String text = "";
     private String age;
+    private String comicName;
 
     public CommentResponse(ObjectId userId, String userName, String pic, String text, LocalDateTime time){
         this.userId = userId.toHexString();
@@ -24,6 +25,16 @@ public class CommentResponse implements java.io.Serializable{
         this.pic = pic;
         this.text = text;
         this.age = timeToString(time);
+        comicName = null;
+    }
+
+    public CommentResponse(ObjectId userId, String userName, String pic, String text, LocalDateTime time, String comicName){
+        this.userId = userId.toHexString();
+        this.userName = userName;
+        this.pic = pic;
+        this.text = text;
+        this.age = timeToString(time);
+        this.comicName = comicName;
     }
 
     public String timeToString(LocalDateTime age){
