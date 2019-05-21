@@ -5,6 +5,7 @@ import com.neonyellow.comixxr.model.CommentResponse;
 import com.neonyellow.comixxr.model.User;
 import com.neonyellow.comixxr.repository.ComicRepository;
 import com.neonyellow.comixxr.repository.CommentRepository;
+import com.neonyellow.comixxr.repository.UserRepository;
 import com.neonyellow.comixxr.service.interfaces.ICommentService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ public class CommentService implements ICommentService {
     @Autowired
     CommentRepository commentRepository;
     @Autowired
-    CommentRepository userRepository;
+    UserRepository userRepository;
     @Autowired
     private UserService userService;
     @Autowired
@@ -43,8 +44,9 @@ public class CommentService implements ICommentService {
         List<CommentResponse> commentResponseList = new ArrayList<>(commentActivity.size());
 
         for(Comment comment : commentActivity){
+            User tempUser = userRepository.findBy_id(comment.getUserId());
             String title = commicRepository.findBy_id(comment.getComicId()).getTitle();
-            commentResponseList.add(new CommentResponse(user.get_id(), user.getFullname(), user.getPic(), comment.getText(), comment.getAge(),title));
+            commentResponseList.add(new CommentResponse(tempUser.get_id(), tempUser.getFullname(), tempUser.getPic(), comment.getText(), comment.getAge(),title));
         }
         return commentResponseList;
     }
