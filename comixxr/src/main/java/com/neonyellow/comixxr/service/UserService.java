@@ -49,6 +49,7 @@ public class UserService implements IUserService {
     public void save(User user) {
         userRepository.save(user);
     }
+    public void deleteByUserId(ObjectId id){ userRepository.deleteBy_id(id);}
 
     public Comic findComicBy_id(ObjectId id){
       return comicRepository.findBy_id(id);

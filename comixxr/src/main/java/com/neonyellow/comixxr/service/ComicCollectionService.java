@@ -1,9 +1,6 @@
 package com.neonyellow.comixxr.service;
 
-import com.neonyellow.comixxr.model.Comic;
-import com.neonyellow.comixxr.model.ComicCollection;
-import com.neonyellow.comixxr.model.Genre;
-import com.neonyellow.comixxr.model.Privacy;
+import com.neonyellow.comixxr.model.*;
 import com.neonyellow.comixxr.repository.CcRepository;
 import com.neonyellow.comixxr.service.interfaces.IComicCollectionService;
 
@@ -20,6 +17,12 @@ public class ComicCollectionService implements IComicCollectionService {
     @Autowired
     private CcRepository ccRepository;
 
+    @Autowired
+    private ComicService comicService;
+
+    @Autowired
+    private UserService userService;
+
     public ComicCollection findBy_id(ObjectId id) {
         return ccRepository.findBy_id(id);
     }
@@ -30,8 +33,21 @@ public class ComicCollectionService implements IComicCollectionService {
     }
 
     @Override
-    public void delete(ObjectId id) {
-        ccRepository.deleteBy_id(id);
+    public void delete(ComicCollection cc, User user) {
+        if(cc.isSeries()){
+            for (ObjectId comicId: cc.getComics()) {
+                Comic c = comicService.findBy_id(comicId);
+                c.setInSeries(false);
+                c.setParentSeriesId(null);
+                comicService.save(c);
+            }
+        }
+        else{
+            user.getCurations().remove(cc.get_id());
+            userService.save(user);
+        }
+
+        ccRepository.deleteBy_id(cc.get_id());
     }
 
     public List<ComicCollection> getComicsByIds(List<ObjectId> ids){

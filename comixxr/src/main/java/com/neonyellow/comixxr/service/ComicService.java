@@ -59,6 +59,7 @@ public class ComicService implements IComicService {
     }
 
     public void delete(ObjectId id) {
+
         //handle deleting the remixes that use it as a parent, and sent to not be remixes
         List<Comic> children = comicRepository.findAllByParent(id);
         for (Comic c: children) {

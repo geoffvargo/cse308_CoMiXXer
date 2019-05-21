@@ -13,4 +13,5 @@ public interface IUserService {
     ArrayList<Comic> getDrafts(User user);
     int getNumRemixes(User user);
     List<User> searchUsersWithName(String name);
+    void deleteByUserId(ObjectId id);
 }

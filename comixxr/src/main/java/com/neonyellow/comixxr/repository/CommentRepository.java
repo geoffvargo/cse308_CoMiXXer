@@ -11,4 +11,6 @@ public interface CommentRepository extends MongoRepository<Comment, ObjectId> {
     Comment findBy_id(ObjectId _id);
     List<Comment> findAllByComicIdOrderByAgeDesc(ObjectId comicId);
     List<Comment> findAllByUserIdAndAgeBeforeOrderByAgeDesc(ObjectId id, LocalDateTime time);
+    Comment deleteBy_id(ObjectId id);
+    List<Comment> findAllByUserId(ObjectId id);
 }

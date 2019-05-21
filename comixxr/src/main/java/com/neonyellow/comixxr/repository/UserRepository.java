@@ -12,4 +12,5 @@ public interface UserRepository extends MongoRepository<User, ObjectId> {
     User findBy_id(ObjectId id);
     List<User> findAllByEnabled(boolean isEnabled);
     List<User> findAllByFullnameContainingAllIgnoreCase(String name);
+    void deleteBy_id(ObjectId id);
 }

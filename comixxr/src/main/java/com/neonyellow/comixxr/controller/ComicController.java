@@ -386,12 +386,7 @@ public class ComicController {
         mv.setViewName("redirect:/user/myProfile");
         comicService.delete(comicId);
         User user = (User)mv.getModel().get("currentUser");
-        for (ObjectId id: user.getComics()) {
-            if(id.equals(comicId)){
-                user.getComics().remove(id);
-                break;
-            }
-        }
+        user.getComics().remove(comicId);
         userService.save(user);
         return mv;
     }
@@ -401,21 +396,13 @@ public class ComicController {
         ModelAndView mv = getMAVWithUser();
         ComicCollection cc = ccService.findBy_id(collectionId);
         if(cc.isSeries()){
-            for (ObjectId comicId: cc.getComics()) {
-                Comic c = comicService.findBy_id(comicId);
-                c.setInSeries(false);
-                c.setParentSeriesId(null);
-                comicService.save(c);
-            }
             mv.setViewName("redirect:/user/myProfile");
         }
         else{
             mv.setViewName("redirect:/user/curations/"+((User)mv.getModel().get("currentUser")).get_id().toHexString());
-            User user = (User)mv.getModel().get("currentUser");
-            user.getCurations().remove(cc.get_id());
-            userService.save(user);
         }
-        ccService.delete(collectionId);
+        User user = (User)mv.getModel().get("currentUser");
+        ccService.delete(cc,user);
         return mv;
     }
 

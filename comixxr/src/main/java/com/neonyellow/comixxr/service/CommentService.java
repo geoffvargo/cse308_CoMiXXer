@@ -31,6 +31,10 @@ public class CommentService implements ICommentService {
 
     public void save(Comment comment) { commentRepository.save(comment);}
 
+    public void delete(Comment comment){
+        commentRepository.deleteBy_id(comment.get_id());
+    }
+
     public List<CommentResponse> getCommentsForActivityFeed(User user){
         LocalDateTime present = LocalDateTime.now();
         List<Comment> commentActivity = new ArrayList<>();
@@ -50,6 +54,8 @@ public class CommentService implements ICommentService {
         }
         return commentResponseList;
     }
+
+    public List<Comment> findByUserId(ObjectId id){ return commentRepository.findAllByUserId(id);}
     public List<Comment> findComments(ObjectId comicId) { return commentRepository.findAllByComicIdOrderByAgeDesc(comicId); }
 
 

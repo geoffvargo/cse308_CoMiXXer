@@ -1,11 +1,7 @@
 package com.neonyellow.comixxr.controller;
 
-import com.neonyellow.comixxr.model.Comic;
-import com.neonyellow.comixxr.model.Genre;
-import com.neonyellow.comixxr.model.User;
-import com.neonyellow.comixxr.service.ComicCollectionService;
-import com.neonyellow.comixxr.service.ComicService;
-import com.neonyellow.comixxr.service.ComixUserDetailsService;
+import com.neonyellow.comixxr.model.*;
+import com.neonyellow.comixxr.service.*;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 public class HomeController {
@@ -24,7 +21,13 @@ public class HomeController {
     private ComixUserDetailsService userService;
 
     @Autowired
+    private UserService uService;
+
+    @Autowired
     private ComicService comicService;
+
+    @Autowired
+    private CommentService commentService;
 
     @Autowired
     private ComicCollectionService comicCollectionService;
@@ -96,6 +99,27 @@ public class HomeController {
     public ModelAndView getSeriesGenre() {
         ModelAndView modelAndView = getMAVWithUser();
         modelAndView.setViewName("seriesGenre");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/removeUser",method = RequestMethod.GET)
+    public ModelAndView removeUser(){
+        ModelAndView modelAndView = getMAVWithUser();
+        User user = (User) modelAndView.getModel().get("currentUser");
+        uService.deleteByUserId(user.get_id());
+        List<Comic> comics = comicService.findAllByUserId(user.get_id());
+        List<ComicCollection> cc = comicCollectionService.getComicCollectionByUserId(user.get_id());
+        for(ComicCollection temp : cc){
+            comicCollectionService.delete(temp, user);
+        }
+        for(Comic c : comics){
+            comicService.delete(c.get_id());
+        }
+        List<Comment> comments = commentService.findByUserId(user.get_id());
+        for(Comment c : comments){
+            commentService.delete(c);
+        }
+        modelAndView.setViewName("redirect:/login");
         return modelAndView;
     }
 
